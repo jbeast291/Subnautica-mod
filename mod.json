@@ -1,0 +1,12 @@
+﻿{
+    "Id": "KnifeDamageSN",
+    "DisplayName": "Knife Damage Mod SN",
+    "Author": "jbeast291",
+    "Version": "1.0.0",
+    "Enable": true,
+    "AssemblyName": "KnifeDamageSN.dll",
+    "VersionDependencies": {
+        "SMLHelper": "2.9.6"
+    },
+    "Game": "Subnautica"
+}
