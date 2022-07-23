@@ -1,2 +1,2 @@
 # Jbeast291_SubnauticaMods
- Mods that i made for subnautica
+ A collection of mod that I created for subnautica.
