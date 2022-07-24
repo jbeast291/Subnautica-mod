@@ -1,12 +1,12 @@
 ﻿{
-    "Id": "KnifeDamageSN",
-    "DisplayName": "Knife Damage Mod SN",
+    "Id": "KnifeMultipiersSN",
+    "DisplayName": "Knife Multipiers SN",
     "Author": "jbeast291",
     "Version": "1.0.0",
     "Enable": true,
-    "AssemblyName": "KnifeDamageSN.dll",
+    "AssemblyName": "KnifeMultipiersSN.dll",
     "VersionDependencies": {
-        "SMLHelper": "2.9.6"
+        "SMLHelper": "2.13.3"
     },
     "Game": "Subnautica"
 }

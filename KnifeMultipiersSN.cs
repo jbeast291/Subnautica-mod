@@ -6,7 +6,7 @@ using SMLHelper.V2.Handlers;
 using System.Reflection;
 using QModManager.API.ModLoading;
 
-namespace KnifeDamageMod_SN
+namespace KnifeMultipiersSN
 {
     [Menu("Knife and HeatBlade Multipliers")]
     public class MyConfig : ConfigFile
@@ -41,7 +41,7 @@ namespace KnifeDamageMod_SN
                 Logger.Log(Logger.Level.Info, "Show Debug Logs Disabled", null, true);
         }
 
-        class KnifeDamageMod
+        class KnifeMultipiers
         {
             public static MyConfig Config { get; } = new MyConfig();
 
@@ -109,7 +109,7 @@ namespace KnifeDamageMod_SN
                             Logger.Log(Logger.Level.Debug, $"Knife Multipiers has been reset", null, true);
                         }
                     }
-                    if (__instance.GetType() == typeof(HeatBlade) && !Config.ToggleKnife)
+                    if (__instance.GetType() == typeof(HeatBlade) && !Config.ToggleHeatBlade)
                     {
                         HeatBlade heatblade = __instance as HeatBlade;
                         heatblade.damage = 20;
