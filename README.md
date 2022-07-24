@@ -1,4 +1,4 @@
-# Jbeast291_SubnauticaMods
+# Jbeast291's Subnautica Mods
  A collection of mods that I created for subnautica.
 
 ### [Knife Multipliers](https://github.com/jbeast291/Subnautica-mod/releases/download/FirstRelease/KnifeMultipiersSN.zip)
