@@ -2,7 +2,7 @@
     "Id": "KnifeMultipiersSN",
     "DisplayName": "Knife Multipiers SN",
     "Author": "jbeast291",
-    "Version": "1.0.0",
+    "Version": "1.0.1",
     "Enable": true,
     "AssemblyName": "KnifeMultipiersSN.dll",
     "VersionDependencies": {

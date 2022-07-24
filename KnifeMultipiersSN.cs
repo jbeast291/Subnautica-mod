@@ -25,7 +25,7 @@ namespace KnifeMultipiersSN
         [Toggle("Appy To Heat Blade")]
         public bool ToggleHeatBlade = true; //Enables the Heat Blade to be changed
 
-        [Toggle("Show Debug Logs"), OnChange(nameof(DebugNotification))]
+        [Toggle("Show Debug Logs Ingame"), OnChange(nameof(DebugNotification))]
         public bool showDebugLogs = false; //Shows debug logs if true
 
         public void CorrectDistVal()
@@ -54,69 +54,71 @@ namespace KnifeMultipiersSN
                 public static void Postfix(PlayerTool __instance)
                 {
                     Config.Load();
+                    float newDamage = Config.KnifeDamageSlider;
+                    float NewDist = Config.CorrectDistSlider;
 
                     // Check to see if this is the knife
-                    if (__instance.GetType() == typeof(Knife) && Config.ToggleKnife)
+                    if (__instance.GetType() == typeof(Knife))
                     {
                         Knife knife = __instance as Knife;
                         float knifeDamage = knife.damage;
-                        float newKnifeDamage = Config.KnifeDamageSlider;
-
                         float KnifeDist = knife.attackDist;
-                        float NewKnifeDist = Config.CorrectDistSlider;
-
-                        if (knifeDamage != Config.KnifeDamageSlider)
-                            knife.damage = newKnifeDamage; // Change the knife damage to the value set in the config
-
-                        if (knifeDamage != Config.CorrectDistSlider)
-                            knife.attackDist = NewKnifeDist; // Change the knife damage to the value set in the config
-
-                        if (Config.showDebugLogs && (knifeDamage != Config.KnifeDamageSlider))
-                            Logger.Log(Logger.Level.Debug, $"Knife damage was: {knifeDamage}," + $" is now: {newKnifeDamage}", null, true);
-
-                        if (Config.showDebugLogs && (KnifeDist != Config.CorrectDistSlider))
-                            Logger.Log(Logger.Level.Debug, $"Knife attack distance was: {KnifeDist}," + $" is now: {NewKnifeDist}", null, true);
-                    }
-                    // Check to see if this is the HeatBlade
-                    if (__instance.GetType() == typeof(HeatBlade) && Config.ToggleHeatBlade)
-                    {
-                        HeatBlade heatblade = __instance as HeatBlade;
-                        float heatBladeDamage = heatblade.damage;
-                        float newHeatBladeDamage = Config.KnifeDamageSlider;
-
-                        float HeatBladeDist = heatblade.attackDist;
-                        float NewHeatBladeDist = Config.CorrectDistSlider;
-
-                        if (heatBladeDamage != Config.KnifeDamageSlider)
-                            heatblade.damage = newHeatBladeDamage; // Change the knife damage to the value set in the config
-
-                        if (heatBladeDamage != Config.CorrectDistSlider)
-                            heatblade.attackDist = NewHeatBladeDist; // Change the knife damage to the value set in the config
-
-                        if (Config.showDebugLogs && (heatBladeDamage != Config.KnifeDamageSlider))
-                            Logger.Log(Logger.Level.Debug, $"Heat Blade damage was: {heatBladeDamage}," + $" is now: {newHeatBladeDamage}", null, true);
-
-                        if (Config.showDebugLogs && (HeatBladeDist != Config.CorrectDistSlider))
-                            Logger.Log(Logger.Level.Debug, $"Heat Blade attack distance was: {HeatBladeDist}," + $" is now: {NewHeatBladeDist}", null, true);
-                    }
-                    if (__instance.GetType() == typeof(Knife) && !Config.ToggleKnife)
-                    {
-                        Knife knife = __instance as Knife;
-                        knife.damage = 20;
-                        knife.attackDist = 2;
-                        if(Config.showDebugLogs)
+                        if (Config.ToggleKnife)
                         {
-                            Logger.Log(Logger.Level.Debug, $"Knife Multipiers has been reset", null, true);
+                            if (knifeDamage != Config.KnifeDamageSlider)
+                            {
+                                knife.damage = newDamage; // Change the knife damage to the value set in the config
+                                if (Config.showDebugLogs)
+                                    Logger.Log(Logger.Level.Debug, $"Knife damage was: {knifeDamage}," + $" is now: {newDamage}", null, true);
+                            }
+
+                            if (KnifeDist != Config.CorrectDistSlider)
+                            {
+                                knife.attackDist = NewDist; // Change the knife damage to the value set in the config
+                                if (Config.showDebugLogs)
+                                    Logger.Log(Logger.Level.Debug, $"Knife attack distance was: {KnifeDist}," + $" is now: {NewDist}", null, true);
+                            }
+                        }
+                        if(!Config.ToggleKnife && (knife.damage != 20) && (knife.attackDist != 2))//Reset Knife Values if de-togged in options menue 
+                        {
+                            knife.damage = 20;
+                            knife.attackDist = 2;
+                            if (Config.showDebugLogs)
+                            {
+                                Logger.Log(Logger.Level.Debug, $"Knife Multipiers has been reset. Damage: {knife.damage}. Dist: {knife.attackDist}", null, true);
+                            }
                         }
                     }
-                    if (__instance.GetType() == typeof(HeatBlade) && !Config.ToggleHeatBlade)
+                    // Check to see if this is the HeatBlade
+                    if (__instance.GetType() == typeof(HeatBlade))
                     {
-                        HeatBlade heatblade = __instance as HeatBlade;
-                        heatblade.damage = 20;
-                        heatblade.attackDist = 2;
-                        if (Config.showDebugLogs)
+                        HeatBlade heatBlade = __instance as HeatBlade;
+                        float heatBladeDamage = heatBlade.damage;
+                        float heatBladeDist = heatBlade.attackDist;
+                        if (Config.ToggleHeatBlade)
                         {
-                            Logger.Log(Logger.Level.Debug, $"HeatBlade Multipiers has been reset", null, true);
+                            if (heatBladeDamage != Config.KnifeDamageSlider)
+                            {
+                                heatBlade.damage = newDamage; // Change the HeatBlade damage to the value set in the config
+                                if (Config.showDebugLogs)
+                                    Logger.Log(Logger.Level.Debug, $"HeatBlade damage was: {heatBladeDamage}," + $" is now: {newDamage}", null, true);
+                            }
+
+                            if (heatBladeDist != Config.CorrectDistSlider)
+                            {
+                                heatBlade.attackDist = NewDist; // Change the HeatBlade damage to the value set in the config
+                                if (Config.showDebugLogs)
+                                    Logger.Log(Logger.Level.Debug, $"HeatBlade attack distance was: {heatBladeDist}," + $" is now: {NewDist}", null, true);
+                            }
+                        }
+                        if (!Config.ToggleHeatBlade && (heatBlade.damage != 40) && (heatBlade.attackDist != 2))//Reset HeatBlade Values if de-togged in options menue 
+                        {
+                            heatBlade.damage = 40;
+                            heatBlade.attackDist = 2;
+                            if (Config.showDebugLogs)
+                            {
+                                Logger.Log(Logger.Level.Debug, $"HeatBlade Multipiers has been reset. Damage: {heatBlade.damage}. Dist: {heatBlade.attackDist}", null, true);
+                            }
                         }
                     }
                 }
