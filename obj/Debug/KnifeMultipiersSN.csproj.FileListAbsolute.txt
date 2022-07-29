@@ -1,6 +1,4 @@
 C:\Users\Jacoby\source\repos\Subnautica mod\Subnautica mod\bin\Debug\0Harmony.dll
-C:\Users\Jacoby\source\repos\Subnautica mod\Subnautica mod\bin\Debug\Assembly-CSharp-firstpass_publicized.dll
-C:\Users\Jacoby\source\repos\Subnautica mod\Subnautica mod\bin\Debug\Assembly-CSharp_publicized.dll
 C:\Users\Jacoby\source\repos\Subnautica mod\Subnautica mod\bin\Debug\QModInstaller.dll
 C:\Users\Jacoby\source\repos\Subnautica mod\Subnautica mod\bin\Debug\SMLHelper.dll
 C:\Users\Jacoby\source\repos\Subnautica mod\Subnautica mod\bin\Debug\UnityEngine.CoreModule.dll
@@ -72,3 +70,5 @@ C:\Users\Jacoby\source\repos\Subnautica mod\Subnautica mod\bin\Debug\KnifeMultip
 C:\Users\Jacoby\source\repos\Subnautica mod\Subnautica mod\bin\Debug\KnifeMultipiersSN.pdb
 C:\Users\Jacoby\source\repos\Subnautica mod\Subnautica mod\obj\Debug\KnifeMultipiersSN.dll
 C:\Users\Jacoby\source\repos\Subnautica mod\Subnautica mod\obj\Debug\KnifeMultipiersSN.pdb
+C:\Users\Jacoby\source\repos\Subnautica mod\Subnautica mod\bin\Debug\Assembly-CSharp-firstpass.dll
+C:\Users\Jacoby\source\repos\Subnautica mod\Subnautica mod\bin\Debug\Assembly-CSharp.dll

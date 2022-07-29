@@ -4,7 +4,7 @@ using SMLHelper.V2.Json;
 using SMLHelper.V2.Options.Attributes;
 using SMLHelper.V2.Handlers;
 using System.Reflection;
-using QModManager.API.ModLoading;
+using QModManager.API.ModLoading; 
 
 namespace KnifeMultipiersSN
 {
