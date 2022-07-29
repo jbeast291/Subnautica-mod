@@ -4,4 +4,5 @@ ChangeLog for all mods
 
 v1.0.1
 Fixed an issue were debug logs would be spammed if either the knife or heat blade were untoggled
-Optimized code to do less calculations per toolaction(more optimized)
+
+Optimized code to do less calculations per toolaction(more optimized overall)
