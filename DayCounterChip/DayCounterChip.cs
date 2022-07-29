@@ -223,10 +223,10 @@ namespace DayCounterChip
     [Menu("Day Counter Chip")]
     public class MyConfig : ConfigFile
     {
-        [Slider("PosX", 0, 2500, DefaultValue = 315.2f)]
+        [Slider("Text PosX", 0, 2500, DefaultValue = 315.2f)]
         public float PosX = 315.2f;
 
-        [Slider("PosY", 0, 1500, DefaultValue = 458.45f)]
+        [Slider("Text PosY", 0, 1500, DefaultValue = 458.45f)]
         public float PosY = 458.45f;
 
         [Choice("Text Color", new[] { "Blue", "Red", "White", "Green", "Black", "Cyan", "Gray", "Magenta", "Yellow" }, Tooltip = "changes text color")]
