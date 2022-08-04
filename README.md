@@ -1,6 +1,7 @@
 # Jbeast291's Subnautica Mods
  A collection of mods that I created for subnautica.
 If you have any questions or comments contact me on discord: Jbeast291#0001
+If you find that one fo my mods dosent work with another please create an [issue](https://github.com/jbeast291/Subnautica-mod/issues)Jbeast291#0001 and i will try my best to fix it.
 
 ## [Knife Multipliers](https://github.com/jbeast291/Subnautica-mod/releases/download/ThirdRelease/KnifeMultipiersSN.zip)
 Change the damage or range of the knife or heatblade
@@ -20,5 +21,7 @@ Copper Wire: 1
 
 ### Unlock:
 Unlocks after obtaining the blueprint for the compass
+
+Works with Mimes [More Ship Slots](https://github.com/Mimes-Pes/MimesSubnauticaMods) mod 
 
 Dependencies: [SmlHelper](https://www.nexusmods.com/subnautica/mods/113)
