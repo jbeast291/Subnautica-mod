@@ -2,7 +2,7 @@
     "Id": "DayCounterChip",
     "DisplayName": "Day Counter Chip",
     "Author": "jbeast291",
-    "Version": "1.0.1",
+    "Version": "1.0.0",
     "Enable": true,
     "AssemblyName": "DayCounterChip.dll",
     "VersionDependencies": {
