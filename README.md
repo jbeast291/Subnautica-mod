@@ -14,8 +14,10 @@ Dependencies: [SmlHelper](https://www.nexusmods.com/subnautica/mods/113)
 
 ## [Day Counter Chip](https://github.com/jbeast291/Subnautica-mod/releases/download/ThirdRelease/DayCounterChip.zip)
 Adds a new Equipment Chip after unlocking the compass.
+
 Once equipped a day Counter in the top right will be displayed
-Very configurable with in game options menue
+
+Configurable within game options menue
 
 ### Crafting:
 Titanium: 2
