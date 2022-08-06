@@ -65,6 +65,10 @@ namespace DayCounterChip
             return obj;
         }
     }
+    public class Info
+    {
+        public static Resolution currentRes;
+    }
     internal class DayCounterChipFuntion : MonoBehaviour
     {
         public Text text;
@@ -74,8 +78,8 @@ namespace DayCounterChip
 
         DayNightCycle dayNightCycle = DayNightCycle.main;
 
-        Font arial;
         RectTransform rectTransform;
+        RectTransform RectTransform2;
         public void Awake()
         {
             QMod.Config.Load();
@@ -91,7 +95,7 @@ namespace DayCounterChip
             canvas = canvasGO.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
-            //create text
+            //create image for background
 
             GameObject imageGO = new GameObject();
             imageGO.transform.parent = canvasGO.transform;
@@ -101,11 +105,11 @@ namespace DayCounterChip
             image.transform.position = new Vector3(100, 100, 0);
             image.gameObject.SetActive(false);
 
-            RectTransform RectTransform2 = image.GetComponent<RectTransform>();
+            RectTransform2 = image.GetComponent<RectTransform>();
             RectTransform2.localPosition = new Vector3(0, 0, 0);
             RectTransform2.sizeDelta = new Vector2(313, 97);
 
-            //create image for background
+            //Create t+ext for background
 
             GameObject textgo = new GameObject();
             textgo.transform.parent = canvasGO.transform;
@@ -113,35 +117,52 @@ namespace DayCounterChip
 
             text = textgo.GetComponent<Text>();
             text.font = Player.main.textStyle.font;
-            text.fontSize = 48;
+            text.fontSize = Mathf.RoundToInt(48f * (Info.currentRes.width / 2560f));
             text.alignment = TextAnchor.MiddleCenter;
             text.GetComponent<Transform>();
             text.color = GetColorFromConfig();
 
             rectTransform = text.GetComponent<RectTransform>();
             rectTransform.localPosition = new Vector3(0, 0, 0);
-            rectTransform.sizeDelta = new Vector2(600, 200);
+            rectTransform.sizeDelta = new Vector2(6000, 2000);
+
         }
         public void Update()
         {
+
             if (CheackIfEquipmentIsInSlot(DayCounterChip.TechTypeID))
             {
-                text.color = GetColorFromConfig();
-                text.transform.position = new Vector3(QMod.Config.PosX, QMod.Config.PosY, 0);
-                text.text = $"Day: {dayNightCycle.GetDay().ToString("N0")}";
+                float diff = Info.currentRes.width / 2560f;
+
                 //
-                if(QMod.Config.BackGroundChoice == "BackGround 1")
+
+                text.color = GetColorFromConfig();
+                text.transform.position = GetTextPosition(Info.currentRes);
+                text.text = $"Day: {dayNightCycle.GetDay().ToString("N0")}";
+                text.fontSize = Mathf.RoundToInt(48f * diff);
+
+                //
+
+                if (QMod.Config.BackGroundChoice == "BackGround 1")
                 {
                     image.sprite = assetBundle.LoadAsset<Sprite>("BackGround");
-                    image.rectTransform.position = new Vector3(QMod.Config.BackGround1PosX, QMod.Config.BackGround1PosY, 0);
+                    image.rectTransform.position = new Vector3(Info.currentRes.width - (172.3f * diff), Info.currentRes.height - (64.35f * diff), 0);
+                    RectTransform2.sizeDelta = new Vector2(313 * diff, 97 * diff);
                     image.gameObject.SetActive(true);
                 }
+
+                //
+
                 if(QMod.Config.BackGroundChoice == "BackGround 2")
                 {
                     image.sprite = assetBundle.LoadAsset<Sprite>("BackGround2");
-                    image.rectTransform.position = new Vector3(QMod.Config.BackGround2PosX, QMod.Config.BackGround2PosY, 0);
+                    image.rectTransform.position = new Vector3(Info.currentRes.width - (171.3499f * diff), Info.currentRes.height - (106.1f * diff), 0);
+                    RectTransform2.sizeDelta = new Vector2(313 * diff, 97 * diff);
                     image.gameObject.SetActive(true);
                 }
+                
+                //
+
                 if(QMod.Config.BackGroundChoice == "No BackGround")
                 {
                     image.gameObject.SetActive(false);
@@ -154,6 +175,10 @@ namespace DayCounterChip
                 image.gameObject.SetActive(false);
             }
 
+        }
+        public Vector3 GetTextPosition(Resolution res)
+        {
+            return new Vector3(res.width - (172.3f * (res.width / 2560f)), res.height - (64.35f * (res.width / 2560f)), 0);
         }
         public Color GetColorFromConfig()
         {
@@ -244,6 +269,17 @@ namespace DayCounterChip
         }
     }
 
+    [HarmonyPatch(typeof(DisplayManager))]
+    internal class OnResolutionChangedPatch
+    {
+        [HarmonyPatch(nameof(DisplayManager.Update))]
+        [HarmonyPostfix]
+        public static void OnResolutionChangedPostFix(DisplayManager __instance)
+        {
+            Info.currentRes = __instance.resolution;
+        }
+    }
+
     [QModCore]
     public static class QMod
     {
@@ -270,23 +306,23 @@ namespace DayCounterChip
     [Menu("Day Counter Chip")]
     public class MyConfig : ConfigFile
     {
-        [Slider("Text PosX", 0, 2500, DefaultValue = 2387.7f)]
-        public float PosX = 2387.7f;
+        //[Slider("Text PosX", 0, 2500, DefaultValue = 2387.7f)]
+        //public float PosX = 2387.7f;
 
-        [Slider("Text PosY", 0, 1500, DefaultValue = 1375.65f)]
-        public float PosY = 1375.65f;
+        //[Slider("Text PosY", 0, 1500, DefaultValue = 1375.65f)]
+        //public float PosY = 1375.65f;
 
-        [Slider("BackGround Style 1 PosX", 0, 2500, DefaultValue = 2386.25f)]
-        public float BackGround1PosX = 2386.25f;
+        //[Slider("BackGround Style 1 PosX", 0, 2500, DefaultValue = 2386.25f)]
+        //public float BackGround1PosX = 2386.25f;
 
-        [Slider("BackGround Style 1 PosY", 0, 1500, DefaultValue = 1371.65f)]
-        public float BackGround1PosY = 1371.65f;
+        //[Slider("BackGround Style 1 PosY", 0, 1500, DefaultValue = 1371.65f)]
+        //public float BackGround1PosY = 1371.65f;
 
-        [Slider("BackGround Style 2 PosX", 0, 2500, DefaultValue = 2388.6501f)]
-        public float BackGround2PosX = 2388.6501f;
+        //[Slider("BackGround Style 2 PosX", 0, 2500, DefaultValue = 2388.6501f)]
+        //public float BackGround2PosX = 2388.6501f;
 
-        [Slider("BackGround Style 2 PosY", 0, 1500, DefaultValue = 1333.9f)]
-        public float BackGround2PosY = 1333.9f;
+        //[Slider("BackGround Style 2 PosY", 0, 1500, DefaultValue = 1333.9f)]
+        //public float BackGround2PosY = 1333.9f;
 
         [Choice("Text Color", new[] { "Blue", "Red", "White", "Green", "Black", "Cyan", "Gray", "Magenta", "Yellow" }, Tooltip = "changes text color")]
         public string ColorChoice = "White";
