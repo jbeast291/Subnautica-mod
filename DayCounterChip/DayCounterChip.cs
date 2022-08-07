@@ -102,14 +102,12 @@ namespace DayCounterChip
             imageGO.AddComponent<Image>();
 
             image = imageGO.GetComponent<Image>();
-            image.transform.position = new Vector3(100, 100, 0);
             image.gameObject.SetActive(false);
 
             RectTransform2 = image.GetComponent<RectTransform>();
-            RectTransform2.localPosition = new Vector3(0, 0, 0);
-            RectTransform2.sizeDelta = new Vector2(313, 97);
+ 
 
-            //Create t+ext for background
+            //Create text for background
 
             GameObject textgo = new GameObject();
             textgo.transform.parent = canvasGO.transform;
@@ -117,10 +115,8 @@ namespace DayCounterChip
 
             text = textgo.GetComponent<Text>();
             text.font = Player.main.textStyle.font;
-            text.fontSize = Mathf.RoundToInt(48f * (Info.currentRes.width / 2560f));
             text.alignment = TextAnchor.MiddleCenter;
             text.GetComponent<Transform>();
-            text.color = GetColorFromConfig();
 
             rectTransform = text.GetComponent<RectTransform>();
             rectTransform.localPosition = new Vector3(0, 0, 0);
@@ -132,38 +128,34 @@ namespace DayCounterChip
 
             if (CheackIfEquipmentIsInSlot(DayCounterChip.TechTypeID))
             {
-                float diff = Info.currentRes.width / 2560f;
+                float diff = Info.currentRes.width / 2560f; // used to make the scale work at different resolutions
 
-                //
+                text.color = GetColorFromConfig(); 
+                text.transform.position = new Vector3(QMod.Config.PosX * diff, QMod.Config.PosY * diff, 0); // set the position of the text based on the config and the resolution
+                text.text = $"Day: {dayNightCycle.GetDay().ToString("N0")}"; // set the text to have the day count from daynightcycle
+                text.fontSize = Mathf.RoundToInt(48f * diff); // Set the size of the text based on the resolution 
 
-                text.color = GetColorFromConfig();
-                text.transform.position = GetTextPosition(Info.currentRes);
-                text.text = $"Day: {dayNightCycle.GetDay().ToString("N0")}";
-                text.fontSize = Mathf.RoundToInt(48f * diff);
-
-                //
-
-                if (QMod.Config.BackGroundChoice == "BackGround 1")
+                if (QMod.Config.BackGroundChoice == "BackGround 1") 
                 {
-                    image.sprite = assetBundle.LoadAsset<Sprite>("BackGround");
-                    image.rectTransform.position = new Vector3(Info.currentRes.width - (172.3f * diff), Info.currentRes.height - (64.35f * diff), 0);
-                    RectTransform2.sizeDelta = new Vector2(313 * diff, 97 * diff);
+                    image.sprite = assetBundle.LoadAsset<Sprite>("BackGround"); // Load background 1 from the asset file
+                    image.rectTransform.position = new Vector3((QMod.Config.PosX - 1.45f) * diff, (QMod.Config.PosY - 4f) * diff, 0); // set the position of the image based on the config and the resolution
+                    RectTransform2.sizeDelta = new Vector2(313 * diff, 97 * diff); // Set the size of the text based on the resolution 
                     image.gameObject.SetActive(true);
                 }
 
                 //
 
-                if(QMod.Config.BackGroundChoice == "BackGround 2")
+                if (QMod.Config.BackGroundChoice == "BackGround 2")
                 {
-                    image.sprite = assetBundle.LoadAsset<Sprite>("BackGround2");
-                    image.rectTransform.position = new Vector3(Info.currentRes.width - (171.3499f * diff), Info.currentRes.height - (106.1f * diff), 0);
-                    RectTransform2.sizeDelta = new Vector2(313 * diff, 97 * diff);
+                    image.sprite = assetBundle.LoadAsset<Sprite>("BackGround2"); // Load background 2 from the asset file
+                    image.rectTransform.position = new Vector3((QMod.Config.PosX + 0.9501f) * diff, (QMod.Config.PosY - 41.75f) * diff, 0); // set the position of the image based on the config and the resolution
+                    RectTransform2.sizeDelta = new Vector2(313 * diff, 97 * diff); // Set the size of the text based on the resolution 
                     image.gameObject.SetActive(true);
                 }
-                
+
                 //
 
-                if(QMod.Config.BackGroundChoice == "No BackGround")
+                if (QMod.Config.BackGroundChoice == "No BackGround")
                 {
                     image.gameObject.SetActive(false);
                 }
@@ -176,11 +168,8 @@ namespace DayCounterChip
             }
 
         }
-        public Vector3 GetTextPosition(Resolution res)
-        {
-            return new Vector3(res.width - (172.3f * (res.width / 2560f)), res.height - (64.35f * (res.width / 2560f)), 0);
-        }
-        public Color GetColorFromConfig()
+
+        public Color GetColorFromConfig() // gets the color form the config file and returns the color 
         {
             QMod.Config.Load();
             if (QMod.Config.ColorChoice == "Blue")
@@ -219,13 +208,13 @@ namespace DayCounterChip
             {
                 return Color.yellow;
             }
-            else
+            else // if there is an error in setting the color in teh config and it does not equal anything above 
             {
                 Logger.Log(Logger.Level.Info, "Error no color value in config", null, true);
                 return Color.white;
             }
         }
-        public static bool CheackIfEquipmentIsInSlot(TechType techtype)
+        public static bool CheackIfEquipmentIsInSlot(TechType techtype) // Checks all the equipment slots and sees if the teachtype is there
         {
             Equipment equipment = null;
             EquipmentType equipmentType = EquipmentType.Chip;
@@ -265,7 +254,7 @@ namespace DayCounterChip
         [HarmonyPostfix]
         public static void PlayerPatchStartPostfix(Player __instance)
         {
-            __instance.gameObject.EnsureComponent<DayCounterChipFuntion>();
+            __instance.gameObject.EnsureComponent<DayCounterChipFuntion>(); // ensures that the component is attached to the player
         }
     }
 
@@ -276,7 +265,7 @@ namespace DayCounterChip
         [HarmonyPostfix]
         public static void OnResolutionChangedPostFix(DisplayManager __instance)
         {
-            Info.currentRes = __instance.resolution;
+            Info.currentRes = __instance.resolution; // sets the resolution in Info to what is currently set
         }
     }
 
@@ -306,23 +295,11 @@ namespace DayCounterChip
     [Menu("Day Counter Chip")]
     public class MyConfig : ConfigFile
     {
-        //[Slider("Text PosX", 0, 2500, DefaultValue = 2387.7f)]
-        //public float PosX = 2387.7f;
+        [Slider("Counter Position on screen X", 0, 2560, DefaultValue = 2387.7f)]
+        public float PosX = 2387.7f;
 
-        //[Slider("Text PosY", 0, 1500, DefaultValue = 1375.65f)]
-        //public float PosY = 1375.65f;
-
-        //[Slider("BackGround Style 1 PosX", 0, 2500, DefaultValue = 2386.25f)]
-        //public float BackGround1PosX = 2386.25f;
-
-        //[Slider("BackGround Style 1 PosY", 0, 1500, DefaultValue = 1371.65f)]
-        //public float BackGround1PosY = 1371.65f;
-
-        //[Slider("BackGround Style 2 PosX", 0, 2500, DefaultValue = 2388.6501f)]
-        //public float BackGround2PosX = 2388.6501f;
-
-        //[Slider("BackGround Style 2 PosY", 0, 1500, DefaultValue = 1333.9f)]
-        //public float BackGround2PosY = 1333.9f;
+        [Slider("Counter Position on screen Y", 0, 1440, DefaultValue = 1375.65f)]
+        public float PosY = 1375.65f;
 
         [Choice("Text Color", new[] { "Blue", "Red", "White", "Green", "Black", "Cyan", "Gray", "Magenta", "Yellow" }, Tooltip = "changes text color")]
         public string ColorChoice = "White";
