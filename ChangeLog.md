@@ -12,6 +12,11 @@ Optimized code to do less calculations per toolaction(more optimized overall)
 ### v1.0.1
 Fixed text scaling issue on different resolutions.
 
-you can accually see the text on resolution lower than 2560 x 1440
+You can accually see the text on resolution lower than 2560 x 1440
 
 Removed options to move text(will be changed in the future)
+
+### v1.0.2
+Reimplimented the ability to move text
+
+Only 1 slider is needed to move the text contrary to how it was in v1.0.0
