@@ -20,3 +20,7 @@ Removed options to move text(will be changed in the future)
 Reimplimented the ability to move text
 
 Only 1 slider is needed to move the text contrary to how it was in v1.0.0
+
+### v1.0.3
+Fixed an issue were you couldn't press buttons on the cyclops
+(thx (The Goat#3732) on discord for telling me about the issue)
