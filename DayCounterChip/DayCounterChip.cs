@@ -68,6 +68,7 @@ namespace DayCounterChip
     public class Info
     {
         public static Resolution currentRes;
+        public static Canvas canvas;
     }
     internal class DayCounterChipFuntion : MonoBehaviour
     {
@@ -84,21 +85,14 @@ namespace DayCounterChip
         {
             QMod.Config.Load();
 
-            GameObject canvasGO = new GameObject();
-            canvasGO.name = "Canvas";
-            canvasGO.AddComponent<Canvas>();
-            canvasGO.AddComponent<CanvasScaler>();
-            canvasGO.AddComponent<GraphicRaycaster>();
-
-
             Canvas canvas;
-            canvas = canvasGO.GetComponent<Canvas>();
+            canvas = Info.canvas.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
             //create image for background
 
             GameObject imageGO = new GameObject();
-            imageGO.transform.parent = canvasGO.transform;
+            imageGO.transform.parent = canvas.transform;
             imageGO.AddComponent<Image>();
 
             image = imageGO.GetComponent<Image>();
@@ -110,7 +104,7 @@ namespace DayCounterChip
             //Create text for background
 
             GameObject textgo = new GameObject();
-            textgo.transform.parent = canvasGO.transform;
+            textgo.transform.parent = canvas.transform;
             textgo.AddComponent<Text>();
 
             text = textgo.GetComponent<Text>();
@@ -121,7 +115,6 @@ namespace DayCounterChip
             rectTransform = text.GetComponent<RectTransform>();
             rectTransform.localPosition = new Vector3(0, 0, 0);
             rectTransform.sizeDelta = new Vector2(6000, 2000);
-
         }
         public void Update()
         {
@@ -266,6 +259,16 @@ namespace DayCounterChip
         public static void OnResolutionChangedPostFix(DisplayManager __instance)
         {
             Info.currentRes = __instance.resolution; // sets the resolution in Info to what is currently set
+        }
+    }
+    [HarmonyPatch(typeof(uGUI))]
+    internal class uGUIPatch
+    {
+        [HarmonyPatch(nameof(uGUI.Awake))]
+        [HarmonyPostfix]
+        public static void OnResolutionChangedPostFix(uGUI __instance)
+        {
+            Info.canvas = __instance.screenCanvas; // sets the Canvsas in Info to what is currently set
         }
     }
 
