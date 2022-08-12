@@ -1,0 +1,12 @@
+﻿{
+    "Id": "EscapePodSpawnChanges",
+    "DisplayName": "Escape Pod Spawn Changes",
+    "Author": "jbeast291",
+    "Version": "1.0.0",
+    "Enable": true,
+    "AssemblyName": "EscapePodSpawnChanges.dll",
+    "VersionDependencies": {
+        "SMLHelper": "2.13.3"
+    },
+    "Game": "Subnautica"
+}
