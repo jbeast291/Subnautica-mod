@@ -29,6 +29,6 @@ Unlocks after obtaining the blueprint for the compass
 ### Extra notes:
 Works with Mimes [More Ship Slots](https://github.com/Mimes-Pes/MimesSubnauticaMods) mod 
 
-Special thanks to ShilohPell#8852 on the subnautica discord for the suggestion. #406
+Special thanks to ShilohPell#8852 on the subnautica modding discord for the suggestion. (suggestion #406)
 
 Dependencies: [SmlHelper](https://www.nexusmods.com/subnautica/mods/113)
