@@ -101,6 +101,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\lifepodspawnmap" />
+    <None Include="Assets\lifepodspawnmap.manifest" />
     <None Include="mod.json" />
   </ItemGroup>
   <ItemGroup />

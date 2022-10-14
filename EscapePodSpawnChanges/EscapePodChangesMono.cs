@@ -24,23 +24,15 @@ namespace EscapePodSpawnChanges
 
         public Canvas canvas;
 
-        public Text text;
+        GameObject imageGO;
+        GameObject imageGO2;
+        GameObject imageGO3;
+        GameObject imageGO4;
+        GameObject imageGO5;
 
-        public SpriteState sprState = new SpriteState();
-
-        public Image image;
-        public Image image2;
-        public Image buttonimage;
-
-        public GameObject buttonPrefab;
-
-        public Selectable.Transition transition;
-
-
-        RectTransform rectTransform;
-        RectTransform rectTransform2;
-        RectTransform rectTransform3;
-        RectTransform rectTransform4;
+        GameObject textgo;
+        GameObject textgo2;
+        GameObject textgo3;
 
         GameObject Rightside;
         GameObject Primaryoptions;
@@ -58,75 +50,145 @@ namespace EscapePodSpawnChanges
 
             canvas = uGUI.main.screenCanvas.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            
 
             //create image
 
-            GameObject imageGO = new GameObject();
+            imageGO = new GameObject();
             imageGO.transform.parent = canvas.transform;
             imageGO.AddComponent<Image>();
 
-            image = imageGO.GetComponent<Image>();
-            image.gameObject.SetActive(false);
-            image.sprite = assetBundle.LoadAsset<Sprite>("SubnauticaMap1");
+            imageGO.GetComponent<Image>().gameObject.SetActive(false);
+            imageGO.GetComponent<Image>().sprite = assetBundle.LoadAsset<Sprite>("SubnauticaMap1");
 
-            rectTransform = image.GetComponent<RectTransform>();
-            rectTransform.position = new Vector3(1280, 720, 0);
-            rectTransform.sizeDelta = new Vector2(2100 * 0.60f, 2100 * 0.60f);
+            imageGO.GetComponent<Image>().GetComponent<RectTransform>().position = new Vector3(1280, 720, 0);
+            imageGO.GetComponent<Image>().GetComponent<RectTransform>().sizeDelta = new Vector2(2100 * 0.60f, 2100 * 0.60f);
 
             //create second image
 
-            GameObject imageGO2 = new GameObject();
+            imageGO2 = new GameObject();
             imageGO2.transform.parent = canvas.transform;
             imageGO2.AddComponent<Image>();
 
-            image2 = imageGO2.GetComponent<Image>();
-            image2.gameObject.SetActive(false);
-            image2.sprite = assetBundle.LoadAsset<Sprite>("SelectedSpot");
+            imageGO2.GetComponent<Image>().gameObject.SetActive(false);
+            imageGO2.GetComponent<Image>().sprite = assetBundle.LoadAsset<Sprite>("SelectedSpot");
 
-            rectTransform2 = image2.GetComponent<RectTransform>();
-            rectTransform2.sizeDelta = new Vector2(442 * 0.60f, 130 * 0.60f);
+            imageGO2.GetComponent<Image>().GetComponent<RectTransform>().sizeDelta = new Vector2(442 * 0.60f, 130 * 0.60f);
+
+            //create third image
+
+            imageGO3 = new GameObject();
+            imageGO3.transform.parent = canvas.transform;
+            imageGO3.AddComponent<Image>();
+
+            imageGO3.GetComponent<Image>().gameObject.SetActive(false);
+            imageGO3.GetComponent<Image>().sprite = assetBundle.LoadAsset<Sprite>("scannerroomui_listbgmouseover.png-CAB_f5d5c899328b296cd841c68fa14b2706--8424868254826263282");
+
+
+            imageGO3.GetComponent<Image>().GetComponent<RectTransform>().position = new Vector3(320, 720, 0);
+            imageGO3.GetComponent<Image>().GetComponent<RectTransform>().sizeDelta = new Vector2(918 * 0.6f, 500);
+
+            //create fourth image
+
+            imageGO4 = new GameObject();
+            imageGO4.transform.parent = canvas.transform;
+            imageGO4.AddComponent<Image>();
+
+
+            imageGO4.GetComponent<Image>().gameObject.SetActive(false);
+            imageGO4.GetComponent<Image>().sprite = assetBundle.LoadAsset<Sprite>("scannerroomui_listbgmouseover.png-CAB_f5d5c899328b296cd841c68fa14b2706--8424868254826263282");
+
+            imageGO4.GetComponent<Image>().GetComponent<RectTransform>().position = new Vector3(2240, 720, 0);
+            imageGO4.GetComponent<Image>().GetComponent<RectTransform>().sizeDelta = new Vector2(918 * 0.6f, 500);
+
+            //create fourth image
+
+            imageGO5 = new GameObject();
+            imageGO5.transform.parent = canvas.transform;
+            imageGO5.AddComponent<Image>();
+
+
+            imageGO5.GetComponent<Image>().gameObject.SetActive(false);
+            imageGO5.GetComponent<Image>().sprite = assetBundle.LoadAsset<Sprite>("scannerroomui_listbgmouseover.png-CAB_f5d5c899328b296cd841c68fa14b2706--8424868254826263282");
+
+            imageGO5.GetComponent<Image>().GetComponent<RectTransform>().position = new Vector3(2240, 220, 0);
+            imageGO5.GetComponent<Image>().GetComponent<RectTransform>().sizeDelta = new Vector2(918 * 0.35f, 500 * 0.15f);
+
 
             //Create text for background
 
-            GameObject textgo = new GameObject();
+            textgo = new GameObject();
             textgo.transform.parent = canvas.transform;
             textgo.AddComponent<Text>();
 
-            text = textgo.GetComponent<Text>();
-            text.font = arial;
-            text.alignment = TextAnchor.MiddleCenter;
-            text.GetComponent<Transform>();
+            textgo.GetComponent<Text>().font = arial;
+            textgo.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
+            textgo.GetComponent<Text>().color = Color.white;
+            textgo.GetComponent<Text>().transform.position = new Vector3(2240, 820, 0);
+            textgo.GetComponent<Text>().text = "Click a position on the map to set were the pod spawns.";
+            textgo.GetComponent<Text>().fontSize = 36;
+            textgo.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(400, 500);
+            textgo.SetActive(false);
 
-            rectTransform3 = text.GetComponent<RectTransform>();
-            rectTransform3.localPosition = new Vector3(0, 0, 0);
-            rectTransform3.sizeDelta = new Vector2(600, 200);
+            //create second text
+
+            textgo2 = new GameObject();
+            textgo2.transform.parent = canvas.transform;
+            textgo2.AddComponent<Text>();
+
+            textgo2.GetComponent<Text>().font = arial;
+            textgo2.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
+            textgo2.GetComponent<Text>().color = Color.white;
+            textgo2.GetComponent<Text>().transform.position = new Vector3(2240, 620, 0);
+            textgo2.GetComponent<Text>().text = "Press play to start!";
+            textgo2.GetComponent<Text>().fontSize = 36;
+            textgo2.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(400, 500);
+            textgo2.SetActive(false);
+
+            //Create button text
+
+            textgo3 = new GameObject();
+            textgo3.transform.parent = canvas.transform;
+            textgo3.AddComponent<Text>();
+
+            textgo3.GetComponent<Text>().font = arial;
+            textgo3.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
+            textgo3.GetComponent<Text>().color = Color.white;
+            textgo3.GetComponent<Text>().transform.position = new Vector3(2240, 220, 0);
+            textgo3.GetComponent<Text>().text = "Play";
+            textgo3.GetComponent<Text>().fontSize = 36;
+            textgo3.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(400, 500);
+            textgo3.SetActive(false);
 
         }
         public void Update()
         {
+            Logger.Log(Logger.Level.Info, "yes", null, true);
             if (Info.showmap)
             {
-                Logger.Log(Logger.Level.Info, $"pre show", null, true);
-                text.color = Color.white;
-                text.transform.position = new Vector3(0, 0, 0); // set the position of the text based on the config and the resolution
-                text.text = $"TEST"; // set the text to have the day count from daynightcycle
-                text.fontSize = 48;
-                
 
-                image.gameObject.SetActive(true);
+                textgo.SetActive(true);
+                textgo2.SetActive(true);
+                textgo3.SetActive(true);
+
+                imageGO.SetActive(true);
+                imageGO3.SetActive(true);
+                imageGO4.SetActive(true);
+                imageGO5.SetActive(true);
+
                 Rightside.SetActive(false);
                 Primaryoptions.SetActive(false);
-                Logger.Log(Logger.Level.Info, $"showed map", null, true);
 
                 if (Input.GetMouseButtonDown(0))
                 {
+                    Logger.Log(Logger.Level.Info, Input.mousePosition.ToString(), null, true);
 
-                    if (CheckValidMousePosition(Input.mousePosition))
+                    if (CheckValidMousePosition(Input.mousePosition) == 1)
                     {
                         vector3 = new Vector3((Input.mousePosition.x - 1280) * 3.33f, (Input.mousePosition.y - 720) * 3.33f, 0);
-                        Logger.Log(Logger.Level.Info, $"{vector3}", null, true);
-                        image2.rectTransform.position = new Vector3(Input.mousePosition.x + (210 * 0.60f), Input.mousePosition.y + (52 * 0.60f), 0);
-                        image2.gameObject.SetActive(true);
+                        //Logger.Log(Logger.Level.Info, $"{vector3}", null, true);
+                        imageGO2.GetComponent<Image>().GetComponent<RectTransform>().position = new Vector3(Input.mousePosition.x + (210 * 0.60f), Input.mousePosition.y + (52 * 0.60f), 0);
+                        imageGO2.gameObject.SetActive(true);
 
                     }
                 }
@@ -142,25 +204,26 @@ namespace EscapePodSpawnChanges
             }
             if (!Info.showmap)
             {
-                image2.gameObject.SetActive(false);
-                image.gameObject.SetActive(false);
+                textgo.SetActive(false);
+                textgo2.SetActive(false);
+
+                imageGO2.SetActive(false);
+                imageGO3.SetActive(false);
+                imageGO4.SetActive(false); 
+                imageGO.gameObject.SetActive(false);
             }
         }
-        void startgame()
-        {
-            Logger.Log(Logger.Level.Info, "PRESSSSSSSSSSSSSS", null, true);
-        }
-        public bool CheckValidMousePosition(Vector3 MousePos)
+        public float CheckValidMousePosition(Vector3 MousePos)
         {
             if ((MousePos.y >= 107.0f && MousePos.y <= 1335.0f) && (MousePos.x >= 664.0f && MousePos.x <= 1895.0f))
             {
                 Logger.Log(Logger.Level.Info, "ValidPos", null, true);
-                return true;
+                return 1;
             }
             else
             {
                 Logger.Log(Logger.Level.Info, "InvalidPos", null, true);
-                return false;
+                return 0;
             }
         }
     }

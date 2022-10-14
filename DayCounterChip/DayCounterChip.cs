@@ -87,7 +87,7 @@ namespace DayCounterChip
 
             Canvas canvas;
             canvas = Info.canvas.GetComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.renderMode = RenderMode.ScreenSpaceCamera;
 
             //create image for background
 
@@ -118,20 +118,20 @@ namespace DayCounterChip
         }
         public void Update()
         {
-
+            Logger.Log(Logger.Level.Info, $"{Info.canvas.GetComponent<Canvas>().isRootCanvas}", null, true);
             if (CheackIfEquipmentIsInSlot(DayCounterChip.TechTypeID))
             {
                 float diff = Info.currentRes.width / 2560f; // used to make the scale work at different resolutions
 
                 text.color = GetColorFromConfig(); 
-                text.transform.position = new Vector3(QMod.Config.PosX * diff, QMod.Config.PosY * diff, 0); // set the position of the text based on the config and the resolution
+                text.transform.position = new Vector3(QMod.Config.PosX * diff, QMod.Config.PosY * diff, -100); // set the position of the text based on the config and the resolution
                 text.text = $"Day: {dayNightCycle.GetDay().ToString("N0")}"; // set the text to have the day count from daynightcycle
                 text.fontSize = Mathf.RoundToInt(48f * diff); // Set the size of the text based on the resolution 
 
                 if (QMod.Config.BackGroundChoice == "BackGround 1") 
                 {
                     image.sprite = assetBundle.LoadAsset<Sprite>("BackGround"); // Load background 1 from the asset file
-                    image.rectTransform.position = new Vector3((QMod.Config.PosX - 1.45f) * diff, (QMod.Config.PosY - 4f) * diff, 0); // set the position of the image based on the config and the resolution
+                    image.rectTransform.position = new Vector3((QMod.Config.PosX - 1.45f) * diff, (QMod.Config.PosY - 4f) * diff, -100); // set the position of the image based on the config and the resolution
                     RectTransform2.sizeDelta = new Vector2(313 * diff, 97 * diff); // Set the size of the text based on the resolution 
                     image.gameObject.SetActive(true);
                 }
@@ -141,7 +141,7 @@ namespace DayCounterChip
                 if (QMod.Config.BackGroundChoice == "BackGround 2")
                 {
                     image.sprite = assetBundle.LoadAsset<Sprite>("BackGround2"); // Load background 2 from the asset file
-                    image.rectTransform.position = new Vector3((QMod.Config.PosX + 0.9501f) * diff, (QMod.Config.PosY - 41.75f) * diff, 0); // set the position of the image based on the config and the resolution
+                    image.rectTransform.position = new Vector3((QMod.Config.PosX + 0.9501f) * diff, (QMod.Config.PosY - 41.75f) * diff, -100); // set the position of the image based on the config and the resolution
                     RectTransform2.sizeDelta = new Vector2(313 * diff, 97 * diff); // Set the size of the text based on the resolution 
                     image.gameObject.SetActive(true);
                 }

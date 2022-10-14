@@ -19,7 +19,7 @@ using UnityEngine.UI;
 namespace EscapePodSpawnChanges
 {
     [HarmonyPatch(typeof(RandomStart))]
-    internal class PatchPlayerOnToolActionStart
+    internal class PatchGetRandomStartPoint
     {
         [HarmonyPatch(typeof(RandomStart), "GetRandomStartPoint")]
         [HarmonyPrefix]

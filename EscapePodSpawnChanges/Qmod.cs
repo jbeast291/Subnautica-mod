@@ -37,7 +37,7 @@ namespace EscapePodSpawnChanges
 
         }
     }
-    [Menu("EscapePodChanges")]
+    [Menu("Escape Pod Changes")]
     public class MyConfig : ConfigFile
     {
         [Toggle("Heavy Pod")]
