@@ -39,8 +39,12 @@ namespace EscapePodSpawnChanges
 
         Vector3 vector3 = new Vector3(10000, 10000, 10000);
 
+        ToFile ToFileInstance = new ToFile();
         public void Awake()
         {
+
+            ToFileInstance.CreateJson();
+
             Font arial;
             arial = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 
@@ -164,6 +168,9 @@ namespace EscapePodSpawnChanges
         public void Update()
         {
             Logger.Log(Logger.Level.Info, "yes", null, true);
+
+            Logger.Log(Logger.Level.Info, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "modconfig.json"), null, true);
+
             if (Info.showmap)
             {
 
@@ -200,25 +207,18 @@ namespace EscapePodSpawnChanges
                         uGUI_MainMenu.main.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Freedom));
                     }
                 }
-                //if (Input.GetKeyDown(KeyCode.Space))
-                //{
-                //    if (vector3 != new Vector3(10000, 10000, 10000))
-                //    {
-                //        Info.SelectedSpawn = new Vector3((Input.mousePosition.x - 1280) * 3.33f, 300, (Input.mousePosition.y - 720) * 3.33f);
-                //        Info.showmap = false;
-                //        uGUI_MainMenu.main.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Freedom));
-                //    }
-                //}
             }
             if (!Info.showmap)
             {
                 textgo.SetActive(false);
                 textgo2.SetActive(false);
+                textgo3.SetActive(false);
 
+                imageGO.SetActive(false);
                 imageGO2.SetActive(false);
                 imageGO3.SetActive(false);
-                imageGO4.SetActive(false); 
-                imageGO.gameObject.SetActive(false);
+                imageGO4.SetActive(false);
+                imageGO5.SetActive(false);
             }
         }
         public float CheckValidMousePosition(Vector3 MousePos)
