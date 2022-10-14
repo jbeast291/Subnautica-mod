@@ -191,16 +191,24 @@ namespace EscapePodSpawnChanges
                         imageGO2.gameObject.SetActive(true);
 
                     }
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    if (vector3 != new Vector3(10000, 10000, 10000))
+
+                    if(CheckValidMousePosition(Input.mousePosition) == 2 && (vector3 != new Vector3(10000, 10000, 10000)))
                     {
+                        Logger.Log(Logger.Level.Info, "BUTTON", null, true);
                         Info.SelectedSpawn = new Vector3((Input.mousePosition.x - 1280) * 3.33f, 300, (Input.mousePosition.y - 720) * 3.33f);
                         Info.showmap = false;
                         uGUI_MainMenu.main.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Freedom));
                     }
                 }
+                //if (Input.GetKeyDown(KeyCode.Space))
+                //{
+                //    if (vector3 != new Vector3(10000, 10000, 10000))
+                //    {
+                //        Info.SelectedSpawn = new Vector3((Input.mousePosition.x - 1280) * 3.33f, 300, (Input.mousePosition.y - 720) * 3.33f);
+                //        Info.showmap = false;
+                //        uGUI_MainMenu.main.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Freedom));
+                //    }
+                //}
             }
             if (!Info.showmap)
             {
@@ -217,8 +225,13 @@ namespace EscapePodSpawnChanges
         {
             if ((MousePos.y >= 107.0f && MousePos.y <= 1335.0f) && (MousePos.x >= 664.0f && MousePos.x <= 1895.0f))
             {
-                Logger.Log(Logger.Level.Info, "ValidPos", null, true);
+                Logger.Log(Logger.Level.Info, "ValidPos1", null, true);
                 return 1;
+            }
+            if ((MousePos.y >= 185.0f && MousePos.y <= 256.0f) && (MousePos.x >= 2081.0f && MousePos.x <= 2388.0f))
+            {
+                Logger.Log(Logger.Level.Info, "ValidPos2", null, true);
+                return 2;
             }
             else
             {
