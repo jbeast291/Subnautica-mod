@@ -22,27 +22,26 @@ namespace EscapePodSpawnChanges
     {
         public static AssetBundle assetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Assets"), "lifepodspawnmap"));
 
-        public Canvas canvas;
+        public static GameObject canvas;
 
-        GameObject imageGO;
-        GameObject imageGO2;
-        GameObject imageGO3;
-        GameObject imageGO4;
-        GameObject imageGO5;
-
-        GameObject textgo;
-        GameObject textgo2;
-        GameObject textgo3;
+        GameObject AreaSeceltor;
 
         GameObject Rightside;
         GameObject Primaryoptions;
+
+
+        GameObject ModeChoiceText;
+        GameObject ModePresetPoint;
+        GameObject RandomizePointButton;
+        GameObject SelectedPoint;
+
+        int CurrentMode = 1;
 
         Vector3 vector3 = new Vector3(10000, 10000, 10000);
 
         ToFile ToFileInstance = new ToFile();
         public void Awake()
         {
-
             ToFileInstance.CreateJson();
 
             Font arial;
@@ -51,174 +50,71 @@ namespace EscapePodSpawnChanges
             Rightside = GameObject.Find("RightSide");
             Primaryoptions = GameObject.Find("PrimaryOptions");
 
+            canvas = GameObject.Find("Menu canvas");
 
-            canvas = uGUI.main.screenCanvas.GetComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            
+            AreaSeceltor = Instantiate(assetBundle.LoadAsset<GameObject>("AreaSelector"));
+            AreaSeceltor.transform.parent = canvas.transform;
+            AreaSeceltor.SetActive(true);
+        }
+        public void Start()
+        {
 
-            //create image
+            GameObject.Find("SettingModsButton").GetComponent<Button>().onClick.AddListener(OnSettingsModButtonClick);
+            GameObject.Find("StartGameButton").GetComponent<Button>().onClick.AddListener(OnStartGameButtonClick);
+            GameObject.Find("BackToMenuButton").GetComponent<Button>().onClick.AddListener(OnBackToMenuButtonClick);
+            GameObject.Find("ModeChoiceleft").GetComponent<Button>().onClick.AddListener(OnModeChoiceleftClick);
+            GameObject.Find("ModeChoiceRight").GetComponent<Button>().onClick.AddListener(OnModeChoiceRightClick);
+            GameObject.Find("ModePresetPointChoiceleft").GetComponent<Button>().onClick.AddListener(OnModePresetPointChoiceleftClick);
+            GameObject.Find("ModePresetPointChoiceRight").GetComponent<Button>().onClick.AddListener(OnModePresetPointChoiceRightClick);
+            GameObject.Find("RandomizePointButton").GetComponent<Button>().onClick.AddListener(OnRandomizePointButtonClick);
 
-            imageGO = new GameObject();
-            imageGO.transform.parent = canvas.transform;
-            imageGO.AddComponent<Image>();
+            ModePresetPoint = GameObject.Find("ModePresetPoint");
+            RandomizePointButton = GameObject.Find("RandomizePointButton");
+            ModeChoiceText = GameObject.Find("ModeChoiceText");
+            SelectedPoint = GameObject.Find("SelectedPoint");
 
-            imageGO.GetComponent<Image>().gameObject.SetActive(false);
-            imageGO.GetComponent<Image>().sprite = assetBundle.LoadAsset<Sprite>("SubnauticaMap1");
-
-            imageGO.GetComponent<Image>().GetComponent<RectTransform>().position = new Vector3(1280, 720, 0);
-            imageGO.GetComponent<Image>().GetComponent<RectTransform>().sizeDelta = new Vector2(2100 * 0.60f, 2100 * 0.60f);
-
-            //create second image
-
-            imageGO2 = new GameObject();
-            imageGO2.transform.parent = canvas.transform;
-            imageGO2.AddComponent<Image>();
-
-            imageGO2.GetComponent<Image>().gameObject.SetActive(false);
-            imageGO2.GetComponent<Image>().sprite = assetBundle.LoadAsset<Sprite>("SelectedSpot");
-
-            imageGO2.GetComponent<Image>().GetComponent<RectTransform>().sizeDelta = new Vector2(442 * 0.60f, 130 * 0.60f);
-
-            //create third image
-
-            imageGO3 = new GameObject();
-            imageGO3.transform.parent = canvas.transform;
-            imageGO3.AddComponent<Image>();
-
-            imageGO3.GetComponent<Image>().gameObject.SetActive(false);
-            imageGO3.GetComponent<Image>().sprite = assetBundle.LoadAsset<Sprite>("scannerroomui_listbgmouseover.png-CAB_f5d5c899328b296cd841c68fa14b2706--8424868254826263282");
-
-
-            imageGO3.GetComponent<Image>().GetComponent<RectTransform>().position = new Vector3(320, 720, 0);
-            imageGO3.GetComponent<Image>().GetComponent<RectTransform>().sizeDelta = new Vector2(918 * 0.6f, 500);
-
-            //create fourth image
-
-            imageGO4 = new GameObject();
-            imageGO4.transform.parent = canvas.transform;
-            imageGO4.AddComponent<Image>();
-
-
-            imageGO4.GetComponent<Image>().gameObject.SetActive(false);
-            imageGO4.GetComponent<Image>().sprite = assetBundle.LoadAsset<Sprite>("scannerroomui_listbgmouseover.png-CAB_f5d5c899328b296cd841c68fa14b2706--8424868254826263282");
-
-            imageGO4.GetComponent<Image>().GetComponent<RectTransform>().position = new Vector3(2240, 720, 0);
-            imageGO4.GetComponent<Image>().GetComponent<RectTransform>().sizeDelta = new Vector2(918 * 0.6f, 500);
-
-            //create fourth image
-
-            imageGO5 = new GameObject();
-            imageGO5.transform.parent = canvas.transform;
-            imageGO5.AddComponent<Image>();
-
-
-            imageGO5.GetComponent<Image>().gameObject.SetActive(false);
-            imageGO5.GetComponent<Image>().sprite = assetBundle.LoadAsset<Sprite>("scannerroomui_listbgmouseover.png-CAB_f5d5c899328b296cd841c68fa14b2706--8424868254826263282");
-
-            imageGO5.GetComponent<Image>().GetComponent<RectTransform>().position = new Vector3(2240, 220, 0);
-            imageGO5.GetComponent<Image>().GetComponent<RectTransform>().sizeDelta = new Vector2(918 * 0.35f, 500 * 0.15f);
-
-
-            //Create text for background
-
-            textgo = new GameObject();
-            textgo.transform.parent = canvas.transform;
-            textgo.AddComponent<Text>();
-
-            textgo.GetComponent<Text>().font = arial;
-            textgo.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
-            textgo.GetComponent<Text>().color = Color.white;
-            textgo.GetComponent<Text>().transform.position = new Vector3(2240, 820, 0);
-            textgo.GetComponent<Text>().text = "Click a position on the map to set were the pod spawns.";
-            textgo.GetComponent<Text>().fontSize = 36;
-            textgo.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(400, 500);
-            textgo.SetActive(false);
-
-            //create second text
-
-            textgo2 = new GameObject();
-            textgo2.transform.parent = canvas.transform;
-            textgo2.AddComponent<Text>();
-
-            textgo2.GetComponent<Text>().font = arial;
-            textgo2.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
-            textgo2.GetComponent<Text>().color = Color.white;
-            textgo2.GetComponent<Text>().transform.position = new Vector3(2240, 620, 0);
-            textgo2.GetComponent<Text>().text = "Press play to start!";
-            textgo2.GetComponent<Text>().fontSize = 36;
-            textgo2.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(400, 500);
-            textgo2.SetActive(false);
-
-            //Create button text
-
-            textgo3 = new GameObject();
-            textgo3.transform.parent = canvas.transform;
-            textgo3.AddComponent<Text>();
-
-            textgo3.GetComponent<Text>().font = arial;
-            textgo3.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
-            textgo3.GetComponent<Text>().color = Color.white;
-            textgo3.GetComponent<Text>().transform.position = new Vector3(2240, 220, 0);
-            textgo3.GetComponent<Text>().text = "Play";
-            textgo3.GetComponent<Text>().fontSize = 36;
-            textgo3.GetComponent<Text>().GetComponent<RectTransform>().sizeDelta = new Vector2(400, 500);
-            textgo3.SetActive(false);
-
+            AreaSeceltor.SetActive(false);
         }
         public void Update()
         {
-            Logger.Log(Logger.Level.Info, "yes", null, true);
-
-            Logger.Log(Logger.Level.Info, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "modconfig.json"), null, true);
-
             if (Info.showmap)
             {
-
-                textgo.SetActive(true);
-                textgo2.SetActive(true);
-                textgo3.SetActive(true);
-
-                imageGO.SetActive(true);
-                imageGO3.SetActive(true);
-                imageGO4.SetActive(true);
-                imageGO5.SetActive(true);
-
+                AreaSeceltor.SetActive(true);
                 Rightside.SetActive(false);
                 Primaryoptions.SetActive(false);
 
-                if (Input.GetMouseButtonDown(0))
+                if (CurrentMode == 1)
                 {
-                    Logger.Log(Logger.Level.Info, Input.mousePosition.ToString(), null, true);
+                    ModeChoiceText.GetComponent<Text>().text = "Specific Point";
 
-                    if (CheckValidMousePosition(Input.mousePosition) == 1)
+                    RandomizePointButton.SetActive(false);
+                    ModePresetPoint.SetActive(false);
+
+                    if (Input.GetMouseButtonDown(0) && CheckValidMousePosition(Input.mousePosition) == 1)
                     {
-                        vector3 = new Vector3((Input.mousePosition.x - 1280) * 3.33f, (Input.mousePosition.y - 720) * 3.33f, 0);
-                        //Logger.Log(Logger.Level.Info, $"{vector3}", null, true);
-                        imageGO2.GetComponent<Image>().GetComponent<RectTransform>().position = new Vector3(Input.mousePosition.x + (210 * 0.60f), Input.mousePosition.y + (52 * 0.60f), 0);
-                        imageGO2.gameObject.SetActive(true);
+                        vector3 = new Vector3((Input.mousePosition.x - 1280) * 3.33f, 0, (Input.mousePosition.y - 720) * 3.33f);
+                        Info.SelectedSpawn = vector3;
 
+                        SelectedPoint.GetComponent<RectTransform>().position = new Vector3(SelectedPoint.transform.position.x, (Input.mousePosition.y - 720f) / 1380f, ((Input.mousePosition.x - 1280f) / 1380f) * -1f);
                     }
+                }
+                if (CurrentMode == 2)
+                {
+                    ModeChoiceText.GetComponent<Text>().text = "Preset Point";
+                    RandomizePointButton.SetActive(false);
+                    ModePresetPoint.SetActive(true);
+                }
 
-                    if(CheckValidMousePosition(Input.mousePosition) == 2 && (vector3 != new Vector3(10000, 10000, 10000)))
-                    {
-                        Logger.Log(Logger.Level.Info, "BUTTON", null, true);
-                        Info.SelectedSpawn = new Vector3((Input.mousePosition.x - 1280) * 3.33f, 300, (Input.mousePosition.y - 720) * 3.33f);
-                        Info.showmap = false;
-                        uGUI_MainMenu.main.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Freedom));
-                    }
+                if (CurrentMode == 3)
+                {
+                    ModeChoiceText.GetComponent<Text>().text = "Random Point";
+                    RandomizePointButton.SetActive(true);
+                    ModePresetPoint.SetActive(false);
                 }
             }
             if (!Info.showmap)
             {
-                textgo.SetActive(false);
-                textgo2.SetActive(false);
-                textgo3.SetActive(false);
 
-                imageGO.SetActive(false);
-                imageGO2.SetActive(false);
-                imageGO3.SetActive(false);
-                imageGO4.SetActive(false);
-                imageGO5.SetActive(false);
             }
         }
         public float CheckValidMousePosition(Vector3 MousePos)
@@ -228,16 +124,59 @@ namespace EscapePodSpawnChanges
                 Logger.Log(Logger.Level.Info, "ValidPos1", null, true);
                 return 1;
             }
-            if ((MousePos.y >= 185.0f && MousePos.y <= 256.0f) && (MousePos.x >= 2081.0f && MousePos.x <= 2388.0f))
-            {
-                Logger.Log(Logger.Level.Info, "ValidPos2", null, true);
-                return 2;
-            }
             else
             {
                 Logger.Log(Logger.Level.Info, "InvalidPos", null, true);
                 return 0;
             }
+        }
+        void OnSettingsModButtonClick()
+        {
+            Logger.Log(Logger.Level.Info, "OMG IT WORKED", null, true);
+        }
+        void OnStartGameButtonClick()
+        {
+            uGUI_MainMenu.main.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Freedom));
+            Info.showmap = false;
+        }
+        void OnBackToMenuButtonClick()
+        {
+            Info.showmap = false;
+            AreaSeceltor.SetActive(false);
+            Rightside.SetActive(true);
+            Primaryoptions.SetActive(true);
+        }
+        void OnModeChoiceleftClick()
+        {
+            if(CurrentMode != 1)
+            {
+                CurrentMode--;
+            }
+        }
+        void OnModeChoiceRightClick()
+        {
+            if (CurrentMode != 3)
+            {
+                CurrentMode++;
+            }
+        }
+        void OnModePresetPointChoiceleftClick()
+        {
+            Logger.Log(Logger.Level.Info, "OMG IT WORKED", null, true);
+        }
+        void OnModePresetPointChoiceRightClick()
+        {
+            Logger.Log(Logger.Level.Info, "OMG IT WORKED", null, true);
+        }
+        void OnRandomizePointButtonClick()
+        {
+            Vector3 ranvector3 = new Vector3(Random.Range(664.0f, 1895.0f), 0, Random.Range(107.0f, 1335.0f));
+
+            vector3 = new Vector3((ranvector3.x - 1280) * 3.33f, 0, (ranvector3.z - 720) * 3.33f);
+
+            SelectedPoint.GetComponent<RectTransform>().position = new Vector3(SelectedPoint.transform.position.x, (ranvector3.z - 720f) / 1380f, ((ranvector3.x - 1280f) / 1380f) * -1f);
+
+            Info.SelectedSpawn = vector3;
         }
     }
 } 
