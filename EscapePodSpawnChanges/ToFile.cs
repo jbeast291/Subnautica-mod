@@ -20,11 +20,17 @@ namespace EscapePodSpawnChanges
 {
     public class ToFile : MonoBehaviour
     {
+
+        public class Saves
+        {
+            public string Slot;
+            public bool HasIntroDone;
+        }
+
         [System.Serializable]
         public class Data
         {
-            public string name;
-            public string lastname;
+            public Saves[] SlotData;
         }
 
         public Data myData = new Data();
@@ -42,11 +48,15 @@ namespace EscapePodSpawnChanges
         }
         public void WriteSettingsToJson()
         {
-            myData.name = "JBEAST";
-            myData.lastname = "JBEASTLASTname";
+/*            myData.name = "JBEAST";
+            myData.lastname = "JBEASTLASTname";*/
             string StringOutPut = JsonUtility.ToJson(myData);
 
             File.WriteAllText(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/modconfig.json", StringOutPut);
+        }
+        public void GetSlotInfo()
+        {
+            //myData = JsonUtility.FromJson<Dat
         }
     }
 }

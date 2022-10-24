@@ -37,10 +37,19 @@ namespace EscapePodSpawnChanges
 
         }
     }
-    [Menu("Escape Pod Changes")]
+    [Menu("Escape Pod Reloaded")]
     public class MyConfig : ConfigFile
     {
-        [Toggle("Heavy Pod")]
+        [Toggle("Heavy Pod (Pod sinks in water)")]
         public bool ToggleHeavyPod = true;
+        [Slider("Heavy Pod Intensity (How fast it sinks)", 1f, 60, DefaultValue = 60f)]
+        public float HeavyPodIntensity = 60f;
+        [Toggle("Air Spawn (spawn the pod high in the air)")]
+        public bool ToggleAirSpawn = true;
+        [Slider("Air Spawn Height (How high it spawn)", 300, 500, DefaultValue = 500)]
+        public float AirSpawnHeight = 500f;
+        [Toggle("Disable First Time Animations")]
+        public bool DisableFirstTimeAnims = true;
     }
+
 }

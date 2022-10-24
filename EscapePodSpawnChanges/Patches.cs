@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UWE;
 
 namespace EscapePodSpawnChanges
 {
@@ -25,8 +26,14 @@ namespace EscapePodSpawnChanges
         [HarmonyPrefix]
         public static bool NewGetRandomStartPoint(ref Vector3 __result)
         {
-            __result = Info.SelectedSpawn;
-            Logger.Log(Logger.Level.Info, "Moved pod 1", null, true);
+            if (QMod.Config.ToggleAirSpawn)
+            {
+                __result = new Vector3(Info.SelectedSpawn.x, QMod.Config.AirSpawnHeight, Info.SelectedSpawn.z);
+            }
+            else
+            {
+                __result = Info.SelectedSpawn;
+            }
             return false;
         }
     }
@@ -39,7 +46,6 @@ namespace EscapePodSpawnChanges
         public static bool NewOnButtonFreedom(uGUI_MainMenu __instance)
         {
             Info.showmap = true;
-            Logger.Log(Logger.Level.Info, "canceled game launch", null, true);
             return false;
         }
     }
@@ -59,7 +65,9 @@ namespace EscapePodSpawnChanges
     [HarmonyPatch("FixedUpdate")]
     internal class EscapePod_FixedUpdate_Patch
     {
-
+        static bool tempbool = false;
+        static bool tempbool2 = false;
+        //static bool tempbool2 = false;
         [HarmonyPrefix]
         public static bool Prefix(EscapePod __instance)
         {
@@ -68,25 +76,77 @@ namespace EscapePodSpawnChanges
             wf.aboveWaterGravity = 100f;
             if (QMod.Config.ToggleHeavyPod)
             {
-                wf.underwaterGravity = 9.81f;
+                wf.underwaterGravity = QMod.Config.HeavyPodIntensity;
             }
             if (!QMod.Config.ToggleHeavyPod)
             {
-                wf.underwaterGravity = 0f;
+                wf.underwaterGravity = -30f;
             }
+
             return true;
         }
         [HarmonyPostfix]
         public static void Postfix(EscapePod __instance)
         {
             float distance = Vector3.Distance(Player.main.transform.position, EscapePod.main.transform.position);
-            if (distance > 15)
+
+            if (!Info.newSave || !QMod.Config.ToggleAirSpawn)
             {
-                __instance.rigidbodyComponent.isKinematic = true;
+                if ((distance > 50 || Info.isrepawning) && !__instance.rigidbodyComponent.isKinematic)
+                {
+                    __instance.rigidbodyComponent.isKinematic = true;
+                }
+                if (distance < 50 && !Info.isrepawning)
+                {
+                    __instance.rigidbodyComponent.isKinematic = false;
+                }
+                if (Info.isrepawning && !tempbool)
+                {
+                    CoroutineHost.StartCoroutine(WaitTillSpawned());
+                    tempbool = true;
+                    __instance.rigidbodyComponent.isKinematic = true;
+                }
             }
-            else
+
+            IEnumerator WaitTillSpawned()
             {
-                __instance.rigidbodyComponent.isKinematic = false;
+                yield return new WaitForSeconds(20);
+                Info.isrepawning = false;
+                tempbool = false;
+            }
+        }
+        [HarmonyPatch(typeof(uGUI_PlayerDeath))]
+        internal class OnResetPlayerOnDeath
+        {
+            [HarmonyPatch(nameof(uGUI_PlayerDeath.TriggerDeathVignette))]
+            [HarmonyPrefix]
+            public static bool OnTriggerDeathVignettePostFix(uGUI_PlayerDeath __instance)
+            {
+                Info.isrepawning = true;
+                return true;
+            }
+        }
+        [HarmonyPatch(typeof(EscapePod))]
+        internal class OnStartPatch
+        {
+            [HarmonyPatch(nameof(EscapePod.Start))]
+            [HarmonyPostfix]
+            public static void OnStartPostFix(EscapePod __instance)
+            {
+                __instance.gameObject.EnsureComponent<EscapePodInGameMono>();
+
+                __instance.bottomHatchUsed = QMod.Config.DisableFirstTimeAnims;
+                __instance.topHatchUsed = QMod.Config.DisableFirstTimeAnims;// sets the resolution in Info to what is currently set
+            }
+        }
+        [HarmonyPatch(typeof(DisplayManager))]
+        internal class OnResolutionChangedPatch
+        {
+            [HarmonyPatch(nameof(DisplayManager.Update))]
+            [HarmonyPostfix]
+            public static void OnResolutionChangedPostFix(DisplayManager __instance)
+            {
+                Info.currentRes = __instance.resolution; // sets the resolution in Info to what is currently set
             }
         }
     }

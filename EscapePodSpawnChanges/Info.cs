@@ -22,5 +22,9 @@ namespace EscapePodSpawnChanges
     {
         public static bool showmap = false;
         public static Vector3 SelectedSpawn;
+        public static Resolution currentRes;
+        public static bool isrepawning;
+        public static AssetBundle assetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Assets"), "lifepodspawnmap"));
+        public static bool newSave;
     }
 }

@@ -98,9 +98,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Monos\EscapePodInGameMono.cs" />
     <Compile Include="ToFile.cs" />
     <Compile Include="Qmod.cs" />
-    <Compile Include="EscapePodChangesMono.cs" />
+    <Compile Include="Monos\EscapePodChangesMono.cs" />
     <Compile Include="Info.cs" />
     <Compile Include="Patches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
