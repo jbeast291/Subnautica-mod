@@ -345,23 +345,20 @@ namespace EscapePodSpawnChanges
         }
         public void ManageSelectedPointIndicator()
         {
-            Logger.Log(Logger.Level.Info, "called", null, true);
             if (PointChanged == true)
             {
-                Logger.Log(Logger.Level.Info, "Point CHnaged true", null, true);
                 PointChanged = false;
                 startsequence = true;
             }
             if(startsequence == true)
             {
-                Logger.Log(Logger.Level.Info, "Patched successfully!", null, true);
-                if(SelectedPointIndicator.transform.localScale.x > 10 && !Scaling)
+                if(SelectedPointIndicator.transform.localScale.x > 7 && !Scaling)
                 {
                     Scaling = true;
                     makesmall = true;
                     CoroutineHost.StartCoroutine(TimeScaler());
                 }
-                if (SelectedPointIndicator.transform.localScale.x < 10 && !Scaling)
+                if (SelectedPointIndicator.transform.localScale.x < 7 && !Scaling)
                 {
                     Scaling = true;
                     makebig = true;

@@ -184,8 +184,16 @@ namespace EscapePodSpawnChanges
         [HarmonyPrefix]
         public static bool OnEscapeHoldPreFix(uGUI_SceneIntro __instance)
         {
-            __instance.menuStillDown = true;
-            return false;
+            if(QMod.Config.SkipInto)
+            {
+                __instance.menuStillDown = true;
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
         }
     }
 }

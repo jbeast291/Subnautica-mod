@@ -28,8 +28,7 @@ namespace EscapePodSpawnChanges
         {
             if (Info.newSave && QMod.Config.ToggleAirSpawn)
             {
-                NewGameCalc();
-                Logger.Log(Logger.Level.Info, "started coroutine", null, true);
+                CoroutineHost.StartCoroutine(WaitForNewSave());
                 parachute = Instantiate(assetBundle.LoadAsset<GameObject>("Parachute"));
                 parachute.transform.parent = EscapePod.main.gameObject.transform;
                 parachute.transform.position = EscapePod.main.transform.position;
@@ -38,7 +37,6 @@ namespace EscapePodSpawnChanges
         }
         public void Update()
         {
-            //FIX PARACHUTE
             if (DetachParachute)
             {
                 Vector3 target = new Vector3(parachute.transform.position.x, 1000, parachute.transform.position.z);
@@ -52,17 +50,11 @@ namespace EscapePodSpawnChanges
                 }
             }
         }
-        public void NewGameCalc()
+        IEnumerator WaitForNewSave()
         {
-            CoroutineHost.StartCoroutine(WaitForNewSave());
-
-            IEnumerator WaitForNewSave()
-            {
-                yield return new WaitForSeconds(32);//(32 * (QMod.Config.AirSpawnHeight / 100 / 6)
-                Logger.Log(Logger.Level.Info, "ended coroutine", null, true);
-                Info.newSave = false;
-                DetachParachute = true;
-            }
+            yield return new WaitForSeconds(32);//(32 * (QMod.Config.AirSpawnHeight / 100 / 6)
+            Info.newSave = false;
+            DetachParachute = true;
         }
 
     }
