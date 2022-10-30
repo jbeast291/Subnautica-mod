@@ -50,6 +50,8 @@ namespace EscapePodSpawnChanges
         public float AirSpawnHeight = 500f;
         [Toggle("Disable First Time Animations")]
         public bool DisableFirstTimeAnims = true;
+        [Toggle("Show Text On Map")]
+        public bool ShowTextOnMap = true;
     }
 
 }

@@ -38,14 +38,40 @@ namespace EscapePodSpawnChanges
         }
     }
 
-    [HarmonyPatch(typeof(uGUI_MainMenu))]
+
+    [HarmonyPatch(typeof(uGUI_MainMenu))] // 1 survival, 2 creative, 3, freedom, 4 hardcore
     internal class PatchuGUI_MainMenu
     {
-        [HarmonyPatch(typeof(uGUI_MainMenu), "OnButtonFreedom")]
+        [HarmonyPatch(typeof(uGUI_MainMenu), "OnButtonSurvival")]
         [HarmonyPrefix]
-        public static bool NewOnButtonFreedom(uGUI_MainMenu __instance)
+        public static bool OnButtonSurvival(uGUI_MainMenu __instance)
         {
             Info.showmap = true;
+            Info.GameMode = 1;
+            return false;
+        }
+        [HarmonyPatch(typeof(uGUI_MainMenu), "OnButtonCreative")]
+        [HarmonyPrefix]
+        public static bool OnButtonCreative(uGUI_MainMenu __instance)
+        {
+            Info.showmap = true;
+            Info.GameMode = 2;
+            return false;
+        }
+        [HarmonyPatch(typeof(uGUI_MainMenu), "OnButtonFreedom")]
+        [HarmonyPrefix]
+        public static bool OnButtonFreedom(uGUI_MainMenu __instance)
+        {
+            Info.showmap = true;
+            Info.GameMode = 3;
+            return false;
+        }
+        [HarmonyPatch(typeof(uGUI_MainMenu), "OnButtonHardcore")]
+        [HarmonyPrefix]
+        public static bool OnButtonHardcore(uGUI_MainMenu __instance)
+        {
+            Info.showmap = true;
+            Info.GameMode = 4;
             return false;
         }
     }
@@ -115,39 +141,51 @@ namespace EscapePodSpawnChanges
                 tempbool = false;
             }
         }
-        [HarmonyPatch(typeof(uGUI_PlayerDeath))]
-        internal class OnResetPlayerOnDeath
+    }
+    [HarmonyPatch(typeof(uGUI_PlayerDeath))]
+    internal class OnResetPlayerOnDeath
+    {
+         [HarmonyPatch(nameof(uGUI_PlayerDeath.TriggerDeathVignette))]
+         [HarmonyPrefix]
+         public static bool OnTriggerDeathVignettePostFix(uGUI_PlayerDeath __instance)
+         {
+             Info.isrepawning = true;
+             return true;
+         }
+    }
+    [HarmonyPatch(typeof(EscapePod))]
+    internal class OnStartPatch
+    {
+        [HarmonyPatch(nameof(EscapePod.Start))]
+        [HarmonyPostfix]
+        public static void OnStartPostFix(EscapePod __instance)
         {
-            [HarmonyPatch(nameof(uGUI_PlayerDeath.TriggerDeathVignette))]
-            [HarmonyPrefix]
-            public static bool OnTriggerDeathVignettePostFix(uGUI_PlayerDeath __instance)
-            {
-                Info.isrepawning = true;
-                return true;
-            }
-        }
-        [HarmonyPatch(typeof(EscapePod))]
-        internal class OnStartPatch
-        {
-            [HarmonyPatch(nameof(EscapePod.Start))]
-            [HarmonyPostfix]
-            public static void OnStartPostFix(EscapePod __instance)
-            {
-                __instance.gameObject.EnsureComponent<EscapePodInGameMono>();
+            __instance.gameObject.EnsureComponent<EscapePodInGameMono>();
 
-                __instance.bottomHatchUsed = QMod.Config.DisableFirstTimeAnims;
-                __instance.topHatchUsed = QMod.Config.DisableFirstTimeAnims;// sets the resolution in Info to what is currently set
-            }
+            __instance.bottomHatchUsed = QMod.Config.DisableFirstTimeAnims;
+            __instance.topHatchUsed = QMod.Config.DisableFirstTimeAnims;
         }
-        [HarmonyPatch(typeof(DisplayManager))]
-        internal class OnResolutionChangedPatch
+    }
+    [HarmonyPatch(typeof(DisplayManager))]
+    internal class OnResolutionChangedPatch
+    {
+        [HarmonyPatch(nameof(DisplayManager.Update))]
+        [HarmonyPostfix]
+        public static void OnResolutionChangedPostFix(DisplayManager __instance)
         {
-            [HarmonyPatch(nameof(DisplayManager.Update))]
-            [HarmonyPostfix]
-            public static void OnResolutionChangedPostFix(DisplayManager __instance)
-            {
-                Info.currentRes = __instance.resolution; // sets the resolution in Info to what is currently set
-            }
+            Info.currentRes = __instance.resolution; // sets the resolution in Info to what is currently set
+        }
+    }
+
+    [HarmonyPatch(typeof(uGUI_SceneIntro))]
+    internal class OnuGUI_SceneIntroPatch
+    {
+        [HarmonyPatch(nameof(uGUI_SceneIntro.IntroSequence))]
+        [HarmonyPrefix]
+        public static bool OnEscapeHoldPreFix(uGUI_SceneIntro __instance)
+        {
+            __instance.menuStillDown = true;
+            return false;
         }
     }
 }

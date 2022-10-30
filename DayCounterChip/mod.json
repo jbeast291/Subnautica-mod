@@ -2,11 +2,11 @@
     "Id": "DayCounterChip",
     "DisplayName": "Day Counter Chip",
     "Author": "jbeast291",
-    "Version": "1.0.0",
+    "Version": "1.0.4",
     "Enable": true,
     "AssemblyName": "DayCounterChip.dll",
     "VersionDependencies": {
-        "SMLHelper": "2.13.3"
+        "SMLHelper": "2.14.0"
     },
     "Game": "Subnautica"
 }
