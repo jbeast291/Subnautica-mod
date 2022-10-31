@@ -3,7 +3,7 @@
  
 If you have any questions or comments contact me on discord: Jbeast291#0001
 
-If you find that one fo my mods dosent work with another please create an [issue](https://github.com/jbeast291/Subnautica-mod/issues) and i will try my best to fix it.
+If you find that one of my mods dosent work with another please create contact me (jbeast291#0001) and i will try my best to fix it.
 
 ## [Knife Multipliers](https://github.com/jbeast291/Subnautica-mod/releases/download/ThirdRelease/KnifeMultipiersSN.zip)
 Change the damage or range of the knife or heatblade
