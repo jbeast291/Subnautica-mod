@@ -51,8 +51,6 @@ The pod gains a parachute for a more immersive effect. There are also many other
 ### Pod features
 The parachute has been added to your pod. Since you are falling out of the sky it only makes sense that you have something to slow your fall!
 
-
-
 ### Config
 (These features are changable via the ingame config menu)
 | Feature | Description |
@@ -65,7 +63,12 @@ The parachute has been added to your pod. Since you are falling out of the sky i
 | `Skip Intro Automatically` | Skip the games cinematic intro automatically |
 | `Show Text On Map` | Change weather the text on the map should be displayed or not (its mor low res because I couldnt find I high res version online. If you have one please contract me) |
 
+### Extra Notes:
+Dependencies: [SmlHelper](https://www.nexusmods.com/subnautica/mods/113)
+
+Special thanks to MrPurple6411, Cattlesquat, and Oldark1 for creating the original [life pod unleashed mod](https://www.nexusmods.com/subnautica/mods/126). Without them I probably wount have as many features in this mod or have been inspired to improve it. Really there amazing so go check out their other mods!
 ### Gallery:
 
 ![MapShowcase](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/MapShowcase.png)
 ![ParachuteShowcase](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/ParachuteShowcase.png)
+
