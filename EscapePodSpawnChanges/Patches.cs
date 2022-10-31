@@ -17,7 +17,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UWE;
 
-namespace EscapePodSpawnChanges
+namespace LifePodRemastered
 {
     [HarmonyPatch(typeof(RandomStart))]
     internal class PatchGetRandomStartPoint

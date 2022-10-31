@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnifeMultipiersSN", "Subnau
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayCounterChip", "DayCounterChip\DayCounterChip.csproj", "{53991308-A9CD-4DE5-B433-5F8A2EFBBBE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EscapePodSpawnChanges", "EscapePodSpawnChanges\EscapePodSpawnChanges.csproj", "{B1429F5D-A1B5-455D-A555-71099823A41F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifePodRemastered", "EscapePodSpawnChanges\LifePodRemastered.csproj", "{B1429F5D-A1B5-455D-A555-71099823A41F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

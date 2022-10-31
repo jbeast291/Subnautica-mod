@@ -1,12 +1,12 @@
 ﻿{
-    "Id": "EscapePodSpawnChanges",
-    "DisplayName": "Escape Pod Spawn Changes",
+    "Id": "LifePodRemastered",
+    "DisplayName": "Life Pod Remastered",
     "Author": "jbeast291",
     "Version": "1.0.0",
     "Enable": true,
-    "AssemblyName": "EscapePodSpawnChanges.dll",
+    "AssemblyName": "LifePodRemastered.dll",
     "VersionDependencies": {
-        "SMLHelper": "2.13.3"
+        "SMLHelper": "2.14.0"
     },
     "Game": "Subnautica"
 }

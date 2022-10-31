@@ -16,7 +16,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EscapePodSpawnChanges
+namespace LifePodRemastered
 {
     public class ToFile : MonoBehaviour
     {

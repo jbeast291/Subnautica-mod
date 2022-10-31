@@ -17,7 +17,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UWE;
 
-namespace EscapePodSpawnChanges
+namespace LifePodRemastered
 {
     internal class EscapePodInGameMono : MonoBehaviour
     {
