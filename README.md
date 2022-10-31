@@ -49,9 +49,8 @@ The pod gains a parachute for a more immersive effect. There are also many other
 | `Input Coords` | Type in your desired coordinates to set were the pod spawns. Format should be -> `(10, 10, 10)` or `10, 10, 10` |
 
 ### Pod features
-The parachute has not been added to your pod. Since you are falling out of the sky it only makes sense that you have something to slow your fall
+The parachute has been added to your pod. Since you are falling out of the sky it only makes sense that you have something to slow your fall!
 
-![ParachuteShowcase](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/ParachuteShowcase.png)
 
 
 ### Config
@@ -68,5 +67,5 @@ The parachute has not been added to your pod. Since you are falling out of the s
 
 ### Gallery:
 
-
-
+![MapShowcase](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/MapShowcase.png)
+![ParachuteShowcase](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/ParachuteShowcase.png)
