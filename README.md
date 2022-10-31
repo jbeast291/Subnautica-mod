@@ -1,18 +1,19 @@
+# (Go to releases to download the mods)
+
 # Jbeast291's Subnautica Mods
- A collection of mods that I created for subnautica.
- 
+A collection of mods that I created for subnautica.
 If you have any questions or comments contact me on discord: Jbeast291#0001
-
 If you find that one of my mods dosent work with another please create contact me (jbeast291#0001) and i will try my best to fix it.
+If you want to contibute to my mods or colaborate contact me on discord.
 
-## [Knife Multipliers](https://github.com/jbeast291/Subnautica-mod/releases/download/ThirdRelease/KnifeMultipiersSN.zip)
+## [Knife Multipliers]
 Change the damage or range of the knife or heatblade
 
 In game options menue lets you toggle and change the values of damage and range
 
 Dependencies: [SmlHelper](https://www.nexusmods.com/subnautica/mods/113)
 
-## [Day Counter Chip](https://github.com/jbeast291/Subnautica-mod/releases/download/ThirdRelease/DayCounterChip.zip)
+## [Day Counter Chip]
 Adds a new Equipment Chip after unlocking the compass.
 
 Once equipped a day Counter in the top right will be displayed
@@ -32,3 +33,40 @@ Works with Mimes [More Ship Slots](https://github.com/Mimes-Pes/MimesSubnauticaM
 Special thanks to ShilohPell#8852 on the subnautica modding discord for the suggestion. (suggestion #406)
 
 Dependencies: [SmlHelper](https://www.nexusmods.com/subnautica/mods/113)
+
+## [Life Pod Remastered]
+TLDR: Many Impovemts giving the user more choice to how the life pod spawns and extra features ingame. You can make the pod sink and spanw in the air.
+The pod gains a parachute for a more immersive effect. There are also many other features you can see ingame.
+
+(this is a remake of the mod life pod unleash to be more userfriendly and feature rich) 
+
+### Modes:
+| Mode | Description |
+| --- | --- |
+| `Specific Point` | Click on the map anywere for your desired point |
+| `Preset Point` | A colection of preset points i have created. I havnt play tested any of them but they should make for a challenging run |
+| `Random Point` | Press the `Randomize Point` button to get a random point. If the random point is in the void or in a bad spot press it again |
+| `Input Coords` | Type in your desired coordinates to set were the pod spawns. Format should be -> `(10, 10, 10)` or `10, 10, 10` |
+
+### Pod features
+The parachute has not been added to your pod. Since you are falling out of the sky it only makes sense that you have something to slow your fall
+
+![ParachuteShowcase](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/ParachuteShowcase.png)
+
+
+### Config
+(These features are changable via the ingame config menu)
+| Feature | Description |
+| --- | --- |
+| `Heavy Pod` | If toggled true the Life Pod will sink in the water |
+| `Heavy Pod Intensity` | If the `heavy pod` is enabled the rate of sinkage can be changed by this slider |
+| `Air Spawn` | If toggled true the life pod will spawn in the air for a more cinematic effect of falling to the planet surface |
+| `Air Spawn Height` | Change the height of the pod spawn if `Air Spawn` is enabled |
+| `Disable First Time Animations` | Remove the annoying cinematic cutscenes when you leave the pod the first time |
+| `Skip Intro Automatically` | Skip the games cinematic intro automatically |
+| `Show Text On Map` | Change weather the text on the map should be displayed or not (its mor low res because I couldnt find I high res version online. If you have one please contract me) |
+
+### Gallery:
+
+
+
