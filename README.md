@@ -6,34 +6,6 @@ If you have any questions or comments contact me on discord: Jbeast291#0001
 If you find that one of my mods dosent work with another please create contact me (jbeast291#0001) and i will try my best to fix it.
 If you want to contibute to my mods or colaborate contact me on discord.
 
-## [Knife Multipliers]
-Change the damage or range of the knife or heatblade
-
-In game options menue lets you toggle and change the values of damage and range
-
-Dependencies: [SmlHelper](https://www.nexusmods.com/subnautica/mods/113)
-
-## [Day Counter Chip]
-Adds a new Equipment Chip after unlocking the compass.
-
-Once equipped a day Counter in the top right will be displayed
-
-Configurable within game options menue
-
-### Crafting:
-Titanium: 2
-Copper Wire: 1
-
-### Unlock:
-Unlocks after obtaining the blueprint for the compass
-
-### Extra notes:
-Works with Mimes [More Ship Slots](https://github.com/Mimes-Pes/MimesSubnauticaMods) mod 
-
-Special thanks to ShilohPell#8852 on the subnautica modding discord for the suggestion. (suggestion #406)
-
-Dependencies: [SmlHelper](https://www.nexusmods.com/subnautica/mods/113)
-
 ## [Life Pod Remastered]
 TLDR: Many Impovemts giving the user more choice to how the life pod spawns and extra features ingame. You can make the pod sink and spanw in the air.
 The pod gains a parachute for a more immersive effect. There are also many other features you can see ingame.
@@ -66,9 +38,41 @@ The parachute has been added to your pod. Since you are falling out of the sky i
 ### Extra Notes:
 Dependencies: [SmlHelper](https://www.nexusmods.com/subnautica/mods/113)
 
-Special thanks to MrPurple6411, Cattlesquat, and Oldark1 for creating the original [life pod unleashed mod](https://www.nexusmods.com/subnautica/mods/126). Without them I probably wount have as many features in this mod or have been inspired to improve it. Really there amazing so go check out their other mods!
+Special thanks to MrPurple6411, Cattlesquat, and Oldark1 for creating the original [life pod unleashed mod](https://www.nexusmods.com/subnautica/mods/126). Without them I probably wouldn't have as many features in this mod or have been inspired to improve it. Really there amazing so go check out their other mods!
 ### Gallery:
 
 ![MapShowcase](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/MapShowcase.png)
 ![ParachuteShowcase](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/ParachuteShowcase.png)
 
+## [Day Counter Chip]
+Adds a new Equipment Chip after unlocking the compass.
+
+Once equipped a day Counter in the top right will be displayed
+
+Configurable within game options menue
+
+### Crafting:
+Titanium: 2
+Copper Wire: 1
+
+### Unlock:
+Unlocks after obtaining the blueprint for the compass
+
+### Extra notes:
+Works with Mimes [More Ship Slots](https://github.com/Mimes-Pes/MimesSubnauticaMods) mod 
+
+Special thanks to ShilohPell#8852 on the subnautica modding discord for the suggestion. (suggestion #406)
+
+Dependencies: [SmlHelper](https://www.nexusmods.com/subnautica/mods/113)
+
+### Gallery:
+
+![BackGround1](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/Background1.png)
+![BackGround2](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/Background2.png)
+
+## [Knife Multipliers]
+Change the damage or range of the knife or heatblade
+
+In game options menue lets you toggle and change the values of damage and range
+
+Dependencies: [SmlHelper](https://www.nexusmods.com/subnautica/mods/113)
