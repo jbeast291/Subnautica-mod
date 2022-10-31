@@ -31,3 +31,7 @@ ALSO!!!! Now Compatable with FCS studios mod
 Previous config files need to be deleted and remade too.
 (Entire code rewrite for fix and optimizations)
 
+## [Day Counter Chip]
+
+### v1.0.0
+Changed font to match regular game. Didnt feel the need to make a new release for this so i just changed the old one
