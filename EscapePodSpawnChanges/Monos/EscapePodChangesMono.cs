@@ -62,16 +62,12 @@ namespace LifePodRemastered
         bool makebig = false;
         bool makesmall = false;
 
-
         Vector3 vector3 = new Vector3(10000, 10000, 10000);
 
         //ToFile ToFileInstance = new ToFile();
         public void Awake()
         {
             //ToFileInstance.CreateJson();
-
-            Font arial;
-            arial = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 
             Rightside = GameObject.Find("RightSide");
             Primaryoptions = GameObject.Find("PrimaryOptions");
@@ -166,7 +162,7 @@ namespace LifePodRemastered
 
                 if (Input.GetMouseButtonDown(0) && CheckValidMousePosition(Input.mousePosition) == 1)
                 {
-                    MousePositionToSelectedPoint(Input.mousePosition);
+                    MousePositionToSelectedPoint(Input.mousePosition, false);
                 }
             }
             if (Mode == 2)
@@ -183,7 +179,7 @@ namespace LifePodRemastered
                     PresetTextTEXT.fontSize = 80;
 
                     Vector3 PresetPoint = new Vector3(-110, 0, 952);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
+                    WorldPointtoMoveSelecedPoint(PresetPoint, false);
                 }
                 if (preset == 2)
                 {
@@ -191,7 +187,7 @@ namespace LifePodRemastered
                     PresetTextTEXT.fontSize = 100;
 
                     Vector3 PresetPoint = new Vector3(-1532, 0, 468);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
+                    WorldPointtoMoveSelecedPoint(PresetPoint, false);
                 }
                 if (preset == 3)
                 {
@@ -199,7 +195,7 @@ namespace LifePodRemastered
                     PresetTextTEXT.fontSize = 90;
 
                     Vector3 PresetPoint = new Vector3(-928, 0, 735);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
+                    WorldPointtoMoveSelecedPoint(PresetPoint, false);
                 }
                 if (preset == 4)
                 {
@@ -207,7 +203,7 @@ namespace LifePodRemastered
                     PresetTextTEXT.fontSize = 80;
 
                     Vector3 PresetPoint = new Vector3(-959, 0, -565);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
+                    WorldPointtoMoveSelecedPoint(PresetPoint, false);
                 }
                 if (preset == 5)
                 {
@@ -215,7 +211,7 @@ namespace LifePodRemastered
                     PresetTextTEXT.fontSize = 75;
 
                     Vector3 PresetPoint = new Vector3(-623, 0, 1122);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
+                    WorldPointtoMoveSelecedPoint(PresetPoint, false);
                 }
                 if (preset == 6)
                 {
@@ -223,7 +219,7 @@ namespace LifePodRemastered
                     PresetTextTEXT.fontSize = 80;
 
                     Vector3 PresetPoint = new Vector3(607, 0, 1217);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
+                    WorldPointtoMoveSelecedPoint(PresetPoint, false);
                 }
                 if (preset == 7)
                 {
@@ -231,7 +227,7 @@ namespace LifePodRemastered
                     PresetTextTEXT.fontSize = 65;
 
                     Vector3 PresetPoint = new Vector3(1123, 0, 908);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
+                    WorldPointtoMoveSelecedPoint(PresetPoint, false);
                 }
                 if (preset == 8)
                 {
@@ -239,7 +235,7 @@ namespace LifePodRemastered
                     PresetTextTEXT.fontSize = 100;
 
                     Vector3 PresetPoint = new Vector3(-773, 0, -1110);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
+                    WorldPointtoMoveSelecedPoint(PresetPoint, false);
                 }
                 if (preset == 9)
                 {
@@ -247,7 +243,7 @@ namespace LifePodRemastered
                     PresetTextTEXT.fontSize = 100;
 
                     Vector3 PresetPoint = new Vector3(-711, 0, -1079);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
+                    WorldPointtoMoveSelecedPoint(PresetPoint, false);
                 }
                 if (preset == 10)
                 {
@@ -255,7 +251,7 @@ namespace LifePodRemastered
                     PresetTextTEXT.fontSize = 100;
 
                     Vector3 PresetPoint = new Vector3(297, 0, 1064);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
+                    WorldPointtoMoveSelecedPoint(PresetPoint, false);
                 }
                 if (preset == 11)
                 {
@@ -263,7 +259,7 @@ namespace LifePodRemastered
                     PresetTextTEXT.fontSize = 65;
 
                     Vector3 PresetPoint = new Vector3(131, 0, -389);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
+                    WorldPointtoMoveSelecedPoint(PresetPoint, false);
                 }
                 if (preset == 12)
                 {
@@ -271,7 +267,7 @@ namespace LifePodRemastered
                     PresetTextTEXT.fontSize = 100;
 
                     Vector3 PresetPoint = new Vector3(1136, 0, -1547);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
+                    WorldPointtoMoveSelecedPoint(PresetPoint, false);
                 }
             }
 
@@ -415,24 +411,30 @@ namespace LifePodRemastered
                 return 0;
             }
         }
-        public void WorldPointtoMoveSelecedPoint(Vector3 WorldPoint)
+        public void WorldPointtoMoveSelecedPoint(Vector3 WorldPoint, bool overideHeight)
         {
             float diff = Info.currentRes.width / 2560f;
             vector3 = new Vector3((WorldPoint.x / (3.33f / diff)) + (1280 * diff), (WorldPoint.z / (3.33f / diff)) + (720 * diff));
             SelectedPoint.GetComponent<RectTransform>().position = new Vector3(SelectedPoint.transform.position.x, (vector3.y - (720f * diff)) / (1380f * diff), ((vector3.x - (1280f * diff)) / (1380f * diff) * -1f));
-            Info.SelectedSpawn = WorldPoint;
+            SetWorldPoint(WorldPoint, overideHeight);
             PointChanged = true;
         }
-        public void MousePositionToSelectedPoint(Vector3 MousePos)
+        public void MousePositionToSelectedPoint(Vector3 MousePos, bool overideHeight)
         {
             float diff = Info.currentRes.width / 2560f;
             vector3 = new Vector3((MousePos.x - (1280 * diff)) * (3.33f / diff), 0, (MousePos.y - (720 * diff)) * (3.33f / diff));
-            Info.SelectedSpawn = vector3;
+
+            SetWorldPoint(vector3, overideHeight);
+
             SelectedPoint.GetComponent<RectTransform>().position = new Vector3(SelectedPoint.transform.position.x, (MousePos.y - (720f * diff)) / (1380f * diff), ((MousePos.x - (1280f * diff)) / (1380f * diff) * -1f));
             ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
             PointChanged = true;
         }
-
+        public void SetWorldPoint(Vector3 worldPoint, bool overideHeight)
+        {
+            Info.SelectedSpawn = worldPoint;
+            Info.OverideSpawnHeight = overideHeight;
+        }
 
 
 
@@ -448,6 +450,7 @@ namespace LifePodRemastered
                 ClickSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
                 Info.showmap = false;
                 Info.newSave = true; // 1 survival, 2 creative, 3, freedom, 4 hardcore
+                Info.Showsettings = false;
                 if (Info.GameMode == 1)
                 {
                     uGUI_MainMenu.main.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Survival));
@@ -511,15 +514,15 @@ namespace LifePodRemastered
         }
         void OnEndInputFieldEdit(string s)
         {
-            Info.SelectedSpawn = StringToVector3(s);
-            WorldPointtoMoveSelecedPoint(Info.SelectedSpawn);
+            Info.OverideSpawnHeight = true;
+            WorldPointtoMoveSelecedPoint(StringToVector3(s), true);
             ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
         }
         void OnRandomizePointButtonClick()
         {
             float diff = Info.currentRes.width / 2560f;
             Vector3 ranvector3 = new Vector3(Random.Range(664.0f * diff, 1895.0f * diff), Random.Range(107.0f * diff, 1335.0f * diff), 0);
-            MousePositionToSelectedPoint(ranvector3);
+            MousePositionToSelectedPoint(ranvector3, false);
             ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
         }
     }

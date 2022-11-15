@@ -26,7 +26,7 @@ namespace LifePodRemastered
         [HarmonyPrefix]
         public static bool NewGetRandomStartPoint(ref Vector3 __result)
         {
-            if (QMod.Config.ToggleAirSpawn)
+            if (QMod.Config.ToggleAirSpawn && !Info.OverideSpawnHeight)
             {
                 __result = new Vector3(Info.SelectedSpawn.x, QMod.Config.AirSpawnHeight, Info.SelectedSpawn.z);
             }
@@ -92,8 +92,6 @@ namespace LifePodRemastered
     internal class EscapePod_FixedUpdate_Patch
     {
         static bool tempbool = false;
-        static bool tempbool2 = false;
-        //static bool tempbool2 = false;
         [HarmonyPrefix]
         public static bool Prefix(EscapePod __instance)
         {
@@ -147,7 +145,7 @@ namespace LifePodRemastered
     {
          [HarmonyPatch(nameof(uGUI_PlayerDeath.TriggerDeathVignette))]
          [HarmonyPrefix]
-         public static bool OnTriggerDeathVignettePostFix(uGUI_PlayerDeath __instance)
+         public static bool OnTriggerDeathVignettePreFix(uGUI_PlayerDeath __instance)
          {
              Info.isrepawning = true;
              return true;

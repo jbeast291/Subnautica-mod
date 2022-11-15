@@ -28,6 +28,6 @@ namespace LifePodRemastered
         public static bool newSave;
         public static bool Showsettings = false;
         public static int GameMode; // 1 survival, 2 creative, 3, freedom, 4 hardcore
-
+        public static bool OverideSpawnHeight;
     }
 }

@@ -27,14 +27,14 @@ namespace DayCounterChip
             DayCounterImage2 = GameObject.Find("LeftSideBackGround2");
             DayCounterText = GameObject.Find("DayText");
             DayCounter.SetActive(true);
-            DayCounter.transform.position = new Vector3(-0.2444f, - 0.9074f, 1);
+            DayCounter.transform.position = new Vector3(-0.2444f, -0.9074f, 1);
 
             DayCounterImage1.SetActive(false);
             DayCounterImage2.SetActive(false);
         }
         public void Update()
         {
-            if (CheackIfEquipmentIsInSlot(DayCounterChip.TechTypeID))
+            if (CheckIfEquipmentIsInSlot(DayCounterChip.TechTypeID))
             {
                 DayCounter.transform.position = new Vector3(QMod.Config.PosX, QMod.Config.PosY, 1.4027f);
                 DayCounterText.GetComponent<Text>().text = $"Day: {dayNightCycle.GetDay().ToString("N0")}";
@@ -103,11 +103,11 @@ namespace DayCounterChip
             }
             else // if there is an error in setting the color in teh config and it does not equal anything above 
             {
-                Logger.Log(Logger.Level.Info, "Error no color value in config", null, true);
+                Logger.Log(Logger.Level.Error, "Error no color value in config", null, true);
                 return Color.white;
             }
         }
-        public static bool CheackIfEquipmentIsInSlot(TechType techtype) // Checks all the equipment slots and sees if the teachtype is there (if you wondering i "borrowed" this from another mod)
+        public static bool CheckIfEquipmentIsInSlot(TechType techtype) // Checks all the equipment slots and sees if the teachtype is there (if you wondering i "borrowed" this from another mod)
         {
             Equipment equipment = null;
             EquipmentType equipmentType = EquipmentType.Chip;

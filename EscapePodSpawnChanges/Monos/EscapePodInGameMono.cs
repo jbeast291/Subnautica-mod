@@ -24,8 +24,13 @@ namespace LifePodRemastered
         public static AssetBundle assetBundle = Info.assetBundle;
         GameObject parachute;
         bool DetachParachute = false;
+        bool toggleParachute;
         public void Start()
         {
+            if(QMod.Config.ToggleParachute)
+            {
+                
+            }
             if (Info.newSave && QMod.Config.ToggleAirSpawn)
             {
                 CoroutineHost.StartCoroutine(WaitForNewSave());
