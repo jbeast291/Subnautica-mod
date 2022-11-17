@@ -7,8 +7,8 @@ If you find that one of my mods dosent work with another please create contact m
 If you want to contibute to my mods or colaborate contact me on discord.
 
 ## [Life Pod Remastered]
-TLDR: Many Impovemts giving the user more choice to how the life pod spawns and extra features ingame. You can make the pod sink and spanw in the air.
-The pod gains a parachute for a more immersive effect. There are also many other features you can see ingame.
+TLDR: Many Impovemts giving the user more choice to how the life pod spawns and extra features ingame. You can make the pod sink and spawn in the air for example.
+The pod gains a parachute when falling in the air for a more immersive and cinematic event. There are also many other features you can see ingame.
 
 (this is a remake of the mod life pod unleash to be more userfriendly and feature rich) 
 
@@ -32,13 +32,14 @@ The parachute has been added to your pod. Since you are falling out of the sky i
 | `Air Spawn` | If toggled true the life pod will spawn in the air for a more cinematic effect of falling to the planet surface |
 | `Air Spawn Height` | Change the height of the pod spawn if `Air Spawn` is enabled |
 | `Disable First Time Animations` | Remove the annoying cinematic cutscenes when you leave the pod the first time |
+| `Parachute` | Turn the parachute ontop of your pod on or off |
 | `Skip Intro Automatically` | Skip the games cinematic intro automatically |
 | `Show Text On Map` | Change weather the text on the map should be displayed or not (its mor low res because I couldnt find I high res version online. If you have one please contract me) |
 
 ### Extra Notes:
 Dependencies: [SmlHelper](https://www.nexusmods.com/subnautica/mods/113)
 
-Special thanks to MrPurple6411, Cattlesquat, and Oldark1 for creating the original [life pod unleashed mod](https://www.nexusmods.com/subnautica/mods/126). Without them I probably wouldn't have as many features in this mod or have been inspired to improve it. Really there amazing so go check out their other mods!
+Special thanks to MrPurple6411, Cattlesquat, and Oldark1 for creating the original [life pod unleashed mod](https://www.nexusmods.com/subnautica/mods/126). Without them I probably wouldn't have as many features in this mod or have been inspired to make this in the first place. Really there amazing so go check out their other mods!
 ### Gallery:
 
 ![MapShowcase](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/MapShowcase.png)
