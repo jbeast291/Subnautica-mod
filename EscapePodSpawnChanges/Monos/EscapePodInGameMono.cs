@@ -24,20 +24,19 @@ namespace LifePodRemastered
         public static AssetBundle assetBundle = Info.assetBundle;
         GameObject parachute;
         bool DetachParachute = false;
-        bool toggleParachute;
         public void Start()
         {
-            if(QMod.Config.ToggleParachute)
-            {
-                
-            }
-            if (Info.newSave && QMod.Config.ToggleAirSpawn)
+            if (Info.newSave && QMod.Config.ToggleAirSpawn && QMod.Config.ToggleParachute)
             {
                 CoroutineHost.StartCoroutine(WaitForNewSave());
                 parachute = Instantiate(assetBundle.LoadAsset<GameObject>("Parachute"));
                 parachute.transform.parent = EscapePod.main.gameObject.transform;
                 parachute.transform.position = EscapePod.main.transform.position;
                 parachute.transform.localPosition = new Vector3(0, 6.9f, 0);
+            }
+            if (Info.newSave && QMod.Config.ToggleAirSpawn && !QMod.Config.ToggleParachute)
+            {
+                CoroutineHost.StartCoroutine(WaitForNewSave2());
             }
         }
         public void Update()
@@ -60,6 +59,11 @@ namespace LifePodRemastered
             yield return new WaitForSeconds(32);//(32 * (QMod.Config.AirSpawnHeight / 100 / 6)
             Info.newSave = false;
             DetachParachute = true;
+        }
+        IEnumerator WaitForNewSave2()
+        {
+            yield return new WaitForSeconds(32);//(32 * (QMod.Config.AirSpawnHeight / 100 / 6)
+            Info.newSave = false;
         }
 
     }

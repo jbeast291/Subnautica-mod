@@ -154,6 +154,7 @@ namespace LifePodRemastered
 
             if (Mode == 1)
             {
+
                 ModeChoiceText.GetComponent<Text>().text = "Specific Point";
 
                 RandomizePointButton.SetActive(false);
@@ -180,6 +181,7 @@ namespace LifePodRemastered
 
                     Vector3 PresetPoint = new Vector3(-110, 0, 952);
                     WorldPointtoMoveSelecedPoint(PresetPoint, false);
+           
                 }
                 if (preset == 2)
                 {

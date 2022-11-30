@@ -48,11 +48,11 @@ namespace LifePodRemastered
         public bool ToggleAirSpawn = true;
         [Slider("Air Spawn Height", 300, 500, DefaultValue = 500, Tooltip = "How high the pod will spawn")]
         public float AirSpawnHeight = 500f;
-        [Toggle("Toggle the Parachute", Tooltip = "Turn the parachute ontop of your pod on or off")]
+        [Toggle("Parachute", Tooltip = "Turn the parachute ontop of your pod on or off")]
         public bool ToggleParachute = true;
         [Toggle("Disable First Time Animations", Tooltip = "Disable the Cinematic Animations when you first leave the pod")]
         public bool DisableFirstTimeAnims = false;
-        [Toggle("Skip Intro Automatically", Tooltip = "Skip The into to the game automatically")]
+        [Toggle("Skip Intro Automatically", Tooltip = "Skip The intro to the game automatically")]
         public bool SkipInto = false;
         [Toggle("Show Text On Map", Tooltip = "Show text on the Map or not")]
         public bool ShowTextOnMap = true;
