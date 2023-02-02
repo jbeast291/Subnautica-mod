@@ -1,5 +1,5 @@
 # (Go to releases to download the mods)
-
+# None of my mods are updated for 2.0 yet but expect a fix in the future (one I get around to it)
 # Jbeast291's Subnautica Mods
 A collection of mods that I created for subnautica.
 If you have any questions or comments contact me on discord: Jbeast291#0001
