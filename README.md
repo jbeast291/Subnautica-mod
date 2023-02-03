@@ -50,14 +50,14 @@ Adds a new Equipment Chip after unlocking the compass.
 
 Once equipped a day Counter in the top right will be displayed
 
-Configurable within game options menue
+Can be moved with the ingame config and the background can be changed
 
 ### Crafting:
 Titanium: 2
 Copper Wire: 1
 
 ### Unlock:
-Unlocks after obtaining the blueprint for the compass
+At the start of the game
 
 ### Extra notes:
 Works with Mimes [More Ship Slots](https://github.com/Mimes-Pes/MimesSubnauticaMods) mod 
