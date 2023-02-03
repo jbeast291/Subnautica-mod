@@ -46,7 +46,7 @@ Special thanks to MrPurple6411, Cattlesquat, and Oldark1 for creating the origin
 ![ParachuteShowcase](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/ParachuteShowcase.png)
 
 ## [Day Counter Chip]
-Adds a new Equipment Chip after unlocking the compass.
+Adds a new Equipment Chip
 
 Once equipped a day Counter in the top right will be displayed
 
