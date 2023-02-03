@@ -1,13 +1,4 @@
 ﻿using HarmonyLib;
-using Logger = QModManager.Utility.Logger;
-using RecipeData = SMLHelper.V2.Crafting.TechData;
-using QModManager.API.ModLoading;
-using SMLHelper.V2.Json;
-using SMLHelper.V2.Options.Attributes;
-using SMLHelper.V2.Handlers;
-using SMLHelper.V2.Assets;
-using SMLHelper.V2.Crafting;
-using SMLHelper.V2.Utility;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,9 +17,9 @@ namespace LifePodRemastered
         [HarmonyPrefix]
         public static bool NewGetRandomStartPoint(ref Vector3 __result)
         {
-            if (QMod.Config.ToggleAirSpawn)
+            if (LifePodRemastered.Config.ToggleAirSpawn)
             {
-                __result = new Vector3(Info.SelectedSpawn.x, QMod.Config.AirSpawnHeight, Info.SelectedSpawn.z);
+                __result = new Vector3(Info.SelectedSpawn.x, LifePodRemastered.Config.AirSpawnHeight, Info.SelectedSpawn.z);
             }
             else
             {
@@ -44,7 +35,7 @@ namespace LifePodRemastered
     {
         [HarmonyPatch(typeof(uGUI_MainMenu), "OnButtonSurvival")]
         [HarmonyPrefix]
-        public static bool OnButtonSurvival(uGUI_MainMenu __instance)
+        public static bool OnButtonSurvival()
         {
             Info.showmap = true;
             Info.GameMode = 1;
@@ -52,7 +43,7 @@ namespace LifePodRemastered
         }
         [HarmonyPatch(typeof(uGUI_MainMenu), "OnButtonCreative")]
         [HarmonyPrefix]
-        public static bool OnButtonCreative(uGUI_MainMenu __instance)
+        public static bool OnButtonCreative()
         {
             Info.showmap = true;
             Info.GameMode = 2;
@@ -60,7 +51,7 @@ namespace LifePodRemastered
         }
         [HarmonyPatch(typeof(uGUI_MainMenu), "OnButtonFreedom")]
         [HarmonyPrefix]
-        public static bool OnButtonFreedom(uGUI_MainMenu __instance)
+        public static bool OnButtonFreedom()
         {
             Info.showmap = true;
             Info.GameMode = 3;
@@ -68,7 +59,7 @@ namespace LifePodRemastered
         }
         [HarmonyPatch(typeof(uGUI_MainMenu), "OnButtonHardcore")]
         [HarmonyPrefix]
-        public static bool OnButtonHardcore(uGUI_MainMenu __instance)
+        public static bool OnButtonHardcore()
         {
             Info.showmap = true;
             Info.GameMode = 4;
@@ -92,19 +83,18 @@ namespace LifePodRemastered
     internal class EscapePod_FixedUpdate_Patch
     {
         static bool tempbool = false;
-        static bool tempbool2 = false;
         //static bool tempbool2 = false;
         [HarmonyPrefix]
         public static bool Prefix(EscapePod __instance)
         {
             WorldForces wf = __instance.GetComponent<WorldForces>();
 
-            wf.aboveWaterGravity = 100f;
-            if (QMod.Config.ToggleHeavyPod)
+            wf.aboveWaterGravity = 10f;
+            if (LifePodRemastered.Config.ToggleHeavyPod)
             {
-                wf.underwaterGravity = QMod.Config.HeavyPodIntensity;
+                wf.aboveWaterGravity = LifePodRemastered.Config.HeavyPodIntensity;
             }
-            if (!QMod.Config.ToggleHeavyPod)
+            if (!LifePodRemastered.Config.ToggleHeavyPod)
             {
                 wf.underwaterGravity = -30f;
             }
@@ -116,7 +106,7 @@ namespace LifePodRemastered
         {
             float distance = Vector3.Distance(Player.main.transform.position, EscapePod.main.transform.position);
 
-            if (!Info.newSave || !QMod.Config.ToggleAirSpawn)
+            if (!Info.newSave || !LifePodRemastered.Config.ToggleAirSpawn)
             {
                 if ((distance > 50 || Info.isrepawning) && !__instance.rigidbodyComponent.isKinematic)
                 {
@@ -145,13 +135,13 @@ namespace LifePodRemastered
     [HarmonyPatch(typeof(uGUI_PlayerDeath))]
     internal class OnResetPlayerOnDeath
     {
-         [HarmonyPatch(nameof(uGUI_PlayerDeath.TriggerDeathVignette))]
-         [HarmonyPrefix]
-         public static bool OnTriggerDeathVignettePostFix(uGUI_PlayerDeath __instance)
-         {
-             Info.isrepawning = true;
-             return true;
-         }
+        [HarmonyPatch(nameof(uGUI_PlayerDeath.TriggerDeathVignette))]
+        [HarmonyPrefix]
+        public static bool OnTriggerDeathVignettePostFix()
+        {
+            Info.isrepawning = true;
+            return true;
+        }
     }
     [HarmonyPatch(typeof(EscapePod))]
     internal class OnStartPatch
@@ -162,8 +152,8 @@ namespace LifePodRemastered
         {
             __instance.gameObject.EnsureComponent<EscapePodInGameMono>();
 
-            __instance.bottomHatchUsed = QMod.Config.DisableFirstTimeAnims;
-            __instance.topHatchUsed = QMod.Config.DisableFirstTimeAnims;
+            __instance.bottomHatchUsed = LifePodRemastered.Config.DisableFirstTimeAnims;
+            __instance.topHatchUsed = LifePodRemastered.Config.DisableFirstTimeAnims;
         }
     }
     [HarmonyPatch(typeof(DisplayManager))]
@@ -176,24 +166,25 @@ namespace LifePodRemastered
             Info.currentRes = __instance.resolution; // sets the resolution in Info to what is currently set
         }
     }
-
+    [HarmonyPatch(typeof(Player))]
+    internal class OnLandPreFixPatch
+    {
+        [HarmonyPatch(nameof(Player.OnLand))]
+        [HarmonyPrefix]
+        public static bool OnLandPreFix()
+        {
+            return false;
+        }
+    }
     [HarmonyPatch(typeof(uGUI_SceneIntro))]
     internal class OnuGUI_SceneIntroPatch
     {
-        [HarmonyPatch(nameof(uGUI_SceneIntro.IntroSequence))]
+        [HarmonyPatch(nameof(uGUI_SceneIntro.OnUpdate))]
         [HarmonyPrefix]
-        public static bool OnEscapeHoldPreFix(uGUI_SceneIntro __instance)
+        public static void OnEscapeHoldPreFix(uGUI_SceneIntro __instance)
         {
-            if(QMod.Config.SkipInto)
-            {
-                __instance.menuStillDown = true;
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-
+            __instance.Stop(true);
         }
     }
 }
+

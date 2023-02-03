@@ -41,8 +41,8 @@
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\publicized_assemblies\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="QModInstaller">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\QModManager\QModInstaller.dll</HintPath>
+    <Reference Include="BepInEx">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="SMLHelper">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\QMods\Modding Helper\SMLHelper.dll</HintPath>
@@ -68,7 +68,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KnifeMultipiersSN.cs" />
+    <Compile Include="BepInEx.cs" />
+    <Compile Include="Patches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,8 +77,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\QMods\$(TargetName)"
-copy /Y "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\QMods\$(TargetName)"
-copy /Y "$(ProjectDir)\mod.json" "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\QMods\$(TargetName)\mod.json"</PostBuildEvent>
+    <PostBuildEvent>copy /Y "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins"</PostBuildEvent>
   </PropertyGroup>
 </Project>

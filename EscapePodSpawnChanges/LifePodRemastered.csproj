@@ -41,11 +41,12 @@
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\publicized_assemblies\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="QModInstaller">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\QModManager\QModInstaller.dll</HintPath>
+    <Reference Include="BepInEx">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
-    <Reference Include="SMLHelper">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\QMods\Modding Helper\SMLHelper.dll</HintPath>
+    <Reference Include="SMLHelper, Version=2.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\Modding Helper\SMLHelper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -57,6 +58,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -100,7 +105,7 @@
   <ItemGroup>
     <Compile Include="Monos\EscapePodInGameMono.cs" />
     <Compile Include="ToFile.cs" />
-    <Compile Include="Qmod.cs" />
+    <Compile Include="BepInEx.cs" />
     <Compile Include="Monos\EscapePodChangesMono.cs" />
     <Compile Include="Info.cs" />
     <Compile Include="Patches.cs" />
@@ -114,8 +119,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\QMods\$(TargetName)"
-copy /Y "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\QMods\$(TargetName)"
-copy /Y "$(ProjectDir)\mod.json" "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\QMods\$(TargetName)\mod.json"</PostBuildEvent>
+    <PostBuildEvent>mkdir "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\$(TargetName)"
+copy /Y "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\$(TargetName)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

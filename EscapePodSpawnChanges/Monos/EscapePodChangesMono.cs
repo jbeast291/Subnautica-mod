@@ -1,13 +1,4 @@
 ﻿using HarmonyLib;
-using Logger = QModManager.Utility.Logger;
-using RecipeData = SMLHelper.V2.Crafting.TechData;
-using QModManager.API.ModLoading;
-using SMLHelper.V2.Json;
-using SMLHelper.V2.Options.Attributes;
-using SMLHelper.V2.Handlers;
-using SMLHelper.V2.Assets;
-using SMLHelper.V2.Crafting;
-using SMLHelper.V2.Utility;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +6,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using UWE;
+using UWE; 
 
 namespace LifePodRemastered
 {
@@ -70,9 +61,6 @@ namespace LifePodRemastered
         {
             //ToFileInstance.CreateJson();
 
-            Font arial;
-            arial = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
-
             Rightside = GameObject.Find("RightSide");
             Primaryoptions = GameObject.Find("PrimaryOptions");
 
@@ -80,6 +68,7 @@ namespace LifePodRemastered
 
             AreaSeceltor = Instantiate(assetBundle.LoadAsset<GameObject>("AreaSelector"));
             AreaSeceltor.transform.parent = canvas.transform;
+            AreaSeceltor.transform.localPosition = new Vector3(0, 0, 7500);
             AreaSeceltor.SetActive(true);
         }
         public void Start()
@@ -99,7 +88,7 @@ namespace LifePodRemastered
             GameObject.Find("SpecificCoordsInput").GetComponent<InputField>().onEndEdit.AddListener(OnEndInputFieldEdit);
 
             OptionsPannel = GameObject.Find("Menu canvas/Panel/Options");
-            OptionsPannelBackButton = GameObject.Find("Menu canvas/Panel/Options/ButtonBack");
+            OptionsPannelBackButton = GameObject.Find("Menu canvas/Panel/Options/Bottom/ButtonBack");
 
             Map = GameObject.Find("Map");
             ModePresetPoint = GameObject.Find("ModePresetPoint");
@@ -122,28 +111,19 @@ namespace LifePodRemastered
             RandomPointInfo.SetActive(false);
             InputCoordsInfo.SetActive(false);
             SettingsInfo.SetActive(false);
+
+            
         }
 
         public void Update()
         {
-            
+            ManageRightSide(CurrentMode, Info.Showsettings);
+            ManageLeftSide(CurrentMode, CurrentPreset);
 
-            if (Info.Showsettings)
-            {
-                ManageRightSide(CurrentMode, Info.Showsettings);
-
-                OptionsPannel.SetActive(true);
-                OptionsPannelBackButton.SetActive(false);
-                Map.SetActive(false);
-            }
             if (Info.showmap && !Info.Showsettings)
             {
-                ManageRightSide(CurrentMode, Info.Showsettings);
-                ManageLeftSide(CurrentMode, CurrentPreset);
-
                 ManageMapText();
                 ManageSelectedPointIndicator();
-
 
                 AreaSeceltor.SetActive(true);
                 Map.SetActive(true);
@@ -154,7 +134,6 @@ namespace LifePodRemastered
         }
         public void ManageLeftSide(int Mode, int preset)
         {
-            float diff = Info.currentRes.width / 2560f;
 
             if (Mode == 1)
             {
@@ -334,11 +313,11 @@ namespace LifePodRemastered
         }
         public void ManageMapText()
         {
-            if(!QMod.Config.ShowTextOnMap)
+            if(!LifePodRemastered.Config.ShowTextOnMap)
             {
                 Map.GetComponent<Image>().sprite = Info.assetBundle.LoadAsset<Sprite>("Map2");
             }
-            if(QMod.Config.ShowTextOnMap)
+            if(LifePodRemastered.Config.ShowTextOnMap)
             {
                 Map.GetComponent<Image>().sprite = Info.assetBundle.LoadAsset<Sprite>("Map1");
             }
@@ -419,7 +398,8 @@ namespace LifePodRemastered
         {
             float diff = Info.currentRes.width / 2560f;
             vector3 = new Vector3((WorldPoint.x / (3.33f / diff)) + (1280 * diff), (WorldPoint.z / (3.33f / diff)) + (720 * diff));
-            SelectedPoint.GetComponent<RectTransform>().position = new Vector3(SelectedPoint.transform.position.x, (vector3.y - (720f * diff)) / (1380f * diff), ((vector3.x - (1280f * diff)) / (1380f * diff) * -1f));
+            LifePodRemastered.Logger.LogInfo(vector3.ToString());
+            SelectedPoint.GetComponent<RectTransform>().localPosition = new Vector3((vector3.x - (1280f * diff)) / (1250f * diff), (vector3.y - (720f * diff)) / (1250f * diff), 0);
             Info.SelectedSpawn = WorldPoint;
             PointChanged = true;
         }
@@ -428,7 +408,8 @@ namespace LifePodRemastered
             float diff = Info.currentRes.width / 2560f;
             vector3 = new Vector3((MousePos.x - (1280 * diff)) * (3.33f / diff), 0, (MousePos.y - (720 * diff)) * (3.33f / diff));
             Info.SelectedSpawn = vector3;
-            SelectedPoint.GetComponent<RectTransform>().position = new Vector3(SelectedPoint.transform.position.x, (MousePos.y - (720f * diff)) / (1380f * diff), ((MousePos.x - (1280f * diff)) / (1380f * diff) * -1f));
+            LifePodRemastered.Logger.LogInfo(vector3.ToString());
+            SelectedPoint.GetComponent<RectTransform>().localPosition = new Vector3((MousePos.x - (1280f * diff)) / (1250f * diff), (MousePos.y - (720f * diff)) / (1250f * diff), 0);
             ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
             PointChanged = true;
         }
@@ -439,7 +420,12 @@ namespace LifePodRemastered
         void OnSettingsModButtonClick()
         {
             Info.Showsettings = !Info.Showsettings;
+            OptionsPannelBackButton.GetComponent<Button>().onClick.AddListener(OnSettingsModButtonClick);
+            OptionsPannel.SetActive(true);
+            Map.SetActive(false);
+            ManageRightSide(CurrentMode, Info.Showsettings);
             ClickSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
+            
         }
         void OnStartGameButtonClick()
         {
@@ -450,19 +436,19 @@ namespace LifePodRemastered
                 Info.newSave = true; // 1 survival, 2 creative, 3, freedom, 4 hardcore
                 if (Info.GameMode == 1)
                 {
-                    uGUI_MainMenu.main.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Survival));
+                    CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Survival));
                 }
                 if (Info.GameMode == 2)
                 {
-                    uGUI_MainMenu.main.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Creative));
+                    CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Creative));
                 }
                 if (Info.GameMode == 3)
                 {
-                    uGUI_MainMenu.main.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Freedom));
+                    CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Freedom));
                 }
                 if (Info.GameMode == 4)
                 {
-                    uGUI_MainMenu.main.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Hardcore));
+                    CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Hardcore));
                 }
 
             }
@@ -484,6 +470,8 @@ namespace LifePodRemastered
                 CurrentMode--;
                 HoverSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
             }
+            ManageRightSide(CurrentMode, Info.Showsettings);
+            ManageLeftSide(CurrentMode, CurrentPreset);
         }
         void OnModeChoiceRightClick()
         {
@@ -492,6 +480,8 @@ namespace LifePodRemastered
                 CurrentMode++;
                 HoverSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
             }
+            ManageRightSide(CurrentMode, Info.Showsettings);
+            ManageLeftSide(CurrentMode, CurrentPreset);
         }
         void OnModePresetPointChoiceleftClick()
         {
@@ -500,6 +490,8 @@ namespace LifePodRemastered
                 CurrentPreset--;
                 ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
             }
+            ManageRightSide(CurrentMode, Info.Showsettings);
+            ManageLeftSide(CurrentMode, CurrentPreset);
         }
         void OnModePresetPointChoiceRightClick()
         {
@@ -508,12 +500,17 @@ namespace LifePodRemastered
                 CurrentPreset++;
                 ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
             }
+            ManageRightSide(CurrentMode, Info.Showsettings);
+            ManageLeftSide(CurrentMode, CurrentPreset);
         }
         void OnEndInputFieldEdit(string s)
         {
             Info.SelectedSpawn = StringToVector3(s);
             WorldPointtoMoveSelecedPoint(Info.SelectedSpawn);
             ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
+
+            ManageRightSide(CurrentMode, Info.Showsettings);
+            ManageLeftSide(CurrentMode, CurrentPreset);
         }
         void OnRandomizePointButtonClick()
         {
@@ -521,6 +518,9 @@ namespace LifePodRemastered
             Vector3 ranvector3 = new Vector3(Random.Range(664.0f * diff, 1895.0f * diff), Random.Range(107.0f * diff, 1335.0f * diff), 0);
             MousePositionToSelectedPoint(ranvector3);
             ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
+
+            ManageRightSide(CurrentMode, Info.Showsettings);
+            ManageLeftSide(CurrentMode, CurrentPreset);
         }
     }
 }
