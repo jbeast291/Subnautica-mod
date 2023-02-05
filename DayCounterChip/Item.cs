@@ -22,7 +22,6 @@ namespace DayCounterChip
             };
         }
         public override EquipmentType EquipmentType => EquipmentType.Chip;
-        //public override TechType RequiredForUnlock => TechType.Compass;
         public override TechGroup GroupForPDA => TechGroup.Personal;
         public override TechCategory CategoryForPDA => TechCategory.Equipment;
         public override CraftTree.Type FabricatorType => CraftTree.Type.Fabricator;

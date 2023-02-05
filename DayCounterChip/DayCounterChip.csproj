@@ -105,7 +105,6 @@
   <ItemGroup>
     <None Include="Assets\daycounterchipbundle" />
     <None Include="Assets\daycounterchipbundle.manifest" />
-    <None Include="mod.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Assets in bundle\BackGround.png" />
