@@ -46,30 +46,7 @@ Special thanks to MrPurple6411, Cattlesquat, and Oldark1 for creating the origin
 ![ParachuteShowcase](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/ParachuteShowcase.png)
 
 ## [Day Counter Chip]
-Adds a new Equipment Chip
-
-Once equipped a day Counter in the top right will be displayed
-
-Can be moved with the ingame config and the background can be changed
-
-### Crafting:
-Titanium: 2
-Copper Wire: 1
-
-### Unlock:
-At the start of the game
-
-### Extra notes:
-Works with Mimes [More Ship Slots](https://github.com/Mimes-Pes/MimesSubnauticaMods) mod 
-
-Special thanks to ShilohPell#8852 on the subnautica modding discord for the suggestion. (suggestion #406)
-
-Dependencies: [SmlHelper](https://www.nexusmods.com/subnautica/mods/113)
-
-### Gallery:
-
-![BackGround1](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/Background1.png)
-![BackGround2](https://github.com/jbeast291/Subnautica-mod/blob/main/Gallery/Background2.png)
+https://submodica.xyz/mods/sn1/210
 
 ## [Knife Multipliers]
 Change the damage or range of the knife or heatblade
