@@ -1,12 +1,12 @@
 # (Go to releases to download the mods)
-# None of my mods are updated for 2.0 yet but expect a fix in the future (when I get around to it lol)
+
 # Jbeast291's Subnautica Mods
 A collection of mods that I created for subnautica.
 If you have any questions or comments contact me on discord: Jbeast291#0001
 If you find that one of my mods dosent work with another please create contact me (jbeast291#0001) and i will try my best to fix it.
 If you want to contibute to my mods or colaborate contact me on discord.
 
-## [Life Pod Remastered]
+## [Life Pod Remastered] NOT 2.0 YET 
 TLDR: Many Impovemts giving the user more choice to how the life pod spawns and extra features ingame. You can make the pod sink and spawn in the air for example.
 The pod gains a parachute when falling in the air for a more immersive and cinematic event. There are also many other features you can see ingame.
 
