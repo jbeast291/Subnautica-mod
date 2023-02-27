@@ -32,7 +32,7 @@ namespace LifePodRemastered
         {
             [Toggle("Heavy Pod", Tooltip = "Escape Pod will sink in the water")]
             public bool ToggleHeavyPod = true;
-            [Slider("Heavy Pod Intensity", 1f, 60, DefaultValue = 30f, Tooltip = "How fast the pod sinks in the water")]
+            [Slider("Heavy Pod Intensity", 1f, 300, DefaultValue = 30f, Tooltip = "How fast the pod sinks in the water")]
             public float HeavyPodIntensity = 30f;
             [Toggle("Air Spawn", Tooltip = "Spawn the pod high in the air")]
             public bool ToggleAirSpawn = true;

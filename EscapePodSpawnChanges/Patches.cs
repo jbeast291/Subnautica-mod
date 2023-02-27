@@ -89,14 +89,14 @@ namespace LifePodRemastered
         {
             WorldForces wf = __instance.GetComponent<WorldForces>();
 
-            wf.aboveWaterGravity = 10f;
+            wf.aboveWaterGravity = LifePodRemastered.Config.HeavyPodIntensity;
             if (LifePodRemastered.Config.ToggleHeavyPod)
             {
-                wf.aboveWaterGravity = LifePodRemastered.Config.HeavyPodIntensity;
+                wf.underwaterGravity = LifePodRemastered.Config.HeavyPodIntensity;
             }
             if (!LifePodRemastered.Config.ToggleHeavyPod)
             {
-                wf.underwaterGravity = -30f;
+                wf.underwaterGravity = -30;
             }
 
             return true;
@@ -183,7 +183,8 @@ namespace LifePodRemastered
         [HarmonyPrefix]
         public static void OnEscapeHoldPreFix(uGUI_SceneIntro __instance)
         {
-            __instance.Stop(true);
+            if(LifePodRemastered.Config.SkipInto)
+                __instance.Stop(true);
         }
     }
 }

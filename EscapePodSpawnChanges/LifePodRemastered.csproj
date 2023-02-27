@@ -103,8 +103,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SaveData.cs" />
     <Compile Include="Monos\EscapePodInGameMono.cs" />
-    <Compile Include="ToFile.cs" />
+    <Compile Include="SaveManager.cs" />
     <Compile Include="BepInEx.cs" />
     <Compile Include="Monos\EscapePodChangesMono.cs" />
     <Compile Include="Info.cs" />
@@ -112,8 +113,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\lifepodspawnmap" />
-    <None Include="Assets\lifepodspawnmap.manifest" />
     <None Include="mod.json" />
   </ItemGroup>
   <ItemGroup />

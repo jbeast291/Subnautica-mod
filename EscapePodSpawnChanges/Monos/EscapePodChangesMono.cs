@@ -6,7 +6,8 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using UWE; 
+using UWE;
+using SMLHelper.V2.Utility;
 
 namespace LifePodRemastered
 {
@@ -119,7 +120,7 @@ namespace LifePodRemastered
         {
             ManageRightSide(CurrentMode, Info.Showsettings);
             ManageLeftSide(CurrentMode, CurrentPreset);
-
+            
             if (Info.showmap && !Info.Showsettings)
             {
                 ManageMapText();
