@@ -2,7 +2,7 @@
 
 # Jbeast291's Subnautica Mods
 A collection of mods that I created for subnautica.
-If you have any questions or comments contact me on discord: Jbeast291 0001
+If you have any questions or comments contact me on discord: (Jbeast291 0001)
 If you find that one of my mods dosent work with another please create contact me (jbeast291 0001) and i will try my best to fix it.
 If you want to contibute to my mods or colaborate contact me on discord.
 
