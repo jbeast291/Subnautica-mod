@@ -176,16 +176,5 @@ namespace LifePodRemastered
             return false;
         }
     }
-    [HarmonyPatch(typeof(uGUI_SceneIntro))]
-    internal class OnuGUI_SceneIntroPatch
-    {
-        [HarmonyPatch(nameof(uGUI_SceneIntro.OnUpdate))]
-        [HarmonyPrefix]
-        public static void OnEscapeHoldPreFix(uGUI_SceneIntro __instance)
-        {
-            if(LifePodRemastered.Config.SkipInto)
-                __instance.Stop(true);
-        }
-    }
 }
 

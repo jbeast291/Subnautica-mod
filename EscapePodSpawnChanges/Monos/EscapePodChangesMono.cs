@@ -124,7 +124,6 @@ namespace LifePodRemastered
             if (Info.showmap && !Info.Showsettings)
             {
                 ManageMapText();
-                ManageSelectedPointIndicator();
 
                 AreaSeceltor.SetActive(true);
                 Map.SetActive(true);
@@ -323,7 +322,7 @@ namespace LifePodRemastered
                 Map.GetComponent<Image>().sprite = Info.assetBundle.LoadAsset<Sprite>("Map1");
             }
         }
-        public void ManageSelectedPointIndicator()
+        /*public void ManageSelectedPointIndicator()
         {
             if (PointChanged == true)
             {
@@ -347,11 +346,11 @@ namespace LifePodRemastered
 
                 if(Scaling == true && makebig)
                 {
-                    SelectedPointIndicator.transform.localScale += new Vector3(0.05f, 0.05f, 0);
+                    SelectedPointIndicator.transform.localScale += new Vector3(10f * Time.deltaTime, 10f * Time.deltaTime, 0);
                 }
                 if (Scaling == true && makesmall)
                 {
-                    SelectedPointIndicator.transform.localScale -= new Vector3(0.05f, 0.05f, 0);
+                    SelectedPointIndicator.transform.localScale -= new Vector3(10f * Time.deltaTime, 10f * Time.deltaTime, 0);
                 }
             }
             IEnumerator TimeScaler()
@@ -361,6 +360,22 @@ namespace LifePodRemastered
                 makebig = false;
                 makesmall = false;
             }
+        }*/
+        public IEnumerator ManageSelectedPointIndicator()
+        {
+            while (SelectedPointIndicator.transform.localScale.x > 14)
+            {
+                SelectedPointIndicator.transform.localScale -= new Vector3(10f * Time.deltaTime, 10f * Time.deltaTime, 0);
+                Debug.Log("smaller");
+                yield return null;
+            }
+            while (SelectedPointIndicator.transform.localScale.x < 7)
+            {
+                SelectedPointIndicator.transform.localScale += new Vector3(10f * Time.deltaTime, 10f * Time.deltaTime, 0);
+                Debug.Log("bigger");
+                yield return null;
+            }
+            CoroutineHost.StartCoroutine(ManageSelectedPointIndicator());
         }
 
 
