@@ -148,3 +148,4 @@ C:\Users\J.Smith26\subnautica mods\EscapePodSpawnChanges\obj\Debug\LifePodRemast
 C:\Users\J.Smith26\subnautica mods\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.csproj.CopyComplete
 C:\Users\J.Smith26\subnautica mods\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.dll
 C:\Users\J.Smith26\subnautica mods\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.pdb
+C:\Users\Jacoby\source\repos\Subnautica mod\EscapePodSpawnChanges\bin\Debug\Unity.TextMeshPro.dll

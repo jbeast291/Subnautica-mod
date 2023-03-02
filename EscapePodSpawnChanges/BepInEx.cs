@@ -44,6 +44,5 @@ namespace LifePodRemastered
             public bool SkipInto = false;
             [Toggle("Show Text On Map", Tooltip = "Show text on the Map or not")]
             public bool ShowTextOnMap = true;
-
         }
 }

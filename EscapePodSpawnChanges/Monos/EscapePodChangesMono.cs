@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UWE;
 using SMLHelper.V2.Utility;
+using TMPro;
 
 namespace LifePodRemastered
 {
@@ -27,17 +28,18 @@ namespace LifePodRemastered
         GameObject Primaryoptions;
 
         GameObject OptionsPannel;
-        GameObject OptionsPannelBackButton;
+        //GameObject OptionsPannelBackButton;
 
         GameObject ModeChoiceText;
         GameObject ModePresetPoint;
         GameObject RandomizePointButton;
         GameObject PresetText;
-        GameObject Map;
         GameObject SpecificCoordsInput;
 
+        GameObject Map;
         GameObject SelectedPoint;
         GameObject SelectedPointIndicator;
+        GameObject OptionsBackGround;
 
         GameObject SpecificPointInfo;
         GameObject PresetPointInfo;
@@ -48,11 +50,13 @@ namespace LifePodRemastered
         int CurrentMode = 1;
         int CurrentPreset = 1;
 
-        bool PointChanged = false;
-        bool startsequence = false;
-        bool Scaling = false;
-        bool makebig = false;
-        bool makesmall = false;
+        bool AnimationActive = false;
+
+        //bool PointChanged = false;
+        //bool startsequence = false;
+        //bool Scaling = false;
+        //bool makebig = false;
+        //bool makesmall = false;
 
 
         Vector3 vector3 = new Vector3(10000, 10000, 10000);
@@ -86,12 +90,10 @@ namespace LifePodRemastered
             GameObject.Find("ModePresetPointChoiceleft").GetComponent<Button>().onClick.AddListener(OnModePresetPointChoiceleftClick);
             GameObject.Find("ModePresetPointChoiceRight").GetComponent<Button>().onClick.AddListener(OnModePresetPointChoiceRightClick);
             GameObject.Find("RandomizePointButton").GetComponent<Button>().onClick.AddListener(OnRandomizePointButtonClick);
-            GameObject.Find("SpecificCoordsInput").GetComponent<InputField>().onEndEdit.AddListener(OnEndInputFieldEdit);
+            GameObject.Find("SpecificCoordsInput").GetComponent<TMP_InputField>().onEndEdit.AddListener(OnEndInputFieldEdit);
 
-            OptionsPannel = GameObject.Find("Menu canvas/Panel/Options");
-            OptionsPannelBackButton = GameObject.Find("Menu canvas/Panel/Options/Bottom/ButtonBack");
+            
 
-            Map = GameObject.Find("Map");
             ModePresetPoint = GameObject.Find("ModePresetPoint");
             RandomizePointButton = GameObject.Find("RandomizePointButton");
             ModeChoiceText = GameObject.Find("ModeChoiceText");
@@ -100,30 +102,35 @@ namespace LifePodRemastered
             PresetText = GameObject.Find("PresetText");
             SpecificCoordsInput = GameObject.Find("SpecificCoordsInput");
 
+            Map = GameObject.Find("Map");
+            OptionsPannel = GameObject.Find("OptionsBackGround");
+
             SpecificPointInfo = GameObject.Find("SpecificPointInfo");
             PresetPointInfo = GameObject.Find("PresetPointInfo");
             RandomPointInfo = GameObject.Find("RandomPointInfo");
             InputCoordsInfo = GameObject.Find("InputCoordsInfo");
             SettingsInfo = GameObject.Find("SettingsInfo");
 
+
             AreaSeceltor.SetActive(false);
+            OptionsBackGround.SetActive(false);
             SpecificPointInfo.SetActive(false);
             PresetPointInfo.SetActive(false);
             RandomPointInfo.SetActive(false);
             InputCoordsInfo.SetActive(false);
             SettingsInfo.SetActive(false);
 
-            
         }
 
         public void Update()
         {
-            ManageRightSide(CurrentMode, Info.Showsettings);
-            ManageLeftSide(CurrentMode, CurrentPreset);
             
             if (Info.showmap && !Info.Showsettings)
             {
                 ManageMapText();
+                ManageRightSide(CurrentMode, Info.Showsettings);
+                ManageLeftSide(CurrentMode, CurrentPreset);
+                ManageSelectedPointIndicator();
 
                 AreaSeceltor.SetActive(true);
                 Map.SetActive(true);
@@ -134,139 +141,101 @@ namespace LifePodRemastered
         }
         public void ManageLeftSide(int Mode, int preset)
         {
-
-            if (Mode == 1)
+            switch (Mode)
             {
-                ModeChoiceText.GetComponent<Text>().text = "Specific Point";
+                case 1:
+                    {
+                        ModeChoiceText.GetComponent<TextMeshProUGUI>().text = "Specific Point";
 
-                RandomizePointButton.SetActive(false);
-                ModePresetPoint.SetActive(false);
-                SpecificCoordsInput.SetActive(false);
+                        RandomizePointButton.SetActive(false);
+                        ModePresetPoint.SetActive(false);
+                        SpecificCoordsInput.SetActive(false);
 
-                if (Input.GetMouseButtonDown(0) && CheckValidMousePosition(Input.mousePosition) == 1)
-                {
-                    MousePositionToSelectedPoint(Input.mousePosition);
-                }
-            }
-            if (Mode == 2)
-            {
-                ModeChoiceText.GetComponent<Text>().text = "Preset Point";
-                RandomizePointButton.SetActive(false);
-                ModePresetPoint.SetActive(true);
+                        if (Input.GetMouseButtonDown(0) && CheckValidMousePosition(Input.mousePosition) == 1)
+                        {
+                            MousePositionToSelectedPoint(Input.mousePosition);
+                        }
+                        break;
+                    }
+                case 2:
+                    {
+                        ModeChoiceText.GetComponent<TextMeshProUGUI>().text = "Preset Point";
+                        RandomizePointButton.SetActive(false);
+                        ModePresetPoint.SetActive(true);
 
-                Text PresetTextTEXT = PresetText.GetComponent<Text>();
-
-                if (preset == 1)
-                {
-                    PresetTextTEXT.text = "UnderWater Island";
-                    PresetTextTEXT.fontSize = 80;
-
-                    Vector3 PresetPoint = new Vector3(-110, 0, 952);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
-                }
-                if (preset == 2)
-                {
-                    PresetTextTEXT.text = "Dunes Vent";
-                    PresetTextTEXT.fontSize = 100;
-
-                    Vector3 PresetPoint = new Vector3(-1532, 0, 468);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
-                }
-                if (preset == 3)
-                {
-                    PresetTextTEXT.text = "Mushroom Forest";
-                    PresetTextTEXT.fontSize = 90;
-
-                    Vector3 PresetPoint = new Vector3(-928, 0, 735);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
-                }
-                if (preset == 4)
-                {
-                    PresetTextTEXT.text = "Blood Kelp Trench";
-                    PresetTextTEXT.fontSize = 80;
-
-                    Vector3 PresetPoint = new Vector3(-959, 0, -565);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
-                }
-                if (preset == 5)
-                {
-                    PresetTextTEXT.text = "Blood Kelp Lost River";
-                    PresetTextTEXT.fontSize = 75;
-
-                    Vector3 PresetPoint = new Vector3(-623, 0, 1122);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
-                }
-                if (preset == 6)
-                {
-                    PresetTextTEXT.text = "Mountains Wreckage";
-                    PresetTextTEXT.fontSize = 80;
-
-                    Vector3 PresetPoint = new Vector3(607, 0, 1217);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
-                }
-                if (preset == 7)
-                {
-                    PresetTextTEXT.text = "Bulb Lost River Entrance";
-                    PresetTextTEXT.fontSize = 65;
-
-                    Vector3 PresetPoint = new Vector3(1123, 0, 908);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
-                }
-                if (preset == 8)
-                {
-                    PresetTextTEXT.text = "Island Degasi";
-                    PresetTextTEXT.fontSize = 100;
-
-                    Vector3 PresetPoint = new Vector3(-773, 0, -1110);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
-                }
-                if (preset == 9)
-                {
-                    PresetTextTEXT.text = "Island Oasis";
-                    PresetTextTEXT.fontSize = 100;
-
-                    Vector3 PresetPoint = new Vector3(-711, 0, -1079);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
-                }
-                if (preset == 10)
-                {
-                    PresetTextTEXT.text = "Gun Island";
-                    PresetTextTEXT.fontSize = 100;
-
-                    Vector3 PresetPoint = new Vector3(297, 0, 1064);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
-                }
-                if (preset == 11)
-                {
-                    PresetTextTEXT.text = "Jellyshroom Cave Entrance";
-                    PresetTextTEXT.fontSize = 65;
-
-                    Vector3 PresetPoint = new Vector3(131, 0, -389);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
-                }
-                if (preset == 12)
-                {
-                    PresetTextTEXT.text = "Crash Zone ;)";
-                    PresetTextTEXT.fontSize = 100;
-
-                    Vector3 PresetPoint = new Vector3(1136, 0, -1547);
-                    WorldPointtoMoveSelecedPoint(PresetPoint);
-                }
-            }
-
-            if (Mode == 3)
-            {
-                ModeChoiceText.GetComponent<Text>().text = "Random Point";
-                RandomizePointButton.SetActive(true);
-                ModePresetPoint.SetActive(false);
-                SpecificCoordsInput.SetActive(false);
-            }
-
-            if (Mode == 4)
-            {
-                ModeChoiceText.GetComponent<Text>().text = "Type Coords";
-                RandomizePointButton.SetActive(false);
-                SpecificCoordsInput.SetActive(true);
+                        TextMeshProUGUI PresetTextTEXT = PresetText.GetComponent<TextMeshProUGUI>();
+                        switch (preset)
+                        {
+                            case 1:
+                                PresetTextTEXT.text = "UnderWater Island";
+                                WorldPointtoMoveSelecedPoint(new Vector3(-110, 0, 952));
+                                break;
+                            case 2:
+                                PresetTextTEXT.text = "Dunes Vent";
+                                WorldPointtoMoveSelecedPoint(new Vector3(-1532, 0, 468));
+                                break;
+                            case 3:
+                                PresetTextTEXT.text = "Mushroom Forest";
+                                WorldPointtoMoveSelecedPoint(new Vector3(-928, 0, 735));
+                                break;
+                            case 4:
+                                PresetTextTEXT.text = "Blood Kelp Trench";
+                                WorldPointtoMoveSelecedPoint(new Vector3(-959, 0, -565));
+                                break;
+                            case 5:
+                                PresetTextTEXT.text = "Blood Kelp Lost River";
+                                WorldPointtoMoveSelecedPoint(new Vector3(-623, 0, 1122));
+                                break;
+                            case 6:
+                                PresetTextTEXT.text = "Mountains Wreckage";
+                                WorldPointtoMoveSelecedPoint(new Vector3(607, 0, 1217));
+                                break;
+                            case 7:
+                                PresetTextTEXT.text = "Bulb Lost River Entrance";
+                                WorldPointtoMoveSelecedPoint(new Vector3(1123, 0, 908));
+                                break;
+                            case 8:
+                                PresetTextTEXT.text = "Island Degasi";
+                                WorldPointtoMoveSelecedPoint(new Vector3(-773, 0, -1110));
+                                break;
+                            case 9:
+                                PresetTextTEXT.text = "Island Oasis";
+                                WorldPointtoMoveSelecedPoint(new Vector3(-711, 0, -1079));
+                                break;
+                            case 10:
+                                PresetTextTEXT.text = "Gun Island";
+                                WorldPointtoMoveSelecedPoint(new Vector3(297, 0, 1064));
+                                break;
+                            case 11:
+                                PresetTextTEXT.text = "Jellyshroom Cave Entrance";
+                                WorldPointtoMoveSelecedPoint(new Vector3(131, 0, -389));
+                                break;
+                            case 12:
+                                PresetTextTEXT.text = "Crash Zone ;)";
+                                WorldPointtoMoveSelecedPoint(new Vector3(1136, 0, -1547));
+                                break;
+                            default:
+                                PresetTextTEXT.text = "Error please report to dev";
+                                WorldPointtoMoveSelecedPoint(new Vector3(0, 0, 0));
+                                break;
+                        }
+                        break;
+                    }
+                case 3:
+                    {
+                        ModeChoiceText.GetComponent<TextMeshProUGUI>().text = "Random Point";
+                        RandomizePointButton.SetActive(true);
+                        ModePresetPoint.SetActive(false);
+                        SpecificCoordsInput.SetActive(false);
+                        break;
+                    }
+                case 4:
+                    {
+                        ModeChoiceText.GetComponent<TextMeshProUGUI>().text = "Type Coords";
+                        RandomizePointButton.SetActive(false);
+                        SpecificCoordsInput.SetActive(true);
+                        break;
+                    }
             }
         }
         public void ManageRightSide(int Mode, bool ShowSettings)
@@ -322,60 +291,13 @@ namespace LifePodRemastered
                 Map.GetComponent<Image>().sprite = Info.assetBundle.LoadAsset<Sprite>("Map1");
             }
         }
-        /*public void ManageSelectedPointIndicator()
+        public void ManageSelectedPointIndicator()
         {
-            if (PointChanged == true)
+            if (!AnimationActive)
             {
-                PointChanged = false;
-                startsequence = true;
+                AnimationActive = false;
+                SelectedPoint.GetComponent<Animation>().Play();
             }
-            if(startsequence == true)
-            {
-                if(SelectedPointIndicator.transform.localScale.x > 7 && !Scaling)
-                {
-                    Scaling = true;
-                    makesmall = true;
-                    CoroutineHost.StartCoroutine(TimeScaler());
-                }
-                if (SelectedPointIndicator.transform.localScale.x < 7 && !Scaling)
-                {
-                    Scaling = true;
-                    makebig = true;
-                    CoroutineHost.StartCoroutine(TimeScaler());
-                }
-
-                if(Scaling == true && makebig)
-                {
-                    SelectedPointIndicator.transform.localScale += new Vector3(10f * Time.deltaTime, 10f * Time.deltaTime, 0);
-                }
-                if (Scaling == true && makesmall)
-                {
-                    SelectedPointIndicator.transform.localScale -= new Vector3(10f * Time.deltaTime, 10f * Time.deltaTime, 0);
-                }
-            }
-            IEnumerator TimeScaler()
-            {
-                yield return new WaitForSeconds(0.5f);
-                Scaling = false;
-                makebig = false;
-                makesmall = false;
-            }
-        }*/
-        public IEnumerator ManageSelectedPointIndicator()
-        {
-            while (SelectedPointIndicator.transform.localScale.x > 14)
-            {
-                SelectedPointIndicator.transform.localScale -= new Vector3(10f * Time.deltaTime, 10f * Time.deltaTime, 0);
-                Debug.Log("smaller");
-                yield return null;
-            }
-            while (SelectedPointIndicator.transform.localScale.x < 7)
-            {
-                SelectedPointIndicator.transform.localScale += new Vector3(10f * Time.deltaTime, 10f * Time.deltaTime, 0);
-                Debug.Log("bigger");
-                yield return null;
-            }
-            CoroutineHost.StartCoroutine(ManageSelectedPointIndicator());
         }
 
 
@@ -417,7 +339,6 @@ namespace LifePodRemastered
             LifePodRemastered.Logger.LogInfo(vector3.ToString());
             SelectedPoint.GetComponent<RectTransform>().localPosition = new Vector3((vector3.x - (1280f * diff)) / (1250f * diff), (vector3.y - (720f * diff)) / (1250f * diff), 0);
             Info.SelectedSpawn = WorldPoint;
-            PointChanged = true;
         }
         public void MousePositionToSelectedPoint(Vector3 MousePos)
         {
@@ -427,7 +348,6 @@ namespace LifePodRemastered
             LifePodRemastered.Logger.LogInfo(vector3.ToString());
             SelectedPoint.GetComponent<RectTransform>().localPosition = new Vector3((MousePos.x - (1280f * diff)) / (1250f * diff), (MousePos.y - (720f * diff)) / (1250f * diff), 0);
             ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
-            PointChanged = true;
         }
 
 
@@ -436,7 +356,6 @@ namespace LifePodRemastered
         void OnSettingsModButtonClick()
         {
             Info.Showsettings = !Info.Showsettings;
-            OptionsPannelBackButton.GetComponent<Button>().onClick.AddListener(OnSettingsModButtonClick);
             OptionsPannel.SetActive(true);
             Map.SetActive(false);
             ManageRightSide(CurrentMode, Info.Showsettings);
