@@ -101,47 +101,6 @@ namespace LifePodRemastered
 
             return true;
         }
-        [HarmonyPostfix]
-        public static void Postfix(EscapePod __instance)
-        {
-            float distance = Vector3.Distance(Player.main.transform.position, EscapePod.main.transform.position);
-
-            if (!Info.newSave || !LifePodRemastered.Config.ToggleAirSpawn)
-            {
-                if ((distance > 50 || Info.isrepawning) && !__instance.rigidbodyComponent.isKinematic)
-                {
-                    __instance.rigidbodyComponent.isKinematic = true;
-                }
-                if (distance < 50 && !Info.isrepawning)
-                {
-                    __instance.rigidbodyComponent.isKinematic = false;
-                }
-                if (Info.isrepawning && !tempbool)
-                {
-                    CoroutineHost.StartCoroutine(WaitTillSpawned());
-                    tempbool = true;
-                    __instance.rigidbodyComponent.isKinematic = true;
-                }
-            }
-
-            IEnumerator WaitTillSpawned()
-            {
-                yield return new WaitForSeconds(20);
-                Info.isrepawning = false;
-                tempbool = false;
-            }
-        }
-    }
-    [HarmonyPatch(typeof(uGUI_PlayerDeath))]
-    internal class OnResetPlayerOnDeath
-    {
-        [HarmonyPatch(nameof(uGUI_PlayerDeath.TriggerDeathVignette))]
-        [HarmonyPrefix]
-        public static bool OnTriggerDeathVignettePostFix()
-        {
-            Info.isrepawning = true;
-            return true;
-        }
     }
     [HarmonyPatch(typeof(EscapePod))]
     internal class OnStartPatch
@@ -174,6 +133,17 @@ namespace LifePodRemastered
         public static bool OnLandPreFix()
         {
             return false;
+        }
+    }
+    [HarmonyPatch(typeof(uGUI_SceneIntro))]
+    internal class OnuGUI_SceneIntroPatch
+    {
+        [HarmonyPatch(nameof(uGUI_SceneIntro.OnUpdate))]
+        [HarmonyPrefix]
+        public static void OnEscapeHoldPreFix(uGUI_SceneIntro __instance)
+        {
+            if (LifePodRemastered.Config.SkipInto)
+                __instance.Stop(true);
         }
     }
 }

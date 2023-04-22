@@ -225,7 +225,6 @@ EscapePodSpawnChanges/bin/Debug/UnityEngine.VideoModule.dll
 EscapePodSpawnChanges/bin/Debug/UnityEngine.VRModule.dll
 EscapePodSpawnChanges/bin/Debug/UnityEngine.WindModule.dll
 EscapePodSpawnChanges/bin/Debug/UnityEngine.XRModule.dll
-EscapePodSpawnChanges/Info.cs
 EscapePodSpawnChanges/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
 EscapePodSpawnChanges/obj/Debug/DesignTimeResolveAssemblyReferences.cache
 EscapePodSpawnChanges/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
@@ -235,3 +234,4 @@ EscapePodSpawnChanges/obj/Debug/EscapePodSpawnChanges.csproj.CoreCompileInputs.c
 EscapePodSpawnChanges/obj/Debug/EscapePodSpawnChanges.csproj.FileListAbsolute.txt
 EscapePodSpawnChanges/obj/Debug/EscapePodSpawnChanges.dll
 EscapePodSpawnChanges/obj/Debug/EscapePodSpawnChanges.pdb
+*.dll

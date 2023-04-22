@@ -36,5 +36,11 @@ namespace LifePodRemastered
             Debug.Log(myData.lastname);
 
         }
+        public static FMODAsset GetFmodAsset(string audioPath)
+        {
+            FMODAsset asset = ScriptableObject.CreateInstance<FMODAsset>();
+            asset.path = audioPath;
+            return asset;
+        }
     }
 }

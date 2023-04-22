@@ -39,7 +39,6 @@ namespace LifePodRemastered
         GameObject Map;
         GameObject SelectedPoint;
         GameObject SelectedPointIndicator;
-        GameObject OptionsBackGround;
 
         GameObject SpecificPointInfo;
         GameObject PresetPointInfo;
@@ -113,7 +112,7 @@ namespace LifePodRemastered
 
 
             AreaSeceltor.SetActive(false);
-            OptionsBackGround.SetActive(false);
+            OptionsPannel.SetActive(false);
             SpecificPointInfo.SetActive(false);
             PresetPointInfo.SetActive(false);
             RandomPointInfo.SetActive(false);
@@ -127,7 +126,6 @@ namespace LifePodRemastered
             
             if (Info.showmap && !Info.Showsettings)
             {
-                ManageMapText();
                 ManageRightSide(CurrentMode, Info.Showsettings);
                 ManageLeftSide(CurrentMode, CurrentPreset);
                 ManageSelectedPointIndicator();
@@ -243,31 +241,38 @@ namespace LifePodRemastered
 
             if (!ShowSettings)//settings info off
             {
-                if (CurrentMode == 1)//specific
+                switch (CurrentMode)
                 {
-                    SpecificPointInfo.SetActive(true);
-                    PresetPointInfo.SetActive(false);
-                    SettingsInfo.SetActive(false);
-                }
-                if (CurrentMode == 2)//Preset
-                {
-                    SpecificPointInfo.SetActive(false);
-                    PresetPointInfo.SetActive(true);
-                    RandomPointInfo.SetActive(false);
-                    SettingsInfo.SetActive(false);
-                }
-                if (CurrentMode == 3)//randon
-                {
-                    PresetPointInfo.SetActive(false);
-                    RandomPointInfo.SetActive(true);
-                    InputCoordsInfo.SetActive(false);
-                    SettingsInfo.SetActive(false);
-                }
-                if (CurrentMode == 4)//Input Coords
-                {
-                    RandomPointInfo.SetActive(false);
-                    InputCoordsInfo.SetActive(true);
-                    SettingsInfo.SetActive(false);
+                    case 1:
+                        {
+                            SpecificPointInfo.SetActive(true);
+                            PresetPointInfo.SetActive(false);
+                            SettingsInfo.SetActive(false);
+                            break;
+                        }
+                    case 2:
+                        {
+                            SpecificPointInfo.SetActive(false);
+                            PresetPointInfo.SetActive(true);
+                            RandomPointInfo.SetActive(false);
+                            SettingsInfo.SetActive(false);
+                            break;
+                        }
+                    case 3:
+                        {
+                            PresetPointInfo.SetActive(false);
+                            RandomPointInfo.SetActive(true);
+                            InputCoordsInfo.SetActive(false);
+                            SettingsInfo.SetActive(false);
+                            break;
+                        }
+                    case 4:
+                        {
+                            RandomPointInfo.SetActive(false);
+                            InputCoordsInfo.SetActive(true);
+                            SettingsInfo.SetActive(false);
+                            break;
+                        }
                 }
             }
             else//settings
@@ -279,17 +284,6 @@ namespace LifePodRemastered
                 SettingsInfo.SetActive(true);
             }
 
-        }
-        public void ManageMapText()
-        {
-            if(!LifePodRemastered.Config.ShowTextOnMap)
-            {
-                Map.GetComponent<Image>().sprite = Info.assetBundle.LoadAsset<Sprite>("Map2");
-            }
-            if(LifePodRemastered.Config.ShowTextOnMap)
-            {
-                Map.GetComponent<Image>().sprite = Info.assetBundle.LoadAsset<Sprite>("Map1");
-            }
         }
         public void ManageSelectedPointIndicator()
         {

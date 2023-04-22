@@ -17,3 +17,4 @@ namespace LifePodRemastered
         public static bool OverideSpawnHeight; // used if manually inputing coords to overide the set spawn height.
     }
 }
+

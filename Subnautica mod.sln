@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayCounterChip", "DayCounte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifePodRemastered", "EscapePodSpawnChanges\LifePodRemastered.csproj", "{B1429F5D-A1B5-455D-A555-71099823A41F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartLocation", "Test(WILL DELETE)\StartLocation.csproj", "{46DD15FA-61A6-44C5-A695-A726068546B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B1429F5D-A1B5-455D-A555-71099823A41F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1429F5D-A1B5-455D-A555-71099823A41F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1429F5D-A1B5-455D-A555-71099823A41F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46DD15FA-61A6-44C5-A695-A726068546B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46DD15FA-61A6-44C5-A695-A726068546B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46DD15FA-61A6-44C5-A695-A726068546B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46DD15FA-61A6-44C5-A695-A726068546B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
