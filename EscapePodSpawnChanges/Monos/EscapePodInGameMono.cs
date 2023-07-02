@@ -122,9 +122,8 @@ namespace LifePodRemastered
         {
             yield return new WaitForSecondsRealtime(10f);
             parachute.SetActive(true);
-            parachute.GetComponent<Animation>().Play();
-
             parachute2.SetActive(true);
+            parachute.GetComponent<Animation>().Play();
             parachute2.GetComponent<Animation>().Play();
             yield return new WaitForSecondsRealtime(3.1f);
             MainCameraControl.main.ShakeCamera(1f, 0.5f, MainCameraControl.ShakeMode.Linear, 1f);
