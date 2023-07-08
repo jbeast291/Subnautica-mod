@@ -7,12 +7,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UWE;
-using SMLHelper.V2.Utility;
 using TMPro;
+using LifePodRemastered.Monos;
 
 namespace LifePodRemastered
 {
-    internal class LifePodMapFunction : MonoBehaviour
+    internal class EscapePodChangesMono : MonoBehaviour
     {
         GameObject HoverSound;
         GameObject ClickSound;
@@ -28,7 +28,6 @@ namespace LifePodRemastered
         GameObject Primaryoptions;
 
         GameObject OptionsPannel;
-        //GameObject OptionsPannelBackButton;
 
         GameObject ModeChoiceText;
         GameObject ModePresetPoint;
@@ -37,6 +36,11 @@ namespace LifePodRemastered
         GameObject SpecificCoordsInput;
 
         GameObject Map;
+        GameObject CoordsDisplay;
+        GameObject ScalePoint1;
+        GameObject ScalePoint2;
+        GameObject BoundBottomLeft;
+        GameObject BoundTopRight;
         GameObject SelectedPoint;
         GameObject SelectedPointIndicator;
 
@@ -46,24 +50,18 @@ namespace LifePodRemastered
         GameObject InputCoordsInfo;
         GameObject SettingsInfo;
 
+        Camera cam;
+
         int CurrentMode = 1;
         int CurrentPreset = 1;
 
         bool AnimationActive = false;
 
-        //bool PointChanged = false;
-        //bool startsequence = false;
-        //bool Scaling = false;
-        //bool makebig = false;
-        //bool makesmall = false;
-
 
         Vector3 vector3 = new Vector3(10000, 10000, 10000);
 
-        //ToFile ToFileInstance = new ToFile();
         public void Awake()
         {
-            //ToFileInstance.CreateJson();
 
             Rightside = GameObject.Find("RightSide");
             Primaryoptions = GameObject.Find("PrimaryOptions");
@@ -102,6 +100,11 @@ namespace LifePodRemastered
             SpecificCoordsInput = GameObject.Find("SpecificCoordsInput");
 
             Map = GameObject.Find("Map");
+            CoordsDisplay = GameObject.Find("CoordsDisplay");
+            ScalePoint1 = GameObject.Find("ScalePoint1");
+            ScalePoint2 = GameObject.Find("ScalePoint2");
+            BoundBottomLeft = GameObject.Find("BoundBottomLeft");
+            BoundTopRight = GameObject.Find("BoundTopRight");
             OptionsPannel = GameObject.Find("OptionsBackGround");
 
             SpecificPointInfo = GameObject.Find("SpecificPointInfo");
@@ -110,6 +113,7 @@ namespace LifePodRemastered
             InputCoordsInfo = GameObject.Find("InputCoordsInfo");
             SettingsInfo = GameObject.Find("SettingsInfo");
 
+            cam = GameObject.Find("UI Camera").GetComponent<Camera>();
 
             AreaSeceltor.SetActive(false);
             OptionsPannel.SetActive(false);
@@ -119,11 +123,12 @@ namespace LifePodRemastered
             InputCoordsInfo.SetActive(false);
             SettingsInfo.SetActive(false);
 
+            OptionsPannel.gameObject.EnsureComponent<OptionsMono>();
+
         }
 
         public void Update()
         {
-            
             if (Info.showmap && !Info.Showsettings)
             {
                 ManageRightSide(CurrentMode, Info.Showsettings);
@@ -290,7 +295,7 @@ namespace LifePodRemastered
             if (!AnimationActive)
             {
                 AnimationActive = false;
-                SelectedPoint.GetComponent<Animation>().Play();
+                SelectedPointIndicator.GetComponent<Animation>().Play();
             }
         }
 
@@ -315,9 +320,7 @@ namespace LifePodRemastered
 
         public float CheckValidMousePosition(Vector3 MousePos)
         {
-            float diff = Info.currentRes.width / 2560f;
-
-            if ((MousePos.y >= (107.0f * diff) && MousePos.y <= (1335.0f * diff)) && (MousePos.x >= (664.0f * diff) && MousePos.x <= (1895.0f * diff)))
+            if ((MousePos.y >= cam.WorldToScreenPoint(BoundBottomLeft.transform.position).y && MousePos.y <= cam.WorldToScreenPoint(BoundTopRight.transform.position).y && (MousePos.x >= cam.WorldToScreenPoint(BoundBottomLeft.transform.position).x && MousePos.x <= cam.WorldToScreenPoint(BoundTopRight.transform.position).x)))
             {
                 return 1;
             }
@@ -326,24 +329,28 @@ namespace LifePodRemastered
                 return 0;
             }
         }
-        public void WorldPointtoMoveSelecedPoint(Vector3 WorldPoint)
+        public void WorldPointtoMoveSelecedPoint(Vector3 WorldPoint)//NEEEEED FIX
         {
             float diff = Info.currentRes.width / 2560f;
-            vector3 = new Vector3((WorldPoint.x / (3.33f / diff)) + (1280 * diff), (WorldPoint.z / (3.33f / diff)) + (720 * diff));
+            vector3 = new Vector3((WorldPoint.x / (3.37f / diff)) + (1280 * diff), (WorldPoint.z / (3.37f / diff)) + (720 * diff));
             LifePodRemastered.Logger.LogInfo(vector3.ToString());
             SelectedPoint.GetComponent<RectTransform>().localPosition = new Vector3((vector3.x - (1280f * diff)) / (1250f * diff), (vector3.y - (720f * diff)) / (1250f * diff), 0);
             Info.SelectedSpawn = WorldPoint;
+            CoordsDisplay.GetComponent<TextMeshProUGUI>().text = "Coords: " + WorldPoint;
         }
         public void MousePositionToSelectedPoint(Vector3 MousePos)
         {
-            float diff = Info.currentRes.width / 2560f;
-            vector3 = new Vector3((MousePos.x - (1280 * diff)) * (3.33f / diff), 0, (MousePos.y - (720 * diff)) * (3.33f / diff));
+            LifePodRemastered.Logger.LogInfo(Input.mousePosition.ToString());
+
+            vector3 = new Vector3((MousePos.x - Info.currentRes.width / 2) * (1500 / (Info.currentRes.width / 2 - cam.WorldToScreenPoint(ScalePoint1.transform.position).x)), 0, (MousePos.y - Info.currentRes.height / 2) * (1500 / (Info.currentRes.height / 2 - cam.WorldToScreenPoint(ScalePoint2.transform.position).y)));
             Info.SelectedSpawn = vector3;
-            LifePodRemastered.Logger.LogInfo(vector3.ToString());
-            SelectedPoint.GetComponent<RectTransform>().localPosition = new Vector3((MousePos.x - (1280f * diff)) / (1250f * diff), (MousePos.y - (720f * diff)) / (1250f * diff), 0);
+            CoordsDisplay.GetComponent<TextMeshProUGUI>().text = "Coords: " + vector3;
+
+            float Scaler = 0.000238f;
+            Vector3 SELECTOR = new Vector3(vector3.x * Scaler, vector3.z * Scaler, 0);
+            SelectedPoint.GetComponent<RectTransform>().localPosition = SELECTOR;
             ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
         }
-
 
 
 
@@ -443,8 +450,9 @@ namespace LifePodRemastered
         }
         void OnRandomizePointButtonClick()
         {
-            float diff = Info.currentRes.width / 2560f;
-            Vector3 ranvector3 = new Vector3(Random.Range(664.0f * diff, 1895.0f * diff), Random.Range(107.0f * diff, 1335.0f * diff), 0);
+            Vector3 ranvector3 = new Vector3(Random.Range(cam.WorldToScreenPoint(BoundBottomLeft.transform.position).x, cam.WorldToScreenPoint(BoundTopRight.transform.position).x), Random.Range(cam.WorldToScreenPoint(BoundBottomLeft.transform.position).y, cam.WorldToScreenPoint(BoundTopRight.transform.position).y), 0);
+            LifePodRemastered.Logger.LogInfo(ranvector3.ToString());
+
             MousePositionToSelectedPoint(ranvector3);
             ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
 

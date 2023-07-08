@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UWE;
-using SMLHelper.V2.Utility;
 
 
 namespace LifePodRemastered
@@ -27,7 +26,7 @@ namespace LifePodRemastered
 
         public void Start()
         {
-            if (Info.newSave && LifePodRemastered.Config.ToggleAirSpawn)
+            if (Info.newSave)
             {
                 CoroutineHost.StartCoroutine(CustomIntro());
                 //CoroutineHost.StartCoroutine(Parachute());

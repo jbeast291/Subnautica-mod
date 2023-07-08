@@ -17,14 +17,7 @@ namespace LifePodRemastered
         [HarmonyPrefix]
         public static bool NewGetRandomStartPoint(ref Vector3 __result)
         {
-            if (LifePodRemastered.Config.ToggleAirSpawn)
-            {
-                __result = new Vector3(Info.SelectedSpawn.x, LifePodRemastered.Config.AirSpawnHeight, Info.SelectedSpawn.z);
-            }
-            else
-            {
-                __result = Info.SelectedSpawn;
-            }
+            __result = Info.SelectedSpawn;
             return false;
         }
     }
@@ -74,7 +67,7 @@ namespace LifePodRemastered
         [HarmonyPostfix]
         public static void StartPostPatch(uGUI_MainMenu __instance)
         {
-            __instance.gameObject.EnsureComponent<LifePodMapFunction>();
+            __instance.gameObject.EnsureComponent<EscapePodChangesMono>();
         }
     }
 
@@ -89,14 +82,10 @@ namespace LifePodRemastered
         {
             WorldForces wf = __instance.GetComponent<WorldForces>();
 
-            wf.aboveWaterGravity = LifePodRemastered.Config.HeavyPodIntensity;
-            if (LifePodRemastered.Config.ToggleHeavyPod)
+            wf.aboveWaterGravity = 500;
+            if (true)
             {
-                wf.underwaterGravity = LifePodRemastered.Config.HeavyPodIntensity;
-            }
-            if (!LifePodRemastered.Config.ToggleHeavyPod)
-            {
-                wf.underwaterGravity = -30;
+                wf.underwaterGravity = 500;
             }
 
             return true;
@@ -111,8 +100,8 @@ namespace LifePodRemastered
         {
             __instance.gameObject.EnsureComponent<EscapePodInGameMono>();
 
-            __instance.bottomHatchUsed = LifePodRemastered.Config.DisableFirstTimeAnims;
-            __instance.topHatchUsed = LifePodRemastered.Config.DisableFirstTimeAnims;
+            __instance.bottomHatchUsed = true;
+            __instance.topHatchUsed = true;
         }
     }
     [HarmonyPatch(typeof(DisplayManager))]
@@ -142,8 +131,7 @@ namespace LifePodRemastered
         [HarmonyPrefix]
         public static void OnEscapeHoldPreFix(uGUI_SceneIntro __instance)
         {
-            if (LifePodRemastered.Config.SkipInto)
-                __instance.Stop(true);
+            __instance.Stop(true);
         }
     }
 }
