@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using static LifePodRemastered.SaveManager;
 
-namespace LifePodRemastered.Monos
+namespace LifePodRemastered
 {
     internal class OptionsMono : MonoBehaviour
     {
@@ -45,35 +46,84 @@ namespace LifePodRemastered.Monos
             heightReqToggle.onValueChanged.AddListener(delegate {
                 HeightReqToggle(heightReqToggle);
             });
+
+            ReadSettingsFromModFolder();
+            heavyPodToggle.isOn = settingsCache.HeavyPodToggle;
+            firstTimeAnimToggle.isOn = settingsCache.FirstTimeToggle;
+            experimentalSettingToggle.isOn = settingsCache.ExSettingToggle;
+            customIntroToggle.isOn = settingsCache.CustomIntroToggle;
+            heightReqToggle.isOn = settingsCache.HeightReqToggle;
+            if (!settingsCache.ExSettingToggle)
+            {
+                experimentalSettingsGroup.SetActive(false);
+            }
         }
-        public void Update()
-        {
-            
-        }
-
-
-
-
 
         public void HeavyPodToggle(Toggle change)
         {
-
+            if (change.isOn)
+            {
+                settingsCache.HeavyPodToggle = true;
+            }
+            else
+            {
+                settingsCache.HeavyPodToggle = false;
+            }
+            WriteSettingsToModFolder();
         }
         public void FirstTimeAnimToggle(Toggle change)
         {
-
+            if (change.isOn)
+            {
+                settingsCache.FirstTimeToggle = true;
+            }
+            else
+            {
+                settingsCache.FirstTimeToggle = false;
+            }
+            WriteSettingsToModFolder();
         }
         public void ExperimentalSettingToggle(Toggle change)
         {
-
+            if(change.isOn)
+            {
+                experimentalSettingsGroup.SetActive(true);
+                settingsCache.ExSettingToggle = true;
+            }
+            else
+            {
+                experimentalSettingsGroup.SetActive(false);
+                settingsCache.ExSettingToggle = false;
+                settingsCache.CustomIntroToggle = true;
+                settingsCache.HeightReqToggle = true;
+                customIntroToggle.isOn = true;
+                heightReqToggle.isOn = true;
+            }
+            WriteSettingsToModFolder();
         }
         public void CustomIntroToggle(Toggle change)
         {
-
+            if (change.isOn)
+            {
+                settingsCache.CustomIntroToggle = true;
+            }
+            else
+            {
+                settingsCache.CustomIntroToggle = false;
+            }
+            WriteSettingsToModFolder();
         }
         public void HeightReqToggle(Toggle change)
         {
-
+            if (change.isOn)
+            {
+                settingsCache.HeightReqToggle = true;
+            }
+            else
+            {
+                settingsCache.HeightReqToggle = false;
+            }
+            WriteSettingsToModFolder();
         }
     }
 }

@@ -15,6 +15,7 @@ namespace LifePodRemastered
         public static bool Showsettings = false; // wether to show the games settings or not 
         public static int GameMode; // 1 survival, 2 creative, 3 freedom, 4 hardcore
         public static bool OverideSpawnHeight; // used if manually inputing coords to overide the set spawn height.
+        public static bool loaded = false;
     }
 }
 

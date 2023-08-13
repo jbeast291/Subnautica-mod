@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UWE;
 using TMPro;
-using LifePodRemastered.Monos;
+using static LifePodRemastered.SaveManager;
 
 namespace LifePodRemastered
 {
@@ -141,6 +141,7 @@ namespace LifePodRemastered
                 Rightside.SetActive(false);
                 Primaryoptions.SetActive(false);
             }
+
         }
         public void ManageLeftSide(int Mode, int preset)
         {
@@ -370,6 +371,9 @@ namespace LifePodRemastered
                 ClickSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
                 Info.showmap = false;
                 Info.newSave = true; // 1 survival, 2 creative, 3, freedom, 4 hardcore
+
+                LoadChachedSettingsToSlotSave();
+
                 if (Info.GameMode == 1)
                 {
                     CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Survival));

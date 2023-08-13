@@ -19,7 +19,7 @@ namespace LifePodRemastered
         public void Awake()
         {
             Logger = base.Logger;
-            Logger.LogInfo(pluginName + " " + pluginVersion + " " + "has been loaded (awesome!)");
+            Logger.LogInfo(pluginName + " " + pluginVersion + " " + "has been loaded!");
             harmony.PatchAll();
         }
     }

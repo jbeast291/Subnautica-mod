@@ -17,7 +17,7 @@ namespace LifePodRemastered
         [HarmonyPrefix]
         public static bool NewGetRandomStartPoint(ref Vector3 __result)
         {
-            __result = Info.SelectedSpawn;
+            __result = new Vector3(Info.SelectedSpawn.x, 2000f, Info.SelectedSpawn.z);
             return false;
         }
     }
@@ -70,7 +70,7 @@ namespace LifePodRemastered
             __instance.gameObject.EnsureComponent<EscapePodChangesMono>();
         }
     }
-
+    /*
     [HarmonyPatch(typeof(EscapePod))]
     [HarmonyPatch("FixedUpdate")]
     internal class EscapePod_FixedUpdate_Patch
@@ -85,12 +85,12 @@ namespace LifePodRemastered
             wf.aboveWaterGravity = 500;
             if (true)
             {
-                wf.underwaterGravity = 500;
+                wf.underwaterGravity = 250;
             }
 
             return true;
         }
-    }
+    }*/
     [HarmonyPatch(typeof(EscapePod))]
     internal class OnStartPatch
     {

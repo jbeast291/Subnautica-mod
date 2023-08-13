@@ -7,40 +7,64 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Nautilus.Utility;
+using static LifePodRemastered.SaveManager;
 
 
 namespace LifePodRemastered
 {
     public class SaveManager
     {
-        [System.Serializable]
-        public class Saves
-        {
-            public string name = "JBEAST";
-            public string lastname = "JBEASTLASTname";
-        }
 
-        public static Saves myData = new Saves();
-        
+        [System.Serializable]
+        public class InGameSave
+        {
+            public bool HeavyPodToggle;
+            public bool FirstTimeToggle;
+            public bool CustomIntroToggle;
+            public bool HeightReqToggle;
+        }
+        [System.Serializable]
+        public class SettingsCache
+        {
+            public bool HeavyPodToggle;
+            public bool FirstTimeToggle;
+            public bool CustomIntroToggle;
+            public bool HeightReqToggle;
+
+            public bool ExSettingToggle;
+        }
+        public static InGameSave inGameSave = new InGameSave();
+        public static SettingsCache settingsCache = new SettingsCache();
+
         public static void WriteSettingsToCurrentSlot()
         {
-            string StringOutPut = JsonUtility.ToJson(myData);
-            File.WriteAllText(SaveUtils.GetCurrentSaveDataDir() + "/modconfig.json", StringOutPut);
+            string StringOutPut = JsonUtility.ToJson(inGameSave);
+            File.WriteAllText(SaveUtils.GetCurrentSaveDataDir() + "/LifePodRemastered.json", StringOutPut);
         }
 
-        public static void ReadSettingsToCurrectSlot()
+        public static void ReadSettingsFromCurrectSlot()
         {
-            string file = File.ReadAllText(SaveUtils.GetCurrentSaveDataDir() + "/modconfig.json");
-            myData = JsonUtility.FromJson<Saves>(file);
-            Debug.Log(myData.name);
-            Debug.Log(myData.lastname);
-
+            string file = File.ReadAllText(SaveUtils.GetCurrentSaveDataDir() + "/LifePodRemastered.json");
+            inGameSave = JsonUtility.FromJson<InGameSave>(file);
         }
-        public static FMODAsset GetFmodAsset(string audioPath)
+        public static void WriteSettingsToModFolder()
         {
-            FMODAsset asset = ScriptableObject.CreateInstance<FMODAsset>();
-            asset.path = audioPath;
-            return asset;
+            string StringOutPut = JsonUtility.ToJson(settingsCache);
+            File.WriteAllText(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/SettingsChache.json", StringOutPut);
+        }
+
+        public static void ReadSettingsFromModFolder()
+        {
+            string file = File.ReadAllText(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/SettingsChache.json");
+            settingsCache = JsonUtility.FromJson<SettingsCache>(file);
+        }
+        public static void LoadChachedSettingsToSlotSave()
+        {
+            inGameSave.HeavyPodToggle = settingsCache.HeavyPodToggle;
+            inGameSave.FirstTimeToggle = settingsCache.FirstTimeToggle;
+            inGameSave.CustomIntroToggle = settingsCache.CustomIntroToggle;
+            inGameSave.HeightReqToggle = settingsCache.HeightReqToggle;
+
         }
     }
 }
