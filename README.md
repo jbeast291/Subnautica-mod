@@ -7,6 +7,8 @@ If you find that one of my mods dosent work with another please create contact m
 If you want to contibute to my mods or colaborate contact me on discord.
 
 ## [Life Pod Remastered] NOT 2.0 YET 
+Go to This [Trello board](https://trello.com/b/DhSe6vgF/lifepodremastered) to see my progress of updating it :)
+
 TLDR: Many Impovemts giving the user more choice to how the life pod spawns and extra features ingame. You can make the pod sink and spawn in the air for example.
 The pod gains a parachute when falling in the air for a more immersive and cinematic event. There are also many other features you can see ingame.
 
