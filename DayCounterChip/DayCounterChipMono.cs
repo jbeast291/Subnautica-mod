@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using System.Collections;
-using UWE;
+using UnityEngine.UI;
+using Nautilus.Handlers;
 
 namespace DayCounterChip
 {
@@ -16,33 +17,45 @@ namespace DayCounterChip
         static GameObject DayCounter;
         static GameObject DayCounterImage1;
         static GameObject DayCounterImage2;
-        TMPro.TextMeshProUGUI DayCounterText;
+        static GameObject PDAImage;
+        static Color PdaTextColor = new Color(0, 1, 1, 1); // light blue
+        static Color WhiteTextColor = new Color(1, 1, 1, 1); // White
+        static Vector3 PdaModeScale = new Vector3(500, 500, 500);
+        static Vector3 HudModeScale = new Vector3(935.3073f, 935.3074f, 935.3073f);
+        static PDA pDA;
+        static TMPro.TextMeshProUGUI DayCounterText;
 
         public void Awake()
         {
             DayCounter = Instantiate(assetBundle.LoadAsset<GameObject>("DayCounteChip"));
-            DayCounter.transform.parent = GameObject.Find("uGUI(Clone)/ScreenCanvas/HUD/Content").transform;
-            DayCounterImage1 = GameObject.Find("LeftSideBackGround");
-            DayCounterImage2 = GameObject.Find("LeftSideBackGround2");
+            DayCounterImage1 = GameObject.Find("BackGround1");
+            DayCounterImage2 = GameObject.Find("BackGround2");
+            PDAImage = GameObject.Find("BackGround3");
             DayCounterText = GameObject.Find("DayText").GetComponent<TMPro.TextMeshProUGUI>();
+            pDA = GameObject.Find("Player/body/player_view/export_skeleton/head_rig/neck/chest/clav_L/clav_L_aim/shoulder_L/elbow_L/hand_L/attachL/PlayerPDA").GetComponent<PDA>();
+
             DayCounter.SetActive(true);
-            DayCounter.transform.position = new Vector3(-0.2444f, - 0.9074f, 1);
         }
+
         public void Start()
         {
+            if (BepInEx.myConfig.PdaMode)
+                SetupPdaMode();
+            else
+            {
+                SetupHudMode();
+                UpdatePosition();
+            }
             UpdateImages();
-            CoroutineHost.StartCoroutine(Check());
+
         }
-        public void Update()
+
+        public void LateUpdate()
         {
-            if (CheckIfEquipmentIsInSlot(DayCounterChip.TechTypeID) && MainCameraControl.main.cinematicMode == false)
+            if (CheckIfEquipmentIsInSlot(DayCounterItem.Info.TechType) && (MainCameraControl.main.cinematicMode == false) && (pDA.state == PDA.State.Closed || BepInEx.myConfig.PdaMode))
             {
                 float Currentday = (float)(dayNightCycle.GetDay() - 0.5f);
-#pragma warning disable IDE0071
-                DayCounterText.text = $"Day: {Currentday.ToString("N0")}";
-#pragma warning restore IDE0071
-
-                //DayCounterText.transform.position = new Vector3(2.0146f, 1.2974f, 1.4027f);
+                DayCounterText.text = $"Day: {Currentday:N0}";
 
                 DayCounter.SetActive(true);
             }
@@ -51,6 +64,7 @@ namespace DayCounterChip
                 DayCounter.SetActive(false);
             }
         }
+
         public static bool CheckIfEquipmentIsInSlot(TechType techtype) // Checks all the equipment slots and sees if the techtype is there (if you wondering i "borrowed" this from another mod)
         {
             Equipment equipment = null;
@@ -68,12 +82,10 @@ namespace DayCounterChip
 
             List<string> Slotslist = new List<string>();
             equipment.GetSlots(equipmentType, Slotslist);
-            Equipment equipment1 = equipment;
-
             for (int i = 0; i < Slotslist.Count; i++)
             {
                 string slot = Slotslist[i];
-                TechType tt = equipment1.GetTechTypeInSlot(slot);
+                TechType tt = equipment.GetTechTypeInSlot(slot);
                 if (tt == techtype)
                 {
                     return true;
@@ -83,35 +95,99 @@ namespace DayCounterChip
         }
         public static void UpdateImages()
         {
-            Debug.Log("update");
             if (DayCounterImage1 != null && DayCounterImage2 != null)
             {
                 if (BepInEx.myConfig.BackGroundChoice == "BackGround 1")
                 {
                     DayCounterImage1.SetActive(true);
                     DayCounterImage2.SetActive(false);
+                    PDAImage.SetActive(false);
+                    UpdateTextColor();
                 }
                 if (BepInEx.myConfig.BackGroundChoice == "BackGround 2")
                 {
                     DayCounterImage1.SetActive(false);
                     DayCounterImage2.SetActive(true);
+                    PDAImage.SetActive(false);
+                    UpdateTextColor();
+                }
+                if (BepInEx.myConfig.BackGroundChoice == "Pda Style")
+                {
+                    DayCounterImage1.SetActive(false);
+                    DayCounterImage2.SetActive(false);
+                    PDAImage.SetActive(true);
+                    UpdateTextColor();
                 }
                 if (BepInEx.myConfig.BackGroundChoice == "No BackGround")
                 {
                     DayCounterImage1.SetActive(false);
                     DayCounterImage2.SetActive(false);
+                    PDAImage.SetActive(false);
                 }
             }
         }
         public static void UpdatePosition()
         {
-            DayCounter.transform.position = new Vector3(BepInEx.myConfig.PosX, BepInEx.myConfig.PosY, 1.4027f);
+            if (!BepInEx.myConfig.PdaMode)
+            {
+                DayCounter.transform.localPosition = new Vector3 (BepInEx.myConfig.PosX - (150 * BepInEx.myConfig.Scale), BepInEx.myConfig.PosY, 1.4027f);
+            }
         }
-        public IEnumerator Check()
+        
+        public static void UpdateMode()
         {
-            yield return new WaitForSecondsRealtime(2);
-            UpdatePosition();
-            Debug.Log("Check");
+            if(BepInEx.myConfig.PdaMode)
+            {
+                SetupPdaMode();
+                UpdateTextColor();
+            }
+            else
+            {
+                SetupHudMode();
+                UpdateScale();
+                UpdatePosition();
+                UpdateTextColor();
+            }
         }
+
+        public static void UpdateScale()
+        {
+            if (!BepInEx.myConfig.PdaMode)
+            {
+                DayCounter.transform.localScale = new Vector3(
+                    HudModeScale.x,
+                    HudModeScale.y * BepInEx.myConfig.Scale,
+                    HudModeScale.z * BepInEx.myConfig.Scale);
+            }
+        }
+
+        static void SetupPdaMode()
+        {
+            DayCounter.transform.SetParent(GameObject.Find("uGUI_PDAScreen(Clone)/Content/InventoryTab").transform);
+            DayCounter.transform.localPosition = new Vector3(-79.3639f, 331.4845f, -2.0231f);
+            DayCounter.transform.localRotation = Quaternion.Euler(0, 270, 0);
+            DayCounter.transform.localScale = PdaModeScale;
+
+        }
+
+        static void SetupHudMode()
+        {
+            DayCounter.transform.SetParent(GameObject.Find("uGUI(Clone)/ScreenCanvas/HUD/Content").transform);
+            DayCounter.transform.localPosition = new Vector3(960.285f, 674.0301f, 217.4586f);
+            DayCounter.transform.localRotation = Quaternion.Euler(0, 270, 0);
+            DayCounter.transform.localScale = new Vector3(
+                HudModeScale.x, 
+                HudModeScale.y * BepInEx.myConfig.Scale,
+                HudModeScale.z * BepInEx.myConfig.Scale);
+        }
+
+        static void UpdateTextColor()
+        {
+            if (BepInEx.myConfig.PdaMode && BepInEx.myConfig.BackGroundChoice == "Pda Style")
+                DayCounterText.color = PdaTextColor;
+            else
+                DayCounterText.color = WhiteTextColor;
+        }
+        
     }
 }

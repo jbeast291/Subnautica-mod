@@ -1,19 +1,22 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using SMLHelper.V2.Options.Attributes;
-using SMLHelper.V2.Handlers;
-using SMLHelper.V2.Json;
+using Nautilus.Handlers;
+using Nautilus.Json;
+using Nautilus.Options.Attributes;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 namespace DayCounterChip
 {
     [BepInPlugin(myGUID, pluginName, pluginVersion)]
+    [BepInDependency("com.snmodding.nautilus")]
     public class BepInEx : BaseUnityPlugin
     {
         private const string myGUID = "Jbeast291.DayCounterChip";
         private const string pluginName = "Day Counter Chip";
-        private const string pluginVersion = "1.1.0";
+        private const string pluginVersion = "1.2.0";
 
         private static readonly Harmony harmony = new Harmony(myGUID);
 
@@ -24,37 +27,58 @@ namespace DayCounterChip
         public void Awake()
         {
             Logger = base.Logger;
-            Logger.LogInfo(pluginName + " " + pluginVersion + " " + "has been loaded (awesome!)");
+            Logger.LogInfo(pluginName + " " + pluginVersion + " " + "has been loaded!");
             harmony.PatchAll();
-            DayCounterChip dayCounterChip = new DayCounterChip();
-            dayCounterChip.Patch();
+            DayCounterItem.Register();
 
         }
 
     }
 
+
     [Menu("Day Counter Chip")]
     public class MyConfig : ConfigFile
     {
-        [Slider("Counter Position on screen X", -2.8f, 2.2f, DefaultValue = 1.7783f), OnChange(nameof(ConfigUpdate2))]
-        public float PosX = 1.7783f;
+        [Slider("Counter X Position on screen", -942f, 942f, DefaultValue = 783, Tooltip = "Move the counter around your screen on the X-axis (unavailable in PDA mode)"), OnChange(nameof(PosUpdate))]
+        public float PosX = 783;
 
-        [Slider("Counter Position on screen Y", -1.4f, 1.4f, DefaultValue = 1.2482f), OnChange(nameof(ConfigUpdate2))]
-        public float PosY = 1.2482f;
+        [Slider("Counter Y Position on screen", -540f, 540f, DefaultValue = 479, Tooltip = "Move the counter around your screen on the Y-axis (unavailable in PDA mode)"), OnChange(nameof(PosUpdate))]
+        public float PosY = 479;
 
+        [Slider("Counter Scale", 0.1f, 2f, DefaultValue = 0.65f, Tooltip = "Scale up/down the counter (unavailable in PDA mode)"), OnChange(nameof(ScaleUpdate))]
+        public float Scale = 0.65f;
+
+        //Deprecated for not being very usefull
         //[Choice("Text Color", new[] { "Blue", "Red", "White", "Green", "Black", "Cyan", "Gray", "Magenta", "Yellow" }, Tooltip = "changes text color")]
         //public string ColorChoice = "White";
 
-        [Choice("BackGround Style", new[] { "BackGround 1", "BackGround 2", "No BackGround" }, Tooltip = "Changes the style of the image behind the text"), OnChange(nameof(ConfigUpdate))]
+        [Choice("BackGround Style", new[] { "BackGround 1", "BackGround 2", "Pda Style", "No BackGround" }, Tooltip = "Changes the style of the image behind the text"), OnChange(nameof(BackgroundUpdate))]
         public string BackGroundChoice = "BackGround 2";
 
-        public void ConfigUpdate()
+        [Toggle("PDA/VR Mode", Tooltip = "(Recommended if using VR) Moves the Day Counter into the PDA so it can be less intrusive/seen in VR"), OnChange(nameof(PdaModeUpdate))]
+        public bool PdaMode = false;
+
+        public void ScaleUpdate()
         {
-            DayCounterChipFuntion.UpdateImages();
+            if (!SceneManager.GetSceneByName("StartScreen").IsValid())
+                DayCounterChipFuntion.UpdateScale();
         }
-        public void ConfigUpdate2()
+
+        void PdaModeUpdate()
         {
-            DayCounterChipFuntion.UpdatePosition();
+            if (!SceneManager.GetSceneByName("StartScreen").IsValid())
+                DayCounterChipFuntion.UpdateMode();
+        }
+
+        void BackgroundUpdate()
+        {
+            if (!SceneManager.GetSceneByName("StartScreen").IsValid())
+                DayCounterChipFuntion.UpdateImages();
+        }
+        void PosUpdate()
+        {
+            if (!SceneManager.GetSceneByName("StartScreen").IsValid())
+                DayCounterChipFuntion.UpdatePosition();
         }
     }
 }

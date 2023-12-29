@@ -154,6 +154,7 @@ C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bi
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\0Harmony.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Assembly-CSharp-firstpass.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Assembly-CSharp.dll
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Nautilus.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.AnimationModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.AssetBundleModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.CoreModule.dll
@@ -213,6 +214,7 @@ C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bi
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.ARModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.InputModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\0Harmony.xml
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Nautilus.xml
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\MonoMod.Utils.xml
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\MonoMod.RuntimeDetour.xml
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.csproj.AssemblyReference.cache
@@ -220,5 +222,3 @@ C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\ob
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.csproj.CopyComplete
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.pdb
-C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Nautilus.dll
-C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Nautilus.xml

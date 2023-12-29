@@ -12,16 +12,25 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>
+    </DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +39,12 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -45,6 +60,9 @@
     <Reference Include="BepInEx">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
+    <Reference Include="Nautilus">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\Nautilus\Nautilus.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime">
@@ -56,6 +74,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Unity.Addressables">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\Unity.Addressables.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\Unity.TextMeshPro.dll</HintPath>
     </Reference>
@@ -99,13 +120,13 @@
     <Compile Include="BepInEx.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\daycounterchipbundle" />
-    <None Include="Assets\daycounterchipbundle.manifest" />
+    <None Include="Assets%28Updated on relase%29\daycounterchipbundle" />
+    <None Include="Assets%28Updated on relase%29\daycounterchipbundle.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Assets in bundle\BackGround.png" />
-    <Content Include="Assets\Assets in bundle\BackGround2.png" />
-    <Content Include="Assets\DayCounterChipIcon.png" />
+    <Content Include="Assets%28Updated on relase%29\Assets in bundle\BackGround.png" />
+    <Content Include="Assets%28Updated on relase%29\Assets in bundle\BackGround2.png" />
+    <Content Include="Assets%28Updated on relase%29\DayCounterChipIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -113,7 +134,7 @@
   <ItemGroup>
     <Analyzer Include="..\..\..\..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Subnautica\BepInEx\core\0Harmony.dll" />
     <Analyzer Include="..\..\..\..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Subnautica\BepInEx\core\BepInEx.dll" />
-    <Analyzer Include="..\..\..\..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Subnautica\BepInEx\plugins\Modding Helper\SMLHelper.dll" />
+    <Analyzer Include="..\..\..\..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Subnautica\BepInEx\plugins\Nautilus\Nautilus.dll" />
     <Analyzer Include="..\..\..\..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\Assembly-CSharp-firstpass.dll" />
     <Analyzer Include="..\..\..\..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\publicized_assemblies\Assembly-CSharp.dll" />
     <Analyzer Include="..\..\..\..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\UnityEngine.AnimationModule.dll" />

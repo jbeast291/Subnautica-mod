@@ -1,55 +1,39 @@
-﻿using RecipeData = SMLHelper.V2.Crafting.TechData;
-using SMLHelper.V2.Assets;
-using SMLHelper.V2.Crafting;
-using SMLHelper.V2.Utility;
-using System.Reflection;
-using System.Collections.Generic;
+﻿using System.Reflection;
 using System.IO;
-using UnityEngine;
-using System.Collections;
+using Nautilus.Assets;
+using Nautilus.Crafting;
+using Nautilus.Utility;
+using Nautilus.Assets.PrefabTemplates;
+using Nautilus.Assets.Gadgets;
+using static CraftData;
 
 namespace DayCounterChip
 {
-    public class DayCounterChip : Equipable
+    public class DayCounterItem
     {
-        public static TechType TechTypeID { get; protected set; }
-        public override string AssetsFolder => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Assets");
-        public DayCounterChip() : base("DayCounterChip", "Day Counter Chip", "Displays a Number that counts the days you have been on 4546B")
-        {
-            OnFinishedPatching += () =>
-            {
-                TechTypeID = this.TechType;
-            };
-        }
-        public override EquipmentType EquipmentType => EquipmentType.Chip;
-        public override TechGroup GroupForPDA => TechGroup.Personal;
-        public override TechCategory CategoryForPDA => TechCategory.Equipment;
-        public override CraftTree.Type FabricatorType => CraftTree.Type.Fabricator;
-        public override string[] StepsToFabricatorTab => new string[] { "Personal", "Equipment" };
-        public override float CraftingTime => 1f;
-        public override QuickSlotType QuickSlotType => QuickSlotType.Passive;
+        internal static string AssetsFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Assets");
+        public static PrefabInfo Info { get; private set; } = PrefabInfo
+            .WithTechType("DayCounterChip", "Day Counter Chip", "Displays a Number that counts the days you have been on 4546B\n\nTo configure please modify Options->Mods")
+            .WithIcon(ImageUtils.LoadSpriteFromFile(AssetsFolder + "/DayCounterChipIcon.png"));
 
-        protected override Atlas.Sprite GetItemSprite()
+        public static void Register()
         {
-            return ImageUtils.LoadSpriteFromFile(Path.Combine(AssetsFolder, "DayCounterChipIcon.png"));
-        }
-
-        protected override RecipeData GetBlueprintRecipe()
-        {
-            return new RecipeData()
-            {
+            var customPrefab = new CustomPrefab(Info);
+            var DayCounterChipObj = new CloneTemplate(Info, TechType.MapRoomHUDChip);
+            customPrefab.SetGameObject(DayCounterChipObj);
+            customPrefab.SetRecipe(new RecipeData(){
                 craftAmount = 1,
-                Ingredients = new List<Ingredient>(new Ingredient[]
-                    {
-                        new Ingredient(TechType.Titanium, 2),
-                        new Ingredient(TechType.CopperWire, 1)
-                    }
-                )
-            };
-        }
-        public override IEnumerator GetGameObjectAsync(IOut<GameObject> gameObject)
-        {
-            yield return CraftData.InstantiateFromPrefabAsync(TechType.MapRoomHUDChip, gameObject);
+                Ingredients = {
+                     new Ingredient(TechType.Titanium, 2),
+                     new Ingredient(TechType.CopperWire, 1)}
+            }
+            )
+                .WithFabricatorType(CraftTree.Type.Fabricator)
+                .WithStepsToFabricatorTab("Personal", "Equipment");
+            customPrefab.SetEquipment(EquipmentType.Chip);
+            customPrefab.SetPdaGroupCategory(TechGroup.Personal, TechCategory.Equipment);
+            customPrefab.SetUnlock(TechType.Titanium);//unlock instantly
+            customPrefab.Register();
         }
     }
 }

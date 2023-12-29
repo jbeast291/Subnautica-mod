@@ -12,5 +12,4 @@ namespace DayCounterChip
             __instance.gameObject.EnsureComponent<DayCounterChipFuntion>();// ensures that the component is attached to the player
         }
     }
-
 }

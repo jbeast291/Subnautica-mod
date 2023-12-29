@@ -330,7 +330,7 @@ namespace LifePodRemastered
                 return 0;
             }
         }
-        public void WorldPointtoMoveSelecedPoint(Vector3 WorldPoint)//NEEEEED FIX
+        public void WorldPointtoMoveSelecedPoint(Vector3 WorldPoint)
         {
             float diff = Info.currentRes.width / 2560f;
             vector3 = new Vector3((WorldPoint.x / (3.37f / diff)) + (1280 * diff), (WorldPoint.z / (3.37f / diff)) + (720 * diff));
