@@ -12,7 +12,7 @@ using static LifePodRemastered.SaveManager;
 
 namespace LifePodRemastered
 {
-    internal class EscapePodChangesMono : MonoBehaviour
+    internal class EscapePodMainMenu : MonoBehaviour
     {
         GameObject HoverSound;
         GameObject ClickSound;
@@ -50,6 +50,8 @@ namespace LifePodRemastered
         GameObject InputCoordsInfo;
         GameObject SettingsInfo;
 
+        
+
         Camera cam;
 
         int CurrentMode = 1;
@@ -62,6 +64,7 @@ namespace LifePodRemastered
 
         public void Awake()
         {
+            
 
             Rightside = GameObject.Find("RightSide");
             Primaryoptions = GameObject.Find("PrimaryOptions");
@@ -75,6 +78,8 @@ namespace LifePodRemastered
         }
         public void Start()
         {
+            
+
             HoverSound = GameObject.Find("ButtonHover");
             ClickSound = GameObject.Find("ButtonClick");
             ButtonHoverSharp = GameObject.Find("ButtonHoverSharp");
@@ -334,14 +339,14 @@ namespace LifePodRemastered
         {
             float diff = Info.currentRes.width / 2560f;
             vector3 = new Vector3((WorldPoint.x / (3.37f / diff)) + (1280 * diff), (WorldPoint.z / (3.37f / diff)) + (720 * diff));
-            LifePodRemastered.Logger.LogInfo(vector3.ToString());
+            BepInEx.Logger.LogInfo(vector3.ToString());
             SelectedPoint.GetComponent<RectTransform>().localPosition = new Vector3((vector3.x - (1280f * diff)) / (1250f * diff), (vector3.y - (720f * diff)) / (1250f * diff), 0);
             Info.SelectedSpawn = WorldPoint;
             CoordsDisplay.GetComponent<TextMeshProUGUI>().text = "Coords: " + WorldPoint;
         }
         public void MousePositionToSelectedPoint(Vector3 MousePos)
         {
-            LifePodRemastered.Logger.LogInfo(Input.mousePosition.ToString());
+            BepInEx.Logger.LogInfo(Input.mousePosition.ToString());
 
             vector3 = new Vector3((MousePos.x - Info.currentRes.width / 2) * (1500 / (Info.currentRes.width / 2 - cam.WorldToScreenPoint(ScalePoint1.transform.position).x)), 0, (MousePos.y - Info.currentRes.height / 2) * (1500 / (Info.currentRes.height / 2 - cam.WorldToScreenPoint(ScalePoint2.transform.position).y)));
             Info.SelectedSpawn = vector3;
@@ -455,7 +460,7 @@ namespace LifePodRemastered
         void OnRandomizePointButtonClick()
         {
             Vector3 ranvector3 = new Vector3(Random.Range(cam.WorldToScreenPoint(BoundBottomLeft.transform.position).x, cam.WorldToScreenPoint(BoundTopRight.transform.position).x), Random.Range(cam.WorldToScreenPoint(BoundBottomLeft.transform.position).y, cam.WorldToScreenPoint(BoundTopRight.transform.position).y), 0);
-            LifePodRemastered.Logger.LogInfo(ranvector3.ToString());
+            BepInEx.Logger.LogInfo(ranvector3.ToString());
 
             MousePositionToSelectedPoint(ranvector3);
             ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();

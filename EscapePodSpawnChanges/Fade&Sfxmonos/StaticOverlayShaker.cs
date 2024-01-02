@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using UWE;
 
 
-namespace LifePodRemastered.Monos
+namespace LifePodRemastered
 {
     public class StaticOverlayShaker : MonoBehaviour
     {

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace LifePodRemastered
 {
     [BepInPlugin(myGUID, pluginName, pluginVersion)]
-    public class LifePodRemastered : BaseUnityPlugin
+    public class BepInEx : BaseUnityPlugin
     {
         private const string myGUID = "Jbeast291.LifePodRemastered";
         private const string pluginName = "Life Pod Remastered";

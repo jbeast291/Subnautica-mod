@@ -44,6 +44,9 @@
     <Reference Include="BepInEx">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
+    <Reference Include="FMODUnity">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\FMODUnity.dll</HintPath>
+    </Reference>
     <Reference Include="Nautilus">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\Nautilus\Nautilus.dll</HintPath>
     </Reference>
@@ -68,6 +71,10 @@
     <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
@@ -105,13 +112,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fade&amp;Sfxmonos\ImageFader.cs" />
+    <Compile Include="Fade&amp;Sfxmonos\TextFader.cs" />
     <Compile Include="Monos\OptionsMono.cs" />
-    <Compile Include="Monos\EscapePodInGameMono.cs" />
-    <Compile Include="Monos\StaticOverlayShaker.cs" />
-    <Compile Include="Monos\SkyFader.cs" />
+    <Compile Include="Monos\EscapePodCustomIntro.cs" />
+    <Compile Include="Fade&amp;Sfxmonos\StaticOverlayShaker.cs" />
+    <Compile Include="Fade&amp;Sfxmonos\SkyFader.cs" />
     <Compile Include="SaveManager.cs" />
     <Compile Include="BepInEx.cs" />
-    <Compile Include="Monos\EscapePodChangesMono.cs" />
+    <Compile Include="Monos\EscapePodMainMenu.cs" />
     <Compile Include="Info.cs" />
     <Compile Include="Patches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

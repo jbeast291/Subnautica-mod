@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+﻿ using HarmonyLib;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
@@ -67,30 +67,9 @@ namespace LifePodRemastered
         [HarmonyPostfix]
         public static void StartPostPatch(uGUI_MainMenu __instance)
         {
-            __instance.gameObject.EnsureComponent<EscapePodChangesMono>();
+            __instance.gameObject.EnsureComponent<EscapePodMainMenu>();
         }
     }
-    /*
-    [HarmonyPatch(typeof(EscapePod))]
-    [HarmonyPatch("FixedUpdate")]
-    internal class EscapePod_FixedUpdate_Patch
-    {
-        static bool tempbool = false;
-        //static bool tempbool2 = false;
-        [HarmonyPrefix]
-        public static bool Prefix(EscapePod __instance)
-        {
-            WorldForces wf = __instance.GetComponent<WorldForces>();
-
-            wf.aboveWaterGravity = 500;
-            if (true)
-            {
-                wf.underwaterGravity = 250;
-            }
-
-            return true;
-        }
-    }*/
     [HarmonyPatch(typeof(EscapePod))]
     internal class OnStartPatch
     {
@@ -98,7 +77,7 @@ namespace LifePodRemastered
         [HarmonyPostfix]
         public static void OnStartPostFix(EscapePod __instance)
         {
-            __instance.gameObject.EnsureComponent<EscapePodInGameMono>();
+            __instance.gameObject.EnsureComponent<EscapePodCustomIntro>();
 
             __instance.bottomHatchUsed = true;
             __instance.topHatchUsed = true;

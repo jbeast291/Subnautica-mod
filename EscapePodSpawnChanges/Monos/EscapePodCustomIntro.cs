@@ -7,14 +7,19 @@ using System.Linq;
 using UnityEngine;
 using UWE;
 using static LifePodRemastered.SaveManager;
-using UnityEngine.UIElements;
-using LifePodRemastered.Monos;
+using LifePodRemastered;
 using UnityEngine.UI;
 using mset;
+using System;
+using Nautilus.Utility;
+using TMPro;
+using LifePodRemastered.Fade_Sfxmonos;
+using FMOD;
+using Nautilus.Handlers;
 
 namespace LifePodRemastered
 {
-    internal class EscapePodInGameMono : MonoBehaviour
+    internal class EscapePodCustomIntro : MonoBehaviour
     {
         static AssetBundle assetBundle = Info.assetBundle;
 
@@ -30,12 +35,14 @@ namespace LifePodRemastered
         GameObject FireVfx3;
         GameObject FakeSpace;
 
+
         //restraints
         GameObject PlayerBody;
         GameObject PlayerCam;
         OxygenManager oxygenManager;
 
         //logic
+        bool FirstSequenceDone = false;
         Vector3 LastPos;
         bool podlanded;
         bool podHitWater;
@@ -47,43 +54,160 @@ namespace LifePodRemastered
 
         //UI
         GameObject CineUiEmpty;
+        GameObject PressAnyButtonText;
+        GameObject PresentingText;
+        GameObject SubnauticaLogoImage;
+        GameObject BlackBackground;
 
 
+        FMOD.Sound FirstAudio;
+
+
+        public void Awake()
+        {
+            //register onloaded to be called on game finished loading. waiting for game to load essentially
+            Action loaded = Onloaded;
+            SaveUtils.RegisterOneTimeUseOnLoadEvent(loaded);
+
+            //freeze escape pod so it doesnt move while the player is looking at the starting ui
+            EscapePod.main.GetComponent<Rigidbody>().isKinematic = true;
+
+            EscapePod.main.GetComponent<Rigidbody>().freezeRotation = true;
+        }
 
         public void Start()
         {
-            if (Info.newSave)
-            {
-                SetupParachutes();
-                SetupFirevfx();
-                setupFakeSpace();
-                SetupUi();
+            oxygenManager = Player.main.GetComponent<OxygenManager>();
+        }
 
-                CoroutineHost.StartCoroutine(CustomIntro());
-                //CoroutineHost.StartCoroutine(Parachute());
-                CoroutineHost.StartCoroutine(CheckIfLanded());
-                CoroutineHost.StartCoroutine(CheckIfUnderwater());
-                CoroutineHost.StartCoroutine(LockCamera());
-
-
-                EscapePod.main.GetComponent<Rigidbody>().freezeRotation = true;
-
-                oxygenManager = Player.main.GetComponent<OxygenManager>();
-
-
-            }
+        void Onloaded()//called once the game is loaded
+        {
+            // start the game intro when the game is loaded
+            SetupUi();
+            SetupAudio();
+        }
+        public void SetupAudio()
+        {
+            FirstAudio = CustomSoundHandler.RegisterCustomSound("FirstAudio", Path.Combine(Info.PathToAudioFolder, "SubnauticaIntro-01.wav"), AudioUtils.BusPaths.PlayerSFXs);
         }
 
         public void SetupUi()
         {
-            CineUiEmpty = Instantiate(assetBundle.LoadAsset<GameObject>("Canvas"));
+            CineUiEmpty = Instantiate(assetBundle.LoadAsset<GameObject>("CustomIntroCanvas"));
             CineUiEmpty.transform.parent = GameObject.Find("uGUI(Clone)").transform;
-            CineUiEmpty.SetActive(true);
             CineUiEmpty.transform.position = new Vector3(0, 0, 1);
             CineUiEmpty.transform.localScale = new Vector3(1, 1, 1);
-            GameObject.Find("StaticOverlay").AddComponent<StaticOverlayShaker>();
+
+            PressAnyButtonText = GameObject.Find("uGUI(Clone)/CustomIntroCanvas(Clone)/BlackBackground/PressAnyButton");
+            PressAnyButtonText.AddComponent<TextFader>();
+            PressAnyButtonText.GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 0);
+            //Set text to be transparent. tried seting the object active and setting this in the editor but it caused issues regarless
+
+            PresentingText = GameObject.Find("uGUI(Clone)/CustomIntroCanvas(Clone)/BlackBackground/PresentingText");
+            PresentingText.AddComponent<TextFader>();
+            PresentingText.GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 0);
+
+            SubnauticaLogoImage = GameObject.Find("uGUI(Clone)/CustomIntroCanvas(Clone)/BlackBackground/SubnauticaLogo");
+            SubnauticaLogoImage.AddComponent<ImageFader>();
+            SubnauticaLogoImage.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+
+            //get ref to the background
+            BlackBackground = GameObject.Find("uGUI(Clone)/CustomIntroCanvas(Clone)/BlackBackground");
+            BlackBackground.AddComponent<ImageFader>();
+
+
+            //start sequence
+            CoroutineHost.StartCoroutine(Sequence1BlackBackground());
         }
-        public void SetupFirevfx()
+        IEnumerator Sequence1BlackBackground()//press any button, presenting, subnautica, fade out of black and see pod
+        {
+            CoroutineHost.StartCoroutine(LockCameraOutsidePod());
+
+
+            //Set black background fader to be the right color
+            BlackBackground.GetComponent<ImageFader>().SetStartingColor(Color.black);
+
+            //Press any button text fading
+            PressAnyButtonText.GetComponent<TextFader>().startFadeIn(50);//start fading in text
+            yield return new WaitUntil(() => PressAnyButtonText.GetComponent<TextFader>().DoneFadeIn == true); // wait for finished fading
+            yield return new WaitUntil(() => Input.anyKeyDown == true); // check input
+            PressAnyButtonText.GetComponent<TextFader>().startFadeOut(50);//start fading out text
+            yield return new WaitUntil(() => PressAnyButtonText.GetComponent<TextFader>().DoneFadeOut == true); // wait for finished fading
+            PressAnyButtonText.SetActive(false);
+
+            //Presenting Text fading
+            PresentingText.GetComponent<TextFader>().startFadeIn(50);
+            yield return new WaitUntil(() => PresentingText.GetComponent<TextFader>().DoneFadeIn == true); // wait for finished fading
+            yield return new WaitForSecondsRealtime(1);//show for a moment
+
+            //start playing audio
+            if(CustomSoundHandler.TryPlayCustomSound("FirstAudio", out Channel channel))
+            {
+                channel.setVolume(2f);
+            }
+
+            yield return new WaitForSecondsRealtime(2);
+            PresentingText.GetComponent<TextFader>().startFadeOut(50);
+            yield return new WaitUntil(() => PresentingText.GetComponent<TextFader>().DoneFadeOut == true); // wait for finished fading
+            PressAnyButtonText.SetActive(false);
+
+            //Subnautica Logo fading
+            SubnauticaLogoImage.GetComponent<ImageFader>().startFadeIn(50);
+            yield return new WaitUntil(() => SubnauticaLogoImage.GetComponent<ImageFader>().DoneFadeIn == true); // wait for finished fading
+            yield return new WaitForSecondsRealtime(5.25f);
+
+            //Fade out text
+            SubnauticaLogoImage.GetComponent<ImageFader>().startFadeOut(50);
+            yield return new WaitUntil(() => SubnauticaLogoImage.GetComponent<ImageFader>().DoneFadeOut == true); // wait for finished fading
+            yield return new WaitForSeconds(0.25f);
+            
+            //startup second sequence
+            FirstSequenceDone = true;
+            Setup2Sequence();
+
+            //Fade out black background
+            BlackBackground.GetComponent<ImageFader>().startFadeOut(50);
+            yield return new WaitUntil(() => BlackBackground.GetComponent<ImageFader>().DoneFadeOut == true); // wait for finished fading
+
+        }
+
+        IEnumerator LockCameraOutsidePod()// workaround to remove the inside noises from the pod
+        {
+            while (!FirstSequenceDone)
+            {
+                Player.main.SetPosition(EscapePod.main.transform.position + new Vector3(0, 20, 0));
+                PlayerCam.GetComponent<MainCameraControl>().LookAt(EscapePod.main.transform.position);
+                yield return null;
+            }
+        }
+
+
+
+
+        // Sequene 2 Below
+
+        void Setup2Sequence()
+        {
+            GameObject.Find("StaticOverlay").AddComponent<StaticOverlayShaker>();
+
+            //unfreeze pod
+            EscapePod.main.GetComponent<Rigidbody>().isKinematic = false;
+
+            SetupParachutes();
+            SetupFirevfx();
+            setupFakeSpace();
+                
+
+            CoroutineHost.StartCoroutine(Sequence2PodFalling());
+            //CoroutineHost.StartCoroutine(Parachute());
+            CoroutineHost.StartCoroutine(CheckIfLanded());
+            CoroutineHost.StartCoroutine(CheckIfUnderwater());
+            CoroutineHost.StartCoroutine(LockCamera());
+
+        }
+
+
+       void SetupFirevfx()
         {
             FireVfx = Instantiate(assetBundle.LoadAsset<GameObject>("FireEmbers"));
             FireVfx.transform.parent = EscapePod.main.gameObject.transform;
@@ -103,7 +227,7 @@ namespace LifePodRemastered
             FireVfx3.transform.localPosition = new Vector3(0, 0, 0);
             FireVfx3.SetActive(false);
         }
-        public void SetupParachutes()
+        void SetupParachutes()
         {
             parachute = Instantiate(assetBundle.LoadAsset<GameObject>("ParachuteRight Variant"));
             parachute.transform.parent = EscapePod.main.gameObject.transform;
@@ -119,7 +243,7 @@ namespace LifePodRemastered
             parachute2.transform.localScale = new Vector3(350, 350, 350);
             parachute2.SetActive(false);
         }
-        public void setupFakeSpace()
+        void setupFakeSpace()
         {
             FakeSpace = Instantiate(assetBundle.LoadAsset<GameObject>("BlackSPhere1"));
             FakeSpace.transform.parent = EscapePod.main.gameObject.transform;
@@ -129,7 +253,7 @@ namespace LifePodRemastered
             FakeSpace.SetActive(true);
             FakeSpace.gameObject.EnsureComponent<SkyFader>();
         }
-        public void Update()
+        void Update()
         {
             if (Input.GetKeyDown(KeyCode.O))//event:/player/footstep_metal
             {
@@ -138,8 +262,27 @@ namespace LifePodRemastered
             }
             if (Input.GetKeyDown(KeyCode.P))//event:/player/footstep_metal
             {
-                Utils.PlayFMODAsset(Util.GetFmodAsset("event:/sub/base/enter_hatch"), Player.main.transform);
+                Utils.PlayFMODAsset(Util.GetFmodAsset("event:/sub/cyclops/docking_doors_close"), Player.main.transform);
                 
+                
+            }
+            if (Input.GetKeyDown(KeyCode.I))//event:/player/footstep_metal
+            {
+                Utils.PlayFMODAsset(Util.GetFmodAsset("event:/sub/cyclops/docking_doors_open"), Player.main.transform);
+
+
+            }
+            if (Input.GetKeyDown(KeyCode.L))//event:/player/footstep_metal
+            {
+                Utils.PlayFMODAsset(Util.GetFmodAsset("event:/sub/cyclops/cyclops_door_close"), Player.main.transform);
+
+
+            }
+            if (Input.GetKeyDown(KeyCode.K))//event:/player/footstep_metal
+            {
+                Utils.PlayFMODAsset(Util.GetFmodAsset("event:/sub/cyclops/cyclops_door_open"), Player.main.transform);
+
+
             }
             /*
             if (Input.GetKeyDown(KeyCode.O))
@@ -163,17 +306,19 @@ namespace LifePodRemastered
               {
                   SaveManager.ReadSettingsToCurrectSlot();
                   Debug.Log(SaveUtils.GetCurrentSaveDataDir());
-              }*/
+              }
+            */
+            //event:/sub/base/door_close
 
         }
-        IEnumerator CustomIntro()
+        IEnumerator Sequence2PodFalling()
         {
             WriteSettingsToCurrentSlot();
             wf.aboveWaterGravity = 500f;
             wf.underwaterGravity = 10f;
             ToggleHud(false);
 
-            yield return new WaitForSecondsRealtime(5f);
+            yield return new WaitForSecondsRealtime(10f);
             //entering atmosphere
             FireVfx.SetActive(true);
             FireVfx2.SetActive(true);
@@ -182,7 +327,12 @@ namespace LifePodRemastered
             yield return new WaitForSecondsRealtime(1f);
             FakeSpace.GetComponent<SkyFader>().startFadeOut();
             yield return new WaitForSecondsRealtime(10f);
-            
+
+            CrashedShipExploder.main.PlayExplosionFX();
+            CrashedShipExploder.main.ShakePlayerCamera();
+            //Utils.PlayFMODAsset(SaveManager.GetFmodAsset("event:/env/music/aurora_reveal"), Player.main.transform);
+            CrashedShipExploder.main.shipExplodeSound.StartEvent();
+
             //deploy parachutes
             yield return new WaitForSecondsRealtime(10f);
             StartParaAnim();
@@ -214,7 +364,6 @@ namespace LifePodRemastered
 
         IEnumerator LockCamera()
         {
-            yield return new WaitForSecondsRealtime(0.1f);
             PlayerBody = GameObject.Find("Player/body");
             PlayerBody.SetActive(false);
             PlayerCam = GameObject.Find("Player/camPivot/camRoot");

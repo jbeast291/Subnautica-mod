@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UWE;
 
-namespace LifePodRemastered.Monos
+namespace LifePodRemastered
 {
     internal class SkyFader : MonoBehaviour
     {
         Renderer rend;
-        float count = 1;
+        float count = 1;      
 
         // Start is called before the first frame update
         void Start()
@@ -20,11 +20,6 @@ namespace LifePodRemastered.Monos
             rend = GetComponent<Renderer>();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
         public void startFadeOut()
         {
             count = 1;
@@ -32,6 +27,7 @@ namespace LifePodRemastered.Monos
         }
         IEnumerator FadeOut()
         {
+            
             Debug.Log("started");
             while (count > 0.8f)
             {

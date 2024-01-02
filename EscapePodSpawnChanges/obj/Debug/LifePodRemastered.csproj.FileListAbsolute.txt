@@ -222,3 +222,8 @@ C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\ob
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.csproj.CopyComplete
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.pdb
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\FMODUnity.dll
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Unity.Addressables.dll
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Unity.ResourceManager.dll
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UWE.EditorModifications.dll
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Unity.Timeline.dll
