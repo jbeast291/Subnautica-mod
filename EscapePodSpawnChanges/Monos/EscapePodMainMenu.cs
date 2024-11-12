@@ -8,7 +8,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UWE;
 using TMPro;
-using static LifePodRemastered.SaveManager;
+using static LifePodRemastered.SaveUtils;
+using FMOD;
 
 namespace LifePodRemastered
 {
@@ -50,8 +51,6 @@ namespace LifePodRemastered
         GameObject InputCoordsInfo;
         GameObject SettingsInfo;
 
-        
-
         Camera cam;
 
         int CurrentMode = 1;
@@ -59,12 +58,13 @@ namespace LifePodRemastered
 
         bool AnimationActive = false;
 
+        List<string[]> presetList;
 
         Vector3 vector3 = new Vector3(10000, 10000, 10000);
 
         public void Awake()
         {
-            
+            presetList = Util.ReadPresetsFromModFolder();
 
             Rightside = GameObject.Find("RightSide");
             Primaryoptions = GameObject.Find("PrimaryOptions");
@@ -78,7 +78,6 @@ namespace LifePodRemastered
         }
         public void Start()
         {
-            
 
             HoverSound = GameObject.Find("ButtonHover");
             ClickSound = GameObject.Find("ButtonClick");
@@ -129,7 +128,7 @@ namespace LifePodRemastered
             SettingsInfo.SetActive(false);
 
             OptionsPannel.gameObject.EnsureComponent<OptionsMono>();
-
+            SelectedPointIndicator.GetComponent<Animation>().Play();//start loop
         }
 
         public void Update()
@@ -138,7 +137,6 @@ namespace LifePodRemastered
             {
                 ManageRightSide(CurrentMode, Info.Showsettings);
                 ManageLeftSide(CurrentMode, CurrentPreset);
-                ManageSelectedPointIndicator();
 
                 AreaSeceltor.SetActive(true);
                 Map.SetActive(true);
@@ -148,7 +146,7 @@ namespace LifePodRemastered
             }
 
         }
-        public void ManageLeftSide(int Mode, int preset)
+        public void ManageLeftSide(int Mode, int presetNumber)
         {
             switch (Mode)
             {
@@ -173,61 +171,12 @@ namespace LifePodRemastered
                         ModePresetPoint.SetActive(true);
 
                         TextMeshProUGUI PresetTextTEXT = PresetText.GetComponent<TextMeshProUGUI>();
-                        switch (preset)
-                        {
-                            case 1:
-                                PresetTextTEXT.text = "UnderWater Island";
-                                WorldPointtoMoveSelecedPoint(new Vector3(-110, 0, 952));
-                                break;
-                            case 2:
-                                PresetTextTEXT.text = "Dunes Vent";
-                                WorldPointtoMoveSelecedPoint(new Vector3(-1532, 0, 468));
-                                break;
-                            case 3:
-                                PresetTextTEXT.text = "Mushroom Forest";
-                                WorldPointtoMoveSelecedPoint(new Vector3(-928, 0, 735));
-                                break;
-                            case 4:
-                                PresetTextTEXT.text = "Blood Kelp Trench";
-                                WorldPointtoMoveSelecedPoint(new Vector3(-959, 0, -565));
-                                break;
-                            case 5:
-                                PresetTextTEXT.text = "Blood Kelp Lost River";
-                                WorldPointtoMoveSelecedPoint(new Vector3(-623, 0, 1122));
-                                break;
-                            case 6:
-                                PresetTextTEXT.text = "Mountains Wreckage";
-                                WorldPointtoMoveSelecedPoint(new Vector3(607, 0, 1217));
-                                break;
-                            case 7:
-                                PresetTextTEXT.text = "Bulb Lost River Entrance";
-                                WorldPointtoMoveSelecedPoint(new Vector3(1123, 0, 908));
-                                break;
-                            case 8:
-                                PresetTextTEXT.text = "Island Degasi";
-                                WorldPointtoMoveSelecedPoint(new Vector3(-773, 0, -1110));
-                                break;
-                            case 9:
-                                PresetTextTEXT.text = "Island Oasis";
-                                WorldPointtoMoveSelecedPoint(new Vector3(-711, 0, -1079));
-                                break;
-                            case 10:
-                                PresetTextTEXT.text = "Gun Island";
-                                WorldPointtoMoveSelecedPoint(new Vector3(297, 0, 1064));
-                                break;
-                            case 11:
-                                PresetTextTEXT.text = "Jellyshroom Cave Entrance";
-                                WorldPointtoMoveSelecedPoint(new Vector3(131, 0, -389));
-                                break;
-                            case 12:
-                                PresetTextTEXT.text = "Crash Zone ;)";
-                                WorldPointtoMoveSelecedPoint(new Vector3(1136, 0, -1547));
-                                break;
-                            default:
-                                PresetTextTEXT.text = "Error please report to dev";
-                                WorldPointtoMoveSelecedPoint(new Vector3(0, 0, 0));
-                                break;
-                        }
+
+                        string[] selectedPreset = presetList[presetNumber - 1];
+
+                        PresetTextTEXT.text = selectedPreset[0];
+                        WorldPointtoMoveSelecedPoint(StringToVector3(selectedPreset[1]));
+
                         break;
                     }
                 case 3:
@@ -296,16 +245,6 @@ namespace LifePodRemastered
             }
 
         }
-        public void ManageSelectedPointIndicator()
-        {
-            if (!AnimationActive)
-            {
-                AnimationActive = false;
-                SelectedPointIndicator.GetComponent<Animation>().Play();
-            }
-        }
-
-
 
         public static Vector3 StringToVector3(string sVector) // I may or may not have "borrrowed" this code
         {
@@ -339,15 +278,12 @@ namespace LifePodRemastered
         {
             float diff = Info.currentRes.width / 2560f;
             vector3 = new Vector3((WorldPoint.x / (3.37f / diff)) + (1280 * diff), (WorldPoint.z / (3.37f / diff)) + (720 * diff));
-            BepInEx.Logger.LogInfo(vector3.ToString());
             SelectedPoint.GetComponent<RectTransform>().localPosition = new Vector3((vector3.x - (1280f * diff)) / (1250f * diff), (vector3.y - (720f * diff)) / (1250f * diff), 0);
             Info.SelectedSpawn = WorldPoint;
             CoordsDisplay.GetComponent<TextMeshProUGUI>().text = "Coords: " + WorldPoint;
         }
         public void MousePositionToSelectedPoint(Vector3 MousePos)
         {
-            BepInEx.Logger.LogInfo(Input.mousePosition.ToString());
-
             vector3 = new Vector3((MousePos.x - Info.currentRes.width / 2) * (1500 / (Info.currentRes.width / 2 - cam.WorldToScreenPoint(ScalePoint1.transform.position).x)), 0, (MousePos.y - Info.currentRes.height / 2) * (1500 / (Info.currentRes.height / 2 - cam.WorldToScreenPoint(ScalePoint2.transform.position).y)));
             Info.SelectedSpawn = vector3;
             CoordsDisplay.GetComponent<TextMeshProUGUI>().text = "Coords: " + vector3;
@@ -375,27 +311,16 @@ namespace LifePodRemastered
             {
                 ClickSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
                 Info.showmap = false;
-                Info.newSave = true; // 1 survival, 2 creative, 3, freedom, 4 hardcore
+                Info.newSave = true;
+                SaveUtils.LoadChachedSettingsToSlotSave();
 
-                LoadChachedSettingsToSlotSave();
-
-                if (Info.GameMode == 1)
+                switch (Info.GameMode) // 1 survival, 2 creative, 3, freedom, 4 hardcore
                 {
-                    CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Survival));
+                    case 1: { CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Survival)); break; }
+                    case 2: { CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Creative)); break; }
+                    case 3: { CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Freedom));  break; }
+                    case 4: { CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Hardcore)); break; }
                 }
-                if (Info.GameMode == 2)
-                {
-                    CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Creative));
-                }
-                if (Info.GameMode == 3)
-                {
-                    CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Freedom));
-                }
-                if (Info.GameMode == 4)
-                {
-                    CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Hardcore));
-                }
-
             }
         }
         void OnBackToMenuButtonClick()
@@ -410,10 +335,12 @@ namespace LifePodRemastered
         }
         void OnModeChoiceleftClick()
         {
-            if(CurrentMode != 1)
+            Info.OverideSpawnHeight = false;
+            if (CurrentMode != 1)
             {
                 CurrentMode--;
                 HoverSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
+                Info.OverideSpawnHeight = false;
             }
             ManageRightSide(CurrentMode, Info.Showsettings);
             ManageLeftSide(CurrentMode, CurrentPreset);
@@ -424,6 +351,7 @@ namespace LifePodRemastered
             {
                 CurrentMode++;
                 HoverSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
+                Info.OverideSpawnHeight = false;
             }
             ManageRightSide(CurrentMode, Info.Showsettings);
             ManageLeftSide(CurrentMode, CurrentPreset);
@@ -440,7 +368,7 @@ namespace LifePodRemastered
         }
         void OnModePresetPointChoiceRightClick()
         {
-            if (CurrentPreset != 12)
+            if (CurrentPreset != presetList.Count) 
             {
                 CurrentPreset++;
                 ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
@@ -451,6 +379,7 @@ namespace LifePodRemastered
         void OnEndInputFieldEdit(string s)
         {
             Info.SelectedSpawn = StringToVector3(s);
+            Info.OverideSpawnHeight = true;
             WorldPointtoMoveSelecedPoint(Info.SelectedSpawn);
             ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
 
@@ -459,8 +388,8 @@ namespace LifePodRemastered
         }
         void OnRandomizePointButtonClick()
         {
+            Info.OverideSpawnHeight = false;
             Vector3 ranvector3 = new Vector3(Random.Range(cam.WorldToScreenPoint(BoundBottomLeft.transform.position).x, cam.WorldToScreenPoint(BoundTopRight.transform.position).x), Random.Range(cam.WorldToScreenPoint(BoundBottomLeft.transform.position).y, cam.WorldToScreenPoint(BoundTopRight.transform.position).y), 0);
-            BepInEx.Logger.LogInfo(ranvector3.ToString());
 
             MousePositionToSelectedPoint(ranvector3);
             ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();

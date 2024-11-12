@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UWE;
-using static LifePodRemastered.SaveManager;
+using static LifePodRemastered.SaveUtils;
 using LifePodRemastered;
 using UnityEngine.UI;
 using mset;
@@ -16,6 +16,8 @@ using TMPro;
 using LifePodRemastered.Fade_Sfxmonos;
 using FMOD;
 using Nautilus.Handlers;
+using LifePodRemastered.Monos;
+using static VFXParticlesPool;
 
 namespace LifePodRemastered
 {
@@ -33,8 +35,8 @@ namespace LifePodRemastered
         GameObject FireVfx;
         GameObject FireVfx2;
         GameObject FireVfx3;
+        GameObject SmokeVfx;
         GameObject FakeSpace;
-
 
         //restraints
         GameObject PlayerBody;
@@ -58,16 +60,24 @@ namespace LifePodRemastered
         GameObject PresentingText;
         GameObject SubnauticaLogoImage;
         GameObject BlackBackground;
+        GameObject PodFallOverlay;
 
 
         FMOD.Sound FirstAudio;
 
-
+        /*public void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.K)) 
+            {
+                HandReticle.main.SetText(HandReticle.TextType.Hand, "test", false, GameInput.Button.LeftHand);
+                HandReticle.main.SetIcon(HandReticle.IconType.Hand, 1f);
+            }
+        }*/
         public void Awake()
         {
             //register onloaded to be called on game finished loading. waiting for game to load essentially
             Action loaded = Onloaded;
-            SaveUtils.RegisterOneTimeUseOnLoadEvent(loaded);
+            Nautilus.Utility.SaveUtils.RegisterOneTimeUseOnLoadEvent(loaded);
 
             //freeze escape pod so it doesnt move while the player is looking at the starting ui
             EscapePod.main.GetComponent<Rigidbody>().isKinematic = true;
@@ -85,10 +95,19 @@ namespace LifePodRemastered
             // start the game intro when the game is loaded
             SetupUi();
             SetupAudio();
+
+            //disable pausing
+            IngameMenu.main.canBeOpen = false;
+
+            //for disabling pda notifs durring cine
+            Info.CinematicActive = true;
+            Info.mutePdaEvents = true;
         }
         public void SetupAudio()
         {
-            FirstAudio = CustomSoundHandler.RegisterCustomSound("FirstAudio", Path.Combine(Info.PathToAudioFolder, "SubnauticaIntro-01.wav"), AudioUtils.BusPaths.PlayerSFXs);
+            //register audio from wavs to be played with fmod
+            FirstAudio = CustomSoundHandler.RegisterCustomSound("IntroExplosions", Path.Combine(Info.PathToAudioFolder, "SubnauticaIntro-01.wav"), AudioUtils.BusPaths.PlayerSFXs);
+            FirstAudio = CustomSoundHandler.RegisterCustomSound("IntroEnterOrbit", Path.Combine(Info.PathToAudioFolder, "SubnauticaIntro-02.wav"), AudioUtils.BusPaths.PlayerSFXs);
         }
 
         public void SetupUi()
@@ -115,6 +134,8 @@ namespace LifePodRemastered
             BlackBackground = GameObject.Find("uGUI(Clone)/CustomIntroCanvas(Clone)/BlackBackground");
             BlackBackground.AddComponent<ImageFader>();
 
+            PodFallOverlay = GameObject.Find("uGUI(Clone)/CustomIntroCanvas(Clone)/PodFallOverlay");
+
 
             //start sequence
             CoroutineHost.StartCoroutine(Sequence1BlackBackground());
@@ -138,15 +159,15 @@ namespace LifePodRemastered
             //Presenting Text fading
             PresentingText.GetComponent<TextFader>().startFadeIn(50);
             yield return new WaitUntil(() => PresentingText.GetComponent<TextFader>().DoneFadeIn == true); // wait for finished fading
-            yield return new WaitForSecondsRealtime(1);//show for a moment
+            yield return new WaitForSeconds(1);//show for a moment
 
             //start playing audio
-            if(CustomSoundHandler.TryPlayCustomSound("FirstAudio", out Channel channel))
+            if(CustomSoundHandler.TryPlayCustomSound("IntroExplosions", out Channel channel))
             {
                 channel.setVolume(2f);
             }
 
-            yield return new WaitForSecondsRealtime(2);
+            yield return new WaitForSeconds(2);
             PresentingText.GetComponent<TextFader>().startFadeOut(50);
             yield return new WaitUntil(() => PresentingText.GetComponent<TextFader>().DoneFadeOut == true); // wait for finished fading
             PressAnyButtonText.SetActive(false);
@@ -154,7 +175,7 @@ namespace LifePodRemastered
             //Subnautica Logo fading
             SubnauticaLogoImage.GetComponent<ImageFader>().startFadeIn(50);
             yield return new WaitUntil(() => SubnauticaLogoImage.GetComponent<ImageFader>().DoneFadeIn == true); // wait for finished fading
-            yield return new WaitForSecondsRealtime(5.25f);
+            yield return new WaitForSeconds(6.5f);//5.25
 
             //Fade out text
             SubnauticaLogoImage.GetComponent<ImageFader>().startFadeOut(50);
@@ -168,11 +189,13 @@ namespace LifePodRemastered
             //Fade out black background
             BlackBackground.GetComponent<ImageFader>().startFadeOut(50);
             yield return new WaitUntil(() => BlackBackground.GetComponent<ImageFader>().DoneFadeOut == true); // wait for finished fading
-
         }
 
         IEnumerator LockCameraOutsidePod()// workaround to remove the inside noises from the pod
         {
+            PlayerCam = GameObject.Find("Player/camPivot/camRoot");
+            PlayerBody = GameObject.Find("Player/body");
+
             while (!FirstSequenceDone)
             {
                 Player.main.SetPosition(EscapePod.main.transform.position + new Vector3(0, 20, 0));
@@ -188,7 +211,13 @@ namespace LifePodRemastered
 
         void Setup2Sequence()
         {
-            GameObject.Find("StaticOverlay").AddComponent<StaticOverlayShaker>();
+            if (!SaveUtils.settingsCache.CinematicOverlayToggle)
+            {
+                PodFallOverlay.SetActive(false);
+            } else
+            {
+                PodFallOverlay.FindChild("StaticOverlay").AddComponent<StaticOverlayShaker>();
+            }
 
             //unfreeze pod
             EscapePod.main.GetComponent<Rigidbody>().isKinematic = false;
@@ -226,6 +255,12 @@ namespace LifePodRemastered
             FireVfx3.transform.position = EscapePod.main.transform.position;
             FireVfx3.transform.localPosition = new Vector3(0, 0, 0);
             FireVfx3.SetActive(false);
+
+            SmokeVfx = Instantiate(assetBundle.LoadAsset<GameObject>("Smoke"));
+            SmokeVfx.transform.parent = EscapePod.main.gameObject.transform;
+            SmokeVfx.transform.position = EscapePod.main.transform.position;
+            SmokeVfx.transform.localPosition = new Vector3(0, 0, 0);
+            SmokeVfx.SetActive(false);
         }
         void SetupParachutes()
         {
@@ -253,92 +288,52 @@ namespace LifePodRemastered
             FakeSpace.SetActive(true);
             FakeSpace.gameObject.EnsureComponent<SkyFader>();
         }
-        void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.O))//event:/player/footstep_metal
-            {
-                Utils.StopAllFMODEvents(Player.main.gameObject, false);
-
-            }
-            if (Input.GetKeyDown(KeyCode.P))//event:/player/footstep_metal
-            {
-                Utils.PlayFMODAsset(Util.GetFmodAsset("event:/sub/cyclops/docking_doors_close"), Player.main.transform);
-                
-                
-            }
-            if (Input.GetKeyDown(KeyCode.I))//event:/player/footstep_metal
-            {
-                Utils.PlayFMODAsset(Util.GetFmodAsset("event:/sub/cyclops/docking_doors_open"), Player.main.transform);
-
-
-            }
-            if (Input.GetKeyDown(KeyCode.L))//event:/player/footstep_metal
-            {
-                Utils.PlayFMODAsset(Util.GetFmodAsset("event:/sub/cyclops/cyclops_door_close"), Player.main.transform);
-
-
-            }
-            if (Input.GetKeyDown(KeyCode.K))//event:/player/footstep_metal
-            {
-                Utils.PlayFMODAsset(Util.GetFmodAsset("event:/sub/cyclops/cyclops_door_open"), Player.main.transform);
-
-
-            }
-            /*
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                CrashedShipExploder.main.PlayExplosionFX();
-                CrashedShipExploder.main.ShakePlayerCamera();
-                //Utils.PlayFMODAsset(SaveManager.GetFmodAsset("event:/env/music/aurora_reveal"), Player.main.transform);
-                CrashedShipExploder.main.shipExplodeSound.StartEvent();
-            }
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                Utils.PlayFMODAsset(CrashedShipExploder.main.rumbleSound, Player.main.transform);
-            }
-              
-              if(Input.GetMouseButtonDown(0))
-              {
-                  SaveManager.WriteSettingsToCurrentSlot();
-                  Debug.Log(SaveUtils.GetCurrentSaveDataDir());
-              }
-              if (Input.GetMouseButtonDown(1))
-              {
-                  SaveManager.ReadSettingsToCurrectSlot();
-                  Debug.Log(SaveUtils.GetCurrentSaveDataDir());
-              }
-            */
-            //event:/sub/base/door_close
-
-        }
         IEnumerator Sequence2PodFalling()
         {
-            WriteSettingsToCurrentSlot();
             wf.aboveWaterGravity = 500f;
-            wf.underwaterGravity = 10f;
             ToggleHud(false);
 
-            yield return new WaitForSecondsRealtime(10f);
-            //entering atmosphere
+            MainCameraControl.main.ShakeCamera(0.5f, 2.5f, MainCameraControl.ShakeMode.Sqrt, 1f);//small shake so it doesnt look so stiff at the start
+
+            yield return new WaitForSeconds(2.5f);
+
+            // entering atmosphere
+
             FireVfx.SetActive(true);
             FireVfx2.SetActive(true);
-            FireVfx3.SetActive(true);
-            MainCameraControl.main.ShakeCamera(10f, 10f, MainCameraControl.ShakeMode.BuildUp, 1f);
-            yield return new WaitForSecondsRealtime(1f);
-            FakeSpace.GetComponent<SkyFader>().startFadeOut();
-            yield return new WaitForSecondsRealtime(10f);
 
-            CrashedShipExploder.main.PlayExplosionFX();
-            CrashedShipExploder.main.ShakePlayerCamera();
-            //Utils.PlayFMODAsset(SaveManager.GetFmodAsset("event:/env/music/aurora_reveal"), Player.main.transform);
-            CrashedShipExploder.main.shipExplodeSound.StartEvent();
+            if (CustomSoundHandler.TryPlayCustomSound("IntroEnterOrbit", out Channel channel))
+            {
+                channel.setVolume(2f);
+            }
+
+            MainCameraControl.main.ShakeCamera(1, 10f, MainCameraControl.ShakeMode.Sqrt, 2f);
+            yield return new WaitForSeconds(10f);
+
+            //fire is enabled and the sky starts to fade, roaring more intense 
+            FakeSpace.GetComponent<SkyFader>().startFadeOut();
+            FireVfx3.SetActive(true);
+            MainCameraControl.main.ShakeCamera(3, 4f, MainCameraControl.ShakeMode.Sqrt, 2f);
+            yield return new WaitForSeconds(2f);
+
+            //beeping starts
+            MainCameraControl.main.ShakeCamera(5, 6f, MainCameraControl.ShakeMode.Sqrt, 2f);
+            yield return new WaitForSeconds(4f);
+
+            //after shake,smoke effect after
+            MainCameraControl.main.ShakeCamera(3f, 2f, MainCameraControl.ShakeMode.Sqrt, 1f);
+            SmokeVfx.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            MainCameraControl.main.ShakeCamera(0.5f, 2f, MainCameraControl.ShakeMode.Sqrt, 1f);
+
+            
+            yield return new WaitForSeconds(10f);
 
             //deploy parachutes
-            yield return new WaitForSecondsRealtime(10f);
             StartParaAnim();
 
             //deploy parachutes shake when open
-            yield return new WaitForSecondsRealtime(1.25f);
+            yield return new WaitForSeconds(1.25f);
             MainCameraControl.main.ShakeCamera(1f, 0.5f, MainCameraControl.ShakeMode.Linear, 1f);
             CoroutineHost.StartCoroutine(WfAboveScaler());
 
@@ -347,30 +342,29 @@ namespace LifePodRemastered
             {
                 yield return null;
             }
-            CoroutineHost.StartCoroutine(WfWaterScaler());
+            if (settingsCache.HeavyPodToggle)
+            {
+                CoroutineHost.StartCoroutine(WfWaterScaler());
+            }
         }
 
         IEnumerator Parachute()
         {
-            yield return new WaitForSecondsRealtime(0.1f);
+            yield return new WaitForSeconds(0.1f);
             while (parachute.transform.position.y > -40.9f)
             {
                 yield return null;
             }
             parachute.GetComponent<Animation>().Play();
-            yield return new WaitForSecondsRealtime(5.1f);
+            yield return new WaitForSeconds(5.1f);
             Destroy(parachute);
         }
 
         IEnumerator LockCamera()
         {
-            PlayerBody = GameObject.Find("Player/body");
+            //obtaining refs moved to first sequence
             PlayerBody.SetActive(false);
-            PlayerCam = GameObject.Find("Player/camPivot/camRoot");
             PlayerCam.GetComponent<MainCameraControl>()._cinematicMode = true;
-
-            yield return new WaitForSecondsRealtime(0.1f);
-            MainCameraControl.main.ShakeCamera(0.5f, 4f, MainCameraControl.ShakeMode.Quadratic, 1f);
 
             while (FirstZoomOffset <= 15)
             {
@@ -383,7 +377,7 @@ namespace LifePodRemastered
                 yield return null;
             }
 
-            while (EscapePod.main.transform.position.y > 0)
+            while (EscapePod.main.transform.position.y > 0 && !podlanded)
             {
                 Player.main.SetPosition(EscapePod.main.transform.position + new Vector3(0, 0, 20));
 
@@ -394,7 +388,7 @@ namespace LifePodRemastered
                 yield return null;
             }
 
-            while (FirstMove1 <= 10 && FirstMove2 <= 10)
+            while (FirstMove1 <= 10 && FirstMove2 <= 10 && !podlanded)
             {
                 Player.main.SetPosition(EscapePod.main.transform.position + new Vector3(0, 0 + FirstMove1, 20 - FirstMove2));
 
@@ -408,6 +402,7 @@ namespace LifePodRemastered
                 yield return null;
             }
 
+            //move this code to its own place should not be here :/
             while (!podlanded)
             {
                 Player.main.SetPosition(EscapePod.main.transform.position + new Vector3(0, 10, 10));
@@ -422,7 +417,7 @@ namespace LifePodRemastered
         }
         IEnumerator WfAboveScaler()
         {
-            yield return new WaitForSecondsRealtime(0.02f);
+            yield return new WaitForSeconds(0.02f);
             WfAboveOffset += 1;
             wf.aboveWaterGravity = 500 - WfAboveOffset;
 
@@ -434,7 +429,7 @@ namespace LifePodRemastered
         }
         IEnumerator WfWaterScaler()
         {
-            yield return new WaitForSecondsRealtime(0.05f);
+            yield return new WaitForSeconds(0.05f);
             WfUnderOffset += 1;
             wf.underwaterGravity = 30 + WfUnderOffset;
             if (WfUnderOffset == 240)
@@ -450,6 +445,7 @@ namespace LifePodRemastered
             if (EscapePod.main.transform.position.y <= 0)
             {
                 podHitWater = true;
+                Info.mutePdaEvents = false;//depth notifs to play when sinking
                 yield break;
             }
             CoroutineHost.StartCoroutine(CheckIfUnderwater());
@@ -458,22 +454,57 @@ namespace LifePodRemastered
         IEnumerator CheckIfLanded()
         {
             LastPos = EscapePod.main.transform.position;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.5f);
 
-            if (LastPos == EscapePod.main.transform.position && Time.deltaTime != 0)
+            if (EscapePod.main.transform.position.y <= (LastPos.y + 0.5) && 
+                EscapePod.main.transform.position.y >= (LastPos.y - 0.5) &&
+                Time.deltaTime != 0)
             {
                 podlanded = true;
                 yield break;
             }
             CoroutineHost.StartCoroutine(CheckIfLanded());
         }
+
         void EndCutscene()
         {
+            //reset pod above water gravity to normal
+            wf.aboveWaterGravity = 9.8f; 
+
+            //first person body
             PlayerBody.SetActive(true);
+            //give back camera controll
             PlayerCam.GetComponent<MainCameraControl>()._cinematicMode = false;
+
+            //put player in escape pod
             Player.main.SetPosition(EscapePod.main.transform.position + new Vector3(0, 3, 0));
+            //update their state so they are considered walking and not swimming inside the escape pod
             Player.main.escapePod.Update(true);
+            //reenable hud
             ToggleHud(true);
+
+            //renable pausing
+            IngameMenu.main.canBeOpen = true;
+
+            //renable pda notifs
+            Info.CinematicActive = false;
+            Info.mutePdaEvents = false;
+
+            //destroy unneeded gameobjects
+            Destroy(parachute);
+            Destroy(parachute2);
+            Destroy(FireVfx);
+            Destroy(FireVfx2);
+            Destroy(FireVfx3);
+            Destroy(SmokeVfx);
+            Destroy(FakeSpace);
+            Destroy(CineUiEmpty);
+
+            //add Heavy pod script to this pod
+            EscapePod.main.gameObject.EnsureComponent<HeavyPodMono>();
+
+            //remove script from object
+            Destroy(this);
         }
         void StartParaAnim()
         {

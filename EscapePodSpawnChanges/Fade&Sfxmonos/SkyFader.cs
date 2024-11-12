@@ -13,8 +13,6 @@ namespace LifePodRemastered
     {
         Renderer rend;
         float count = 1;      
-
-        // Start is called before the first frame update
         void Start()
         {
             rend = GetComponent<Renderer>();
@@ -27,14 +25,11 @@ namespace LifePodRemastered
         }
         IEnumerator FadeOut()
         {
-            
-            Debug.Log("started");
             while (count > 0.8f)
             {
                 count -= 0.025f * Time.deltaTime;
                 Color VisableColor = new Color(0, 0, 0, count);
                 rend.material.SetColor("_Color", VisableColor);
-                Debug.Log(count);
                 yield return null;
             }
             while (count > 0f)
@@ -42,7 +37,6 @@ namespace LifePodRemastered
                 count -= 0.35f * Time.deltaTime;
                 Color VisableColor = new Color(0, 0, 0, count);
                 rend.material.SetColor("_Color", VisableColor);
-                Debug.Log(count);
                 yield return null;
             }
 

@@ -20,7 +20,6 @@ namespace LifePodRemastered
         //Defualt start color
         Color color = Color.white;
 
-        // Start is called before the first frame update
         void Start()
         {
             TMP = GetComponent<TextMeshProUGUI>();

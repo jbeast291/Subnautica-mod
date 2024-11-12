@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using static LifePodRemastered.SaveManager;
+using static LifePodRemastered.SaveUtils;
 
 namespace LifePodRemastered
 {
@@ -16,6 +16,7 @@ namespace LifePodRemastered
         Toggle experimentalSettingToggle;
         Toggle customIntroToggle;
         Toggle heightReqToggle;
+        Toggle cinematicOverlayToggle;
 
         GameObject experimentalSettingsGroup;
 
@@ -26,6 +27,7 @@ namespace LifePodRemastered
             experimentalSettingToggle = GameObject.Find("ExperimentalToggle").GetComponent<Toggle>();
             customIntroToggle = GameObject.Find("CustomIntroToggle").GetComponent<Toggle>();
             heightReqToggle = GameObject.Find("HeightReqToggle").GetComponent<Toggle>();
+            cinematicOverlayToggle = GameObject.Find("CinematicOverlayToggle").GetComponent<Toggle>();
 
             experimentalSettingsGroup = GameObject.Find("ExperimentalSettings"); 
         }
@@ -46,13 +48,15 @@ namespace LifePodRemastered
             heightReqToggle.onValueChanged.AddListener(delegate {
                 HeightReqToggle(heightReqToggle);
             });
-
-            ReadSettingsFromModFolder();
+            cinematicOverlayToggle.onValueChanged.AddListener(delegate {
+                CinematicOverlayToggle(cinematicOverlayToggle);
+            });
             heavyPodToggle.isOn = settingsCache.HeavyPodToggle;
             firstTimeAnimToggle.isOn = settingsCache.FirstTimeToggle;
             experimentalSettingToggle.isOn = settingsCache.ExSettingToggle;
             customIntroToggle.isOn = settingsCache.CustomIntroToggle;
             heightReqToggle.isOn = settingsCache.HeightReqToggle;
+            cinematicOverlayToggle.isOn = settingsCache.CinematicOverlayToggle;
             if (!settingsCache.ExSettingToggle)
             {
                 experimentalSettingsGroup.SetActive(false);
@@ -80,6 +84,18 @@ namespace LifePodRemastered
             else
             {
                 settingsCache.FirstTimeToggle = false;
+            }
+            WriteSettingsToModFolder();
+        }
+        public void CinematicOverlayToggle(Toggle change)
+        {
+            if (change.isOn)
+            {
+                settingsCache.CinematicOverlayToggle = true;
+            }
+            else
+            {
+                settingsCache.CinematicOverlayToggle = false;
             }
             WriteSettingsToModFolder();
         }

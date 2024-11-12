@@ -54,7 +54,7 @@ namespace DayCounterChip
         {
             if (CheckIfEquipmentIsInSlot(DayCounterItem.Info.TechType) && (MainCameraControl.main.cinematicMode == false) && (pDA.state == PDA.State.Closed || BepInEx.myConfig.PdaMode))
             {
-                float Currentday = (float)(dayNightCycle.GetDay() - 0.5f);
+                float Currentday = (float) ( dayNightCycle.GetDay() - 0.5f );
                 DayCounterText.text = $"Day: {Currentday:N0}";
 
                 DayCounter.SetActive(true);

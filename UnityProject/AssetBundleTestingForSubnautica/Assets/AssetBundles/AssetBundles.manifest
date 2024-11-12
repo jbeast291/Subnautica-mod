@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 1852300278
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: lifepodspawnmap
+      Dependencies: {}
+    Info_1:
+      Name: daycounterchipbundle
+      Dependencies: {}

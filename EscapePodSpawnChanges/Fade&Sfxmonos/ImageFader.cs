@@ -21,7 +21,6 @@ namespace LifePodRemastered.Fade_Sfxmonos
         //Defualt start color
         Color color = Color.white;
 
-        // Start is called before the first frame update
         void Start()
         {
             img = GetComponent<Image>();
@@ -31,7 +30,6 @@ namespace LifePodRemastered.Fade_Sfxmonos
         {
             color = StartingColor;
         }
-
 
         public void startFadeOut(int speedMulti)
         {

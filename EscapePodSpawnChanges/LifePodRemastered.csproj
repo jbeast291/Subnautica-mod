@@ -114,15 +114,23 @@
   <ItemGroup>
     <Compile Include="Fade&amp;Sfxmonos\ImageFader.cs" />
     <Compile Include="Fade&amp;Sfxmonos\TextFader.cs" />
+    <Compile Include="Monos\HeavyPodMono.cs" />
     <Compile Include="Monos\OptionsMono.cs" />
     <Compile Include="Monos\EscapePodCustomIntro.cs" />
     <Compile Include="Fade&amp;Sfxmonos\StaticOverlayShaker.cs" />
     <Compile Include="Fade&amp;Sfxmonos\SkyFader.cs" />
-    <Compile Include="SaveManager.cs" />
+    <Compile Include="Monos\SaveMono.cs" />
+    <Compile Include="patches\DisplayManagerPatch.cs" />
+    <Compile Include="patches\EscapePodPatch.cs" />
+    <Compile Include="patches\PdaMutePatch.cs" />
+    <Compile Include="patches\PlayerPatch.cs" />
+    <Compile Include="patches\RandomStartPatch.cs" />
+    <Compile Include="patches\uGUIMainMenuPatch.cs" />
+    <Compile Include="patches\uGUISceneIntroPatch.cs" />
+    <Compile Include="SaveUtils.cs" />
     <Compile Include="BepInEx.cs" />
     <Compile Include="Monos\EscapePodMainMenu.cs" />
     <Compile Include="Info.cs" />
-    <Compile Include="Patches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>

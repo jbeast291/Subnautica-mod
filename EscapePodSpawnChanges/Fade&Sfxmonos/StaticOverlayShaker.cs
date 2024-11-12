@@ -12,10 +12,10 @@ namespace LifePodRemastered
 {
     public class StaticOverlayShaker : MonoBehaviour
     {
-        Image img;
+        RawImage img;
         public void Start()
         {
-            img = gameObject.GetComponent<Image>();
+            img = gameObject.GetComponent<RawImage>();
             img.color = new Color(255, 255, 255, 0.015f); // 0.03776348f
         }
 
