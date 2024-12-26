@@ -9,6 +9,7 @@ using Nautilus.Options;
 using Nautilus.Handlers;
 using UnityEngine;
 using LifePodRemastered.Monos;
+using static UserStorageXSave;
 
 namespace LifePodRemastered
 {
@@ -37,14 +38,13 @@ namespace LifePodRemastered
         [Button("Toggle Heavy Pod", Tooltip = "WARNING: Will cause camera jitter if you are in/on the pod. The pod will only move when you are within 15m(so it doesnt fall thru the ground)")]
         public void MyButtonClickEvent(ButtonClickedEventArgs e)
         {
-            Debug.Log(HeavyPodMono.main != null);
             if (HeavyPodMono.main != null)
             {
-                Debug.Log(SaveUtils.inGameSave.HeavyPodToggle);
                 SaveUtils.inGameSave.HeavyPodToggle = !SaveUtils.inGameSave.HeavyPodToggle;
-                Debug.Log(SaveUtils.inGameSave.HeavyPodToggle);
-                HeavyPodMono.main.updateState();
             }
         }
+
+        [Slider("Vertical Motion Rate", 1f, 50f, DefaultValue = 10f, Tooltip = "When toggling the Heavy Pod on/off, this is the rate it will move up/down")]
+        public float verticalMotionRate = 10f;
     }
 }

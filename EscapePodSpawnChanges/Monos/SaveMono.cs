@@ -17,7 +17,6 @@ namespace LifePodRemastered.Monos
                 SaveUtils.CreateDefaultSlotSettingsIfNotExist();
                 SaveUtils.ReadSettingsFromCurrectSlot();
             }
-            //register onloaded to be called on game finished loading. waiting for game to load essentially
             Action save = OnSave;
             Nautilus.Utility.SaveUtils.RegisterOnSaveEvent(save);
         }
@@ -26,6 +25,5 @@ namespace LifePodRemastered.Monos
         {
             SaveUtils.WriteSettingsToCurrentSlot();
         }
-        //need handling if there was no file in a previously made save
     }
 }

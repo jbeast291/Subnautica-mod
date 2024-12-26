@@ -20,7 +20,7 @@ namespace LifePodRemastered.patches
             [HarmonyPrefix]
             public static bool NewGetRandomStartPoint(ref Vector3 __result)
             {
-                float y;
+                float y = 2000f;
                 if (!SaveUtils.settingsCache.HeightReqToggle)
                 {
                     y = 0f;
@@ -28,10 +28,6 @@ namespace LifePodRemastered.patches
                 if (!SaveUtils.settingsCache.HeightReqToggle && Info.OverideSpawnHeight)
                 {
                     y = Info.SelectedSpawn.y;
-                }
-                else
-                {
-                    y = 2000f;
                 }
                 __result = new Vector3(Info.SelectedSpawn.x, y, Info.SelectedSpawn.z);
                 return false;

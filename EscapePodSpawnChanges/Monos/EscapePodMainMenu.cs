@@ -10,6 +10,7 @@ using UWE;
 using TMPro;
 using static LifePodRemastered.SaveUtils;
 using FMOD;
+using UnityEngine.SceneManagement;
 
 namespace LifePodRemastered
 {
@@ -21,7 +22,7 @@ namespace LifePodRemastered
 
         public static AssetBundle assetBundle = Info.assetBundle;
 
-        public static GameObject canvas;
+        Canvas originalGameCanvas;
 
         GameObject AreaSeceltor;
 
@@ -36,7 +37,7 @@ namespace LifePodRemastered
         GameObject PresetText;
         GameObject SpecificCoordsInput;
 
-        GameObject Map;
+        GameObject mapsBackground;
         GameObject CoordsDisplay;
         GameObject ScalePoint1;
         GameObject ScalePoint2;
@@ -45,22 +46,26 @@ namespace LifePodRemastered
         GameObject SelectedPoint;
         GameObject SelectedPointIndicator;
 
-        GameObject SpecificPointInfo;
-        GameObject PresetPointInfo;
-        GameObject RandomPointInfo;
-        GameObject InputCoordsInfo;
-        GameObject SettingsInfo;
-
-        Camera cam;
+        TextMeshProUGUI RightSideInfoText;
 
         int CurrentMode = 1;
         int CurrentPreset = 1;
+
+        //Used in map cycle
+        int currentMapSelected = 1;
+        GameObject mapText;
+        GameObject mapNoText;
+        GameObject mapDepth;
+        GameObject mapXRay;
+
+        GameObject cycleMapButton;
 
         bool AnimationActive = false;
 
         List<string[]> presetList;
 
-        Vector3 vector3 = new Vector3(10000, 10000, 10000);
+        bool hasSelectedPoint = false;
+        Button playButton;
 
         public void Awake()
         {
@@ -69,10 +74,11 @@ namespace LifePodRemastered
             Rightside = GameObject.Find("RightSide");
             Primaryoptions = GameObject.Find("PrimaryOptions");
 
-            canvas = GameObject.Find("Menu canvas");
+            originalGameCanvas = GameObject.Find("Menu canvas").GetComponent<Canvas>();
 
-            AreaSeceltor = Instantiate(assetBundle.LoadAsset<GameObject>("AreaSelector"));
-            AreaSeceltor.transform.parent = canvas.transform;
+
+            AreaSeceltor = Instantiate(assetBundle.LoadAsset<GameObject>("LifePodRemasteredCanvas"));
+            SceneManager.MoveGameObjectToScene(AreaSeceltor, SceneManager.GetSceneByName("XMenu"));
             AreaSeceltor.transform.localPosition = new Vector3(0, 0, 7500);
             AreaSeceltor.SetActive(true);
         }
@@ -93,7 +99,11 @@ namespace LifePodRemastered
             GameObject.Find("RandomizePointButton").GetComponent<Button>().onClick.AddListener(OnRandomizePointButtonClick);
             GameObject.Find("SpecificCoordsInput").GetComponent<TMP_InputField>().onEndEdit.AddListener(OnEndInputFieldEdit);
 
-            
+            cycleMapButton = GameObject.Find("CycleMapButton");
+            cycleMapButton.GetComponent<Button>().onClick.AddListener(OnCycleButtonClick);
+
+
+            playButton = GameObject.Find("StartGameButton").GetComponent<Button>();
 
             ModePresetPoint = GameObject.Find("ModePresetPoint");
             RandomizePointButton = GameObject.Find("RandomizePointButton");
@@ -103,7 +113,7 @@ namespace LifePodRemastered
             PresetText = GameObject.Find("PresetText");
             SpecificCoordsInput = GameObject.Find("SpecificCoordsInput");
 
-            Map = GameObject.Find("Map");
+            mapsBackground = GameObject.Find("MapBackground");
             CoordsDisplay = GameObject.Find("CoordsDisplay");
             ScalePoint1 = GameObject.Find("ScalePoint1");
             ScalePoint2 = GameObject.Find("ScalePoint2");
@@ -111,24 +121,21 @@ namespace LifePodRemastered
             BoundTopRight = GameObject.Find("BoundTopRight");
             OptionsPannel = GameObject.Find("OptionsBackGround");
 
-            SpecificPointInfo = GameObject.Find("SpecificPointInfo");
-            PresetPointInfo = GameObject.Find("PresetPointInfo");
-            RandomPointInfo = GameObject.Find("RandomPointInfo");
-            InputCoordsInfo = GameObject.Find("InputCoordsInfo");
-            SettingsInfo = GameObject.Find("SettingsInfo");
+            RightSideInfoText = GameObject.Find("RightSideInfoText").GetComponent<TextMeshProUGUI>();
 
-            cam = GameObject.Find("UI Camera").GetComponent<Camera>();
+            //cycle
+            mapText = GameObject.Find("MapText");
+            mapNoText = GameObject.Find("MapNoText");
+            mapDepth = GameObject.Find("MapDepth");
+            mapXRay = GameObject.Find("MapXRay");
 
             AreaSeceltor.SetActive(false);
             OptionsPannel.SetActive(false);
-            SpecificPointInfo.SetActive(false);
-            PresetPointInfo.SetActive(false);
-            RandomPointInfo.SetActive(false);
-            InputCoordsInfo.SetActive(false);
-            SettingsInfo.SetActive(false);
 
             OptionsPannel.gameObject.EnsureComponent<OptionsMono>();
             SelectedPointIndicator.GetComponent<Animation>().Play();//start loop
+
+            cycleMaps();
         }
 
         public void Update()
@@ -139,12 +146,13 @@ namespace LifePodRemastered
                 ManageLeftSide(CurrentMode, CurrentPreset);
 
                 AreaSeceltor.SetActive(true);
-                Map.SetActive(true);
+                mapsBackground.SetActive(true);
                 OptionsPannel.SetActive(false);
                 Rightside.SetActive(false);
                 Primaryoptions.SetActive(false);
-            }
 
+                originalGameCanvas.enabled = false;
+            }
         }
         public void ManageLeftSide(int Mode, int presetNumber)
         {
@@ -158,9 +166,10 @@ namespace LifePodRemastered
                         ModePresetPoint.SetActive(false);
                         SpecificCoordsInput.SetActive(false);
 
-                        if (Input.GetMouseButtonDown(0) && CheckValidMousePosition(Input.mousePosition) == 1)
+                        if (Input.GetMouseButtonDown(0) && CheckValidMousePosition(Input.mousePosition))
                         {
-                            MousePositionToSelectedPoint(Input.mousePosition);
+                            MoveSelecedPointFromWorldPoint(MousePositionToWorldPoint(Input.mousePosition));
+                            ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
                         }
                         break;
                     }
@@ -175,7 +184,7 @@ namespace LifePodRemastered
                         string[] selectedPreset = presetList[presetNumber - 1];
 
                         PresetTextTEXT.text = selectedPreset[0];
-                        WorldPointtoMoveSelecedPoint(StringToVector3(selectedPreset[1]));
+                        MoveSelecedPointFromWorldPoint(StringToVector3(selectedPreset[1]));
 
                         break;
                     }
@@ -199,115 +208,101 @@ namespace LifePodRemastered
         public void ManageRightSide(int Mode, bool ShowSettings)
         {
 
-            if (!ShowSettings)//settings info off
+            if (!ShowSettings)//map 
             {
                 switch (CurrentMode)
                 {
-                    case 1:
-                        {
-                            SpecificPointInfo.SetActive(true);
-                            PresetPointInfo.SetActive(false);
-                            SettingsInfo.SetActive(false);
-                            break;
-                        }
-                    case 2:
-                        {
-                            SpecificPointInfo.SetActive(false);
-                            PresetPointInfo.SetActive(true);
-                            RandomPointInfo.SetActive(false);
-                            SettingsInfo.SetActive(false);
-                            break;
-                        }
-                    case 3:
-                        {
-                            PresetPointInfo.SetActive(false);
-                            RandomPointInfo.SetActive(true);
-                            InputCoordsInfo.SetActive(false);
-                            SettingsInfo.SetActive(false);
-                            break;
-                        }
-                    case 4:
-                        {
-                            RandomPointInfo.SetActive(false);
-                            InputCoordsInfo.SetActive(true);
-                            SettingsInfo.SetActive(false);
-                            break;
-                        }
+                    case 1: { RightSideInfoText.text = "Click a position on the map to set were the pod spawns.\r\n\r\n\r\nPress play to \r\nstart!"; break; }
+                    case 2: { RightSideInfoText.text = "Choose from one of the preset points on the left\r\n\r\n\r\nPress play to \r\nstart!"; break; }
+                    case 3: { RightSideInfoText.text = "Press the button \"Randomize Point\" for a randompoint (can be in void so be carefull)\r\n\r\nPress play to \r\nstart!"; break; }
+                    case 4: { RightSideInfoText.text = "For more advanced users type your desired coords in manually\r\n\r\n\r\nPress play to \r\nstart!"; break; }
                 }
             }
             else//settings
             {
-                SpecificPointInfo.SetActive(false);
-                PresetPointInfo.SetActive(false);
-                RandomPointInfo.SetActive(false);
-                InputCoordsInfo.SetActive(false);
-                SettingsInfo.SetActive(true);
+                RightSideInfoText.text = "Modify experimental spawning properties or post-intro settings!\r\n\r\nPress play to \r\nstart!";
             }
 
         }
 
-        public static Vector3 StringToVector3(string sVector) // I may or may not have "borrrowed" this code
+        public static Vector3 StringToVector3(string sVector)
         {
-            // Remove the parentheses
+            //Remove parentheses
             if (sVector.StartsWith("(") && sVector.EndsWith(")"))
             {
                 sVector = sVector.Substring(1, sVector.Length - 2);
             }
 
-            // split the items
+            //split xyz
             string[] sArray = sVector.Split(',');
 
-            // store as a Vector3
+            //store as Vector3
             Vector3 result = new Vector3(float.Parse(sArray[0]), float.Parse(sArray[1]), float.Parse(sArray[2]));
 
             return result;
         }
 
-        public float CheckValidMousePosition(Vector3 MousePos)
+        public bool CheckValidMousePosition(Vector3 MousePos)
         {
-            if ((MousePos.y >= cam.WorldToScreenPoint(BoundBottomLeft.transform.position).y && MousePos.y <= cam.WorldToScreenPoint(BoundTopRight.transform.position).y && (MousePos.x >= cam.WorldToScreenPoint(BoundBottomLeft.transform.position).x && MousePos.x <= cam.WorldToScreenPoint(BoundTopRight.transform.position).x)))
+            //check if it is in the bounds
+            Vector3 vectorOfRelativePositionToMap = WorldPointToLocalOfMap(MousePositionToWorldPoint(MousePos));
+            if ((MousePos.y >= BoundBottomLeft.transform.position.y && MousePos.y <= BoundTopRight.transform.position.y && MousePos.x >= BoundBottomLeft.transform.position.x && MousePos.x <= BoundTopRight.transform.position.x) && (
+                //check if the click is on the cycle button
+                vectorOfRelativePositionToMap.x <= (cycleMapButton.GetComponent<RectTransform>().localPosition.x - (cycleMapButton.GetComponent<RectTransform>().rect.width / 2)) ||
+                vectorOfRelativePositionToMap.x >= (cycleMapButton.GetComponent<RectTransform>().localPosition.x + (cycleMapButton.GetComponent<RectTransform>().rect.width / 2)) ||
+                vectorOfRelativePositionToMap.y <= (cycleMapButton.GetComponent<RectTransform>().localPosition.y - (cycleMapButton.GetComponent<RectTransform>().rect.height / 2)) ||
+                vectorOfRelativePositionToMap.y >= (cycleMapButton.GetComponent<RectTransform>().localPosition.y + (cycleMapButton.GetComponent<RectTransform>().rect.height / 2))))
             {
-                return 1;
+                return true;
             }
             else
             {
-                return 0;
+                return false;
             }
+           
         }
-        public void WorldPointtoMoveSelecedPoint(Vector3 WorldPoint)
+
+
+        public Vector3 WorldPointToLocalOfMap(Vector3 WorldPoint)
         {
-            float diff = Info.currentRes.width / 2560f;
-            vector3 = new Vector3((WorldPoint.x / (3.37f / diff)) + (1280 * diff), (WorldPoint.z / (3.37f / diff)) + (720 * diff));
-            SelectedPoint.GetComponent<RectTransform>().localPosition = new Vector3((vector3.x - (1280f * diff)) / (1250f * diff), (vector3.y - (720f * diff)) / (1250f * diff), 0);
+            Vector3 calculatedSelectorLocalPosition = new Vector3(WorldPoint.x * System.Math.Abs(ScalePoint1.transform.localPosition.x) / 1500, 
+                WorldPoint.z * System.Math.Abs(ScalePoint2.transform.localPosition.y) / 1500, 0);
+            return calculatedSelectorLocalPosition;
+        }
+        public Vector3 MousePositionToWorldPoint(Vector3 MousePos)
+        {
+            //calculate the world point based on the mouse point
+            Vector3 calculatedWorldPoint = new Vector3((MousePos.x - Info.currentRes.width / 2) * (1500 / (Info.currentRes.width / 2 - ScalePoint1.transform.position.x)), 0,
+                (MousePos.y - Info.currentRes.height / 2) * (1500 / (Info.currentRes.height / 2 - ScalePoint2.transform.position.y)));
+
+            return calculatedWorldPoint;
+        }
+
+
+
+        public void MoveSelecedPointFromWorldPoint(Vector3 WorldPoint)
+        {
+            Vector3 calculatedSelectorLocalPosition = WorldPointToLocalOfMap(WorldPoint);
+
+            SelectedPoint.GetComponent<RectTransform>().localPosition = calculatedSelectorLocalPosition;
             Info.SelectedSpawn = WorldPoint;
             CoordsDisplay.GetComponent<TextMeshProUGUI>().text = "Coords: " + WorldPoint;
+
+            playButton.interactable = true;//make the start button pressable, once point is selected
+            hasSelectedPoint = true;
         }
-        public void MousePositionToSelectedPoint(Vector3 MousePos)
-        {
-            vector3 = new Vector3((MousePos.x - Info.currentRes.width / 2) * (1500 / (Info.currentRes.width / 2 - cam.WorldToScreenPoint(ScalePoint1.transform.position).x)), 0, (MousePos.y - Info.currentRes.height / 2) * (1500 / (Info.currentRes.height / 2 - cam.WorldToScreenPoint(ScalePoint2.transform.position).y)));
-            Info.SelectedSpawn = vector3;
-            CoordsDisplay.GetComponent<TextMeshProUGUI>().text = "Coords: " + vector3;
-
-            float Scaler = 0.000238f;
-            Vector3 SELECTOR = new Vector3(vector3.x * Scaler, vector3.z * Scaler, 0);
-            SelectedPoint.GetComponent<RectTransform>().localPosition = SELECTOR;
-            ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
-        }
-
-
-
         void OnSettingsModButtonClick()
         {
             Info.Showsettings = !Info.Showsettings;
-            OptionsPannel.SetActive(true);
-            Map.SetActive(false);
+            OptionsPannel.SetActive(Info.Showsettings);
+            mapsBackground.SetActive(!Info.Showsettings);
             ManageRightSide(CurrentMode, Info.Showsettings);
             ClickSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
             
         }
         void OnStartGameButtonClick()
         {
-            if (vector3 != new Vector3(10000, 10000, 10000))
+            if (hasSelectedPoint)
             {
                 ClickSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
                 Info.showmap = false;
@@ -332,6 +327,8 @@ namespace LifePodRemastered
             AreaSeceltor.SetActive(false);
             Rightside.SetActive(true);
             Primaryoptions.SetActive(true);
+
+            originalGameCanvas.enabled = true;
         }
         void OnModeChoiceleftClick()
         {
@@ -379,8 +376,9 @@ namespace LifePodRemastered
         void OnEndInputFieldEdit(string s)
         {
             Info.SelectedSpawn = StringToVector3(s);
+            playButton.interactable = true;//make the start button pressable, once point is selected
             Info.OverideSpawnHeight = true;
-            WorldPointtoMoveSelecedPoint(Info.SelectedSpawn);
+            MoveSelecedPointFromWorldPoint(Info.SelectedSpawn);
             ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
 
             ManageRightSide(CurrentMode, Info.Showsettings);
@@ -389,13 +387,65 @@ namespace LifePodRemastered
         void OnRandomizePointButtonClick()
         {
             Info.OverideSpawnHeight = false;
-            Vector3 ranvector3 = new Vector3(Random.Range(cam.WorldToScreenPoint(BoundBottomLeft.transform.position).x, cam.WorldToScreenPoint(BoundTopRight.transform.position).x), Random.Range(cam.WorldToScreenPoint(BoundBottomLeft.transform.position).y, cam.WorldToScreenPoint(BoundTopRight.transform.position).y), 0);
+            Vector3 ranvector3 = new Vector3(Random.Range(BoundBottomLeft.transform.position.x, BoundTopRight.transform.position.x), 
+                Random.Range(BoundBottomLeft.transform.position.y, BoundTopRight.transform.position.y), 0);
 
-            MousePositionToSelectedPoint(ranvector3);
+            MoveSelecedPointFromWorldPoint(MousePositionToWorldPoint(ranvector3));
+
             ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
 
             ManageRightSide(CurrentMode, Info.Showsettings);
             ManageLeftSide(CurrentMode, CurrentPreset);
+        }
+        void OnCycleButtonClick()
+        {
+            ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
+            if(currentMapSelected < 4)
+            {
+                currentMapSelected++;
+            } else
+            {
+                currentMapSelected = 1;
+            }
+            cycleMaps();
+        }
+        void cycleMaps()
+        {
+            switch (currentMapSelected)
+            {
+                case 1:
+                    {
+                        mapText.SetActive(true);
+                        mapNoText.SetActive(false);
+                        mapDepth.SetActive(false);
+                        mapXRay.SetActive(false);
+                        break;
+                    }
+                case 2:
+                    {
+                        mapText.SetActive(false);
+                        mapNoText.SetActive(true);
+                        mapDepth.SetActive(false);
+                        mapXRay.SetActive(false);
+                        break;
+                    }
+                case 3:
+                    {
+                        mapText.SetActive(false);
+                        mapNoText.SetActive(false);
+                        mapDepth.SetActive(true);
+                        mapXRay.SetActive(false);
+                        break;
+                    }
+                case 4:
+                    {
+                        mapText.SetActive(false);
+                        mapNoText.SetActive(false);
+                        mapDepth.SetActive(false);
+                        mapXRay.SetActive(true);
+                        break;
+                    }
+            }
         }
     }
 }

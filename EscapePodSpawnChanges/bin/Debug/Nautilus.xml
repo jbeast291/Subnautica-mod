@@ -725,6 +725,18 @@
             </summary>
             <remarks>The class ID reference will be completely erased, however, the TechType instance will remain in the game.</remarks>
         </member>
+        <member name="T:Nautilus.Assets.CustomPrefabExtensions">
+            <summary>
+            Represents extension methods for the <see cref="T:Nautilus.Assets.CustomPrefab"/> class.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Assets.CustomPrefabExtensions.RemoveFromCache(Nautilus.Assets.CustomPrefab)">
+            <summary>
+            Removes the current prefab from the prefab cache and doesn't allow it to get cached later.
+            </summary>
+            <param name="customPrefab">The custom prefab to remove from the prefab cache.</param>
+            <returns>A reference to this instance after the operation has completed.</returns>
+        </member>
         <member name="T:Nautilus.Assets.Gadgets.CraftingGadget">
             <summary>
             Represents a crafting gadget
@@ -1456,7 +1468,7 @@
         </member>
         <member name="M:Nautilus.Assets.ModPrefabCache.AddPrefab(UnityEngine.GameObject)">
             <summary> Adds the given prefab to the cache. </summary>
-            <param name="prefab"> The prefab object that is disabled and cached. </param>
+            <param name="prefab"> The prefab object that is disabled and cached.</param>
         </member>
         <member name="M:Nautilus.Assets.ModPrefabCache.IsPrefabCached(System.String)">
             <summary>
@@ -1470,6 +1482,7 @@
             Any prefab with the matching <paramref name="classId"/> will be removed from the cache.
             </summary>
             <param name="classId">The class id of the prefab that will be removed.</param>
+            <remarks>This operation is extremely dangerous on custom prefabs that are directly registering an asset bundle prefab as it may make the prefab unusable in the current session.<br/>Avoid using this method unless you know what you're doing.</remarks>
         </member>
         <member name="M:Nautilus.Assets.ModPrefabCache.TryGetPrefabFromCache(System.String,UnityEngine.GameObject@)">
             <summary>
@@ -1528,7 +1541,7 @@
             <param name="displayName">The display name of this Tech Type, can be anything. If null or empty, this will use the language line "{enumName}" instead.</param>
             <param name="description">The tooltip displayed when hovered in the PDA, can be anything. If null or empty, this will use the language line "Tooltip_{enumName}" instead.</param>
             <param name="language">The language for this entry. Defaults to English.</param>
-            <param name="unlockAtStart">Whether this tech type should be unlocked on game start or not. Default to <see langword="true"/>.</param>
+            <param name="unlockAtStart">Whether this tech type should be unlocked on game start or not. Defaults to <see langword="false"/>.</param>
             <param name="techTypeOwner">The assembly that owns the created tech type. The name of this assembly will be shown in the PDA.</param>
             <returns>An instance of the constructed <see cref="T:Nautilus.Assets.PrefabInfo"/>.</returns>
         </member>
@@ -1597,7 +1610,7 @@
         </member>
         <member name="T:Nautilus.Assets.PrefabTemplates.AtmosphereVolumeTemplate">
             <summary>
-            A template for Atmosphere Volumes, which are basic invisible triggers for mini-biomes.
+            A template for Atmosphere Volumes, which are basic invisible triggers for mini-biomes. Atmosphere volumes can affect fog, music, ambient sounds and even the player's swim speed.
             </summary>
         </member>
         <member name="P:Nautilus.Assets.PrefabTemplates.AtmosphereVolumeTemplate.Shape">
@@ -1613,6 +1626,11 @@
         <member name="P:Nautilus.Assets.PrefabTemplates.AtmosphereVolumeTemplate.Priority">
             <summary>
             The priority of this atmosphere volume. Atmosphere volumes with higher priorities override those with lower priorities. The default priority is 10.
+            </summary>
+        </member>
+        <member name="P:Nautilus.Assets.PrefabTemplates.AtmosphereVolumeTemplate.CanEnterWhileInsideVehicle">
+            <summary>
+            Whether this atmosphere volume can be entered while inside a vehicle or not. For unknown reasons, this is NOT true for base game volumes. However, in this template, it is true by default.
             </summary>
         </member>
         <member name="P:Nautilus.Assets.PrefabTemplates.AtmosphereVolumeTemplate.CellLevel">
@@ -2019,6 +2037,19 @@
         </member>
         <member name="P:Nautilus.Assets.SpawnLocation.EulerAngles">
             <summary>Euler angles for the rotation the spawned object will appear with.</summary>
+        </member>
+        <member name="P:Nautilus.Assets.SpawnLocation.Scale">
+            <summary>
+            The scale that the object is spawned at. If default (0, 0, 0) will be resolved to (1, 1, 1).
+            </summary>
+        </member>
+        <member name="M:Nautilus.Assets.SpawnLocation.#ctor(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+            Defines the spawn location with world position and optional euler angles. Used in the Coordinated Spawns system.
+            </summary>
+            <param name="Position">The world position.</param>
+            <param name="EulerAngles">Euler angles for the rotation the spawned object will appear with.</param>
+            <param name="Scale">The scale that the object is spawned at. If default (0, 0, 0) will be resolved to (1, 1, 1).</param>
         </member>
         <member name="T:Nautilus.Assets.ModSprite">
             <summary>
@@ -2500,6 +2531,29 @@
             <param name="index">The index.</param>
             <returns>The <see cref="T:TechType"/> at the requested the index if the index is value; Otherwise returns null.</returns>
         </member>
+        <member name="T:Nautilus.Extensions.FModExtensions">
+            <summary>
+            Contains extension methods for the FMOD system. 
+            </summary>
+        </member>
+        <member name="M:Nautilus.Extensions.FModExtensions.AddFadeOut(FMOD.Sound,System.Single)">
+            <summary>
+            Adds a fade-out point for the specified sound.
+            </summary>
+            <param name="sound">The sound to add a fade-out to</param>
+            <param name="seconds">The duration of the fade-out.</param>
+            <remarks>Fades are only triggered when an emitter respects them. E.G: when calling <c>FMOD_CustomEmitter.Stop(STOP_MODE.ALLOWFADEOUT)</c>.</remarks>
+        </member>
+        <member name="M:Nautilus.Extensions.FModExtensions.AddFadeOut(FMOD.Channel,System.Single,System.UInt64@)">
+            <summary>
+            Adds a fade-out point for the specified channel.
+            </summary>
+            <param name="channel">The channel to add a fade-out to</param>
+            <param name="seconds">The duration of the fade-out. The fade-out starts at the current time.</param>
+            <param name="dspClock">The DSP clock at the point where the fade was added.<br/>
+            DSP clock consists of 48_000 ticks per second. For more information, please refer to the <see href="https://documentation.help/fmod-studio-api/FMOD_Channel_GetDSPClock.html">FMOD docs</see>.</param>
+            <remarks>This method only applies the fade-out one time. If you want the fade to stay everytime the sound is played, consider using <see cref="M:Nautilus.Extensions.FModExtensions.AddFadeOut(FMOD.Sound,System.Single)"/>.</remarks>
+        </member>
         <member name="T:Nautilus.Extensions.GameObjectExtensions">
             <summary>
             Contains extension methods for Unity objects.
@@ -2572,6 +2626,7 @@
             </summary>
             <param name="gameObject">The game object to check.</param>
             <returns>True if this game object is a proper prefab, otherwise false.</returns>
+            <exception cref="T:System.NullReferenceException"><paramref name="gameObject"/> is null.</exception>
         </member>
         <member name="M:Nautilus.Extensions.GameObjectExtensions.ForceValid``1(``0)">
             <summary>
@@ -2616,6 +2671,33 @@
             <param name="separator">The <see cref="T:System.String"/> to insert between each pair of values.</param>
             <param name="values">Values to concatenate into the <paramref name="builder"/>.</param>
             <returns>The provided <see cref="T:System.Text.StringBuilder"/>.</returns>
+        </member>
+        <member name="T:Nautilus.Extensions.RecipeExtensions">
+            <summary>
+            Contains extensions that are specific to the <see cref="T:Nautilus.Crafting.RecipeData"/> and <see cref="T:ITechData"/> classes.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Extensions.RecipeExtensions.ConvertToTechData(ITechData,TechType)">
+            <summary>
+            Converts a <see cref="T:Nautilus.Crafting.RecipeData"/> to an <see cref="T:ITechData"/>.
+            </summary>
+            <param name="techData"> the original data to convert.</param>
+            <param name="techType"> The Techtype </param>
+            <returns><see cref="T:CraftData.TechData"/></returns>
+        </member>
+        <member name="M:Nautilus.Extensions.RecipeExtensions.ConvertToRecipeData(ITechData)">
+            <summary>
+            Converts the games ITechData into Nautilus RecipeData.
+            </summary>
+            <param name="iTechData"></param>
+        </member>
+        <member name="M:Nautilus.Extensions.RecipeExtensions.SameAs(ITechData,ITechData)">
+            <summary>
+            Checks if the two ITechData are equal.
+            </summary>
+            <param name="originalTechData"></param>
+            <param name="techData"></param>
+            <returns></returns>
         </member>
         <member name="M:Nautilus.Extensions.TypeExtensions.GetFriendlyName(System.Type)">
             <summary>
@@ -2796,6 +2878,20 @@
             <seealso cref="M:Nautilus.Handlers.ConsoleCommandsHandler.RegisterConsoleCommand``1(System.String,``0)"/>
             <seealso cref="T:Nautilus.Commands.ConsoleCommandAttribute"/>
         </member>
+        <member name="M:Nautilus.Handlers.ConsoleCommandsHandler.AddBiomeTeleportPosition(System.String,UnityEngine.Vector3)">
+            <summary>
+            Adds a new teleport position to the "biome" command.
+            </summary>
+            <param name="biomeName">The name of the teleport. Case-insensitive, no spaces allowed.</param>
+            <param name="position">The world coordinates of the teleport.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.ConsoleCommandsHandler.AddGotoTeleportPosition(System.String,UnityEngine.Vector3)">
+            <summary>
+            Adds a new teleport position to the "goto" command.
+            </summary>
+            <param name="locationName">The name of the teleport. Case-insensitive, no spaces allowed.</param>
+            <param name="position">The world coordinates of the teleport.</param>
+        </member>
         <member name="T:Nautilus.Handlers.CoordinatedSpawnsHandler">
             <summary>
             A handler class for registering Coordinated Spawns.
@@ -2906,6 +3002,26 @@
             <param name="spawnPosition">Position to spawn into.</param>
             <param name="rotation">Rotation to spawn at.</param>
             <param name="scale">Scale to spawn with.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.SpawnInfo.#ctor(TechType,UnityEngine.Vector3,UnityEngine.Quaternion,UnityEngine.Vector3,System.Action{UnityEngine.GameObject})">
+            <summary>
+            Initializes a new <see cref="T:Nautilus.Handlers.SpawnInfo"/>.
+            </summary>
+            <param name="techType">TechType to spawn.</param>
+            <param name="spawnPosition">Position to spawn into.</param>
+            <param name="rotation">Rotation to spawn at.</param>
+            <param name="scale">Scale to spawn with.</param>
+            <param name="onSpawned">Callback that is used when the object is successfully spawned.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.SpawnInfo.#ctor(System.String,UnityEngine.Vector3,UnityEngine.Quaternion,UnityEngine.Vector3,System.Action{UnityEngine.GameObject})">
+            <summary>
+            Initializes a new <see cref="T:Nautilus.Handlers.SpawnInfo"/>.
+            </summary>
+            <param name="classId">ClassID to spawn.</param>
+            <param name="spawnPosition">Position to spawn into.</param>
+            <param name="rotation">Rotation to spawn at.</param>
+            <param name="scale">Scale to spawn with.</param>
+            <param name="onSpawned">Callback that is used when the object is successfully spawned.</param>
         </member>
         <member name="M:Nautilus.Handlers.SpawnInfo.Equals(System.Object)">
             <summary>
@@ -3189,7 +3305,7 @@
             </summary>
             <param name="craftTree">The target craft tree to edit.</param>
             <param name="name">The ID of the tab node. Must be unique!</param>
-            <param name="displayName">The display name of the tab, which will show up when you hover your mouse on the tab.</param>
+            <param name="displayName">The display name of the tab, which will show up when you hover your mouse on the tab. If null or empty, this will use the language line "{craftTreeName}_{tabName}" instead.</param>
             <param name="sprite">The sprite of the tab.</param>        
         </member>
         <member name="M:Nautilus.Handlers.CraftTreeHandler.AddTabNode(CraftTree.Type,System.String,System.String,UnityEngine.Sprite)">
@@ -3198,7 +3314,7 @@
             </summary>
             <param name="craftTree">The target craft tree to edit.</param>
             <param name="name">The ID of the tab node. Must be unique!</param>
-            <param name="displayName">The display name of the tab, which will show up when you hover your mouse on the tab.</param>
+            <param name="displayName">The display name of the tab, which will show up when you hover your mouse on the tab. If null or empty, this will use the language line "{craftTreeName}_{tabName}" instead.</param>
             <param name="sprite">The sprite of the tab.</param>
         </member>
         <member name="M:Nautilus.Handlers.CraftTreeHandler.AddTabNode(CraftTree.Type,System.String,System.String,Atlas.Sprite,System.String[])">
@@ -3207,7 +3323,7 @@
             </summary>
             <param name="craftTree">The target craft tree to edit.</param>
             <param name="name">The ID of the tab node. Must be unique!</param>
-            <param name="displayName">The display name of the tab, which will show up when you hover your mouse on the tab.</param>
+            <param name="displayName">The display name of the tab, which will show up when you hover your mouse on the tab. If null or empty, this will use the language line "{craftTreeName}_{tabName}" instead.</param>
             <param name="sprite">The sprite of the tab.</param>
             <param name="stepsToTab">
             <para>The steps to the target tab.</para>
@@ -3222,7 +3338,7 @@
             </summary>
             <param name="craftTree">The target craft tree to edit.</param>
             <param name="name">The ID of the tab node. Must be unique!</param>
-            <param name="displayName">The display name of the tab, which will show up when you hover your mouse on the tab.</param>
+            <param name="displayName">The display name of the tab, which will show up when you hover your mouse on the tab. If null or empty, this will use the language line "{craftTreeName}_{tabName}" instead.</param>
             <param name="sprite">The sprite of the tab.</param>
             <param name="stepsToTab">
             <para>The steps to the target tab.</para>
@@ -3389,6 +3505,19 @@
             <param name="id">The emitter's ID, can be retrieved by calling <c>object.GetInstanceID()</c>.</param>
             <param name="channel">Outputs the <see cref="T:FMOD.Channel"/>.</param>
             <returns>True if found, otherwise false.</returns>
+        </member>
+        <member name="M:Nautilus.Handlers.CustomSoundHandler.AttachChannelToGameObject(FMOD.Channel,UnityEngine.Transform)">
+            <summary>
+            Attaches the specified channel to the given transform. This results in the sound position following the <paramref name="transform"/>.
+            </summary>
+            <param name="channel">The channel to attach.</param>
+            <param name="transform">The transform which the channel will follow.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.CustomSoundHandler.DetachChannelFromGameObject(FMOD.Channel)">
+            <summary>
+            Detaches the specified channel from any game object.
+            </summary>
+            <param name="channel">The channel to detach.</param>
         </member>
         <member name="T:Nautilus.Handlers.EnumBuilder`1">
             <summary>
@@ -6985,6 +7114,19 @@
             <param name="message">The message.</param>
             <param name="level">Log level.</param>
         </member>
+        <member name="M:Nautilus.Patchers.CraftTreePatcher.RemoveNodes(CraftTree@,System.Collections.Generic.List{Nautilus.Crafting.Node}@)">
+            <summary>
+            This method can be used to both remove single child nodes, thus removing one recipe from the tree.
+            Or it can remove entire tabs at once, removing the tab and all the recipes it contained in one go.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Patchers.CraftTreePatcher.CopyCraftNode(TreeNode)">
+            <summary>
+            Copy the specified node and it's inner nodes recursively.
+            </summary>
+            <param name="treeNode">The node to begin this operation on. Can be used on any node.</param>
+            <returns>A complete copy of the passed node.</returns>
+        </member>
         <member name="F:Nautilus.Patchers.ItemActionPatcher.CustomMiddleClickItemAction">
             <summary>
             A constant <see cref="T:ItemAction"/> value to represent a custom middle click item action
@@ -7771,6 +7913,26 @@
             Only returns true once all relevant materials/shaders have been loaded by the MaterialUtils class and are safe to be used.
             </summary>
         </member>
+        <member name="P:Nautilus.Utility.MaterialUtils.GlassMaterial">
+            <summary>
+            Gets the basic glass material
+            </summary>
+        </member>
+        <member name="P:Nautilus.Utility.MaterialUtils.ExteriorGlassMaterial">
+            <summary>
+            Gets the material for the outside of glass, such as for base windows
+            </summary>
+        </member>
+        <member name="P:Nautilus.Utility.MaterialUtils.InteriorGlassMaterial">
+            <summary>
+            Gets the material for the inside of glass, such as the inside of the Cyclops windshield
+            </summary>
+        </member>
+        <member name="P:Nautilus.Utility.MaterialUtils.ShinyGlassMaterial">
+            <summary>
+            Gets a shiny glass material
+            </summary>
+        </member>
         <member name="T:Nautilus.Utility.MaterialUtils.Shaders">
             <summary>
             Contains references to various Shaders.
@@ -7888,6 +8050,11 @@
         <member name="P:Nautilus.Utility.MaterialUtils.GhostMaterial">
             <summary>
             Gets the material used by unfinished constructions.
+            </summary>
+        </member>
+        <member name="P:Nautilus.Utility.MaterialUtils.HolographicUIMaterial">
+            <summary>
+            Gets the material used by the UI in the Cyclops
             </summary>
         </member>
         <member name="T:Nautilus.Utility.ModMessages.BasicModMessageReader">
@@ -8293,6 +8460,18 @@
             <para>This should be a child of <paramref name="prefab"/>, and NOT the root. If it is the same value as <paramref name="prefab"/>, you have done something wrong!</para></param>
             <returns>A reference to the added <see cref="T:Constructable"/> instance.</returns>
         </member>
+        <member name="M:Nautilus.Utility.PrefabUtils.AddConstructable``1(UnityEngine.GameObject,TechType,Nautilus.Utility.ConstructableFlags,UnityEngine.GameObject)">
+            <summary>
+            Adds and configures the <see cref="T:Constructable"/> component or a derived type on the specified prefab.
+            </summary>
+            <param name="prefab">The prefab to operate on.</param>
+            <param name="techType">The tech type associated with the specified prefab.</param>
+            <param name="constructableFlags">A bitmask comprised of one or more <see cref="T:Nautilus.Utility.ConstructableFlags"/> that specify how the prefab should be treated during placement.</param>
+            <param name="model"><para>The child GameObject that holds all the renderers that are used for the ghost model.
+            If assigned, this parameter will control the <see cref="F:Constructable.model"/> field. This field MUST BE ASSIGNED A VALUE to avoid errors when building!</para>
+            <para>This should be a child of <paramref name="prefab"/>, and NOT the root. If it is the same value as <paramref name="prefab"/>, you have done something wrong!</para></param>
+            <returns>A reference to the added <see cref="T:Constructable"/> instance.</returns>
+        </member>
         <member name="M:Nautilus.Utility.PrefabUtils.AddVFXFabricating(UnityEngine.GameObject,System.String,System.Single,System.Single,UnityEngine.Vector3,System.Single,UnityEngine.Vector3)">
             <summary>
             Adds the <see cref="T:VFXFabricating"/> component onto the child found by <paramref name="pathToModel"/>. 
@@ -8313,6 +8492,20 @@
         <member name="M:Nautilus.Utility.PrefabUtils.AddStorageContainer(UnityEngine.GameObject,System.String,System.String,System.Int32,System.Int32,System.Boolean)">
             <summary>
             <para>Adds the <see cref="T:StorageContainer"/> component to the given prefab, for basic use cases with lockers and such.</para>
+            <para>Due to how this component needs to be initialized, this method will disable the object and re-enable it after the component is added (assuming it was already active). This all happens within the same frame and will not be seen.</para>
+            </summary>
+            <param name="prefabRoot">The prefab that the component is added onto. This does not necessarily NEED to be the "prefab root". You can set it to a
+            child collider if you want a smaller area of interaction or to have multiple storage containers on one prefab.</param>
+            <param name="storageRootName">The name of the object that internally holds all of the items.</param>
+            <param name="storageRootClassId">A unique string for the <see cref="T:ChildObjectIdentifier"/> component.</param>
+            <param name="width">The width of this container's face.</param>
+            <param name="height">The height of this container's interface.</param>
+            <param name="preventDeconstructionIfNotEmpty">If true, you cannot destroy this prefab unless all of its storage containers are empty.</param>
+            <returns>A reference to the added <see cref="T:StorageContainer"/> instance.</returns>
+        </member>
+        <member name="M:Nautilus.Utility.PrefabUtils.AddStorageContainer``1(UnityEngine.GameObject,System.String,System.String,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            <para>Adds a component of the type <see cref="T:StorageContainer"/> or a derived class to the given prefab, for basic use cases with lockers and such.</para>
             <para>Due to how this component needs to be initialized, this method will disable the object and re-enable it after the component is added (assuming it was already active). This all happens within the same frame and will not be seen.</para>
             </summary>
             <param name="prefabRoot">The prefab that the component is added onto. This does not necessarily NEED to be the "prefab root". You can set it to a
@@ -8718,6 +8911,16 @@
             <returns>
             The collection of techtypes allowed in the container.
             </returns>
+        </member>
+        <member name="T:Nautilus.Utility.ThunderkitUtilities.ApplySNLayer.LayerName">
+            <summary>
+            These are taken from <see cref="T:LayerID"/>
+            </summary>
+        </member>
+        <member name="M:Nautilus.Utility.ThunderkitUtilities.ApplySNMaterial.AssignMaterials">
+            <summary>
+            Applies the set material using the specified <see cref="T:Nautilus.Utility.ThunderkitUtilities.MaterialSetMode"/>
+            </summary>
         </member>
         <member name="T:Nautilus.Utility.WorldEntityInfoUtils">
             <summary>

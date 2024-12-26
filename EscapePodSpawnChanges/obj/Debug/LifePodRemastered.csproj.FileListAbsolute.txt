@@ -154,9 +154,11 @@ C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bi
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\0Harmony.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Assembly-CSharp-firstpass.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Assembly-CSharp.dll
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\FMODUnity.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Nautilus.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.AnimationModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.AssetBundleModule.dll
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.AudioModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.CoreModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.IMGUIModule.dll
@@ -170,7 +172,8 @@ C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bi
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Mono.Cecil.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\MonoMod.Utils.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\MonoMod.RuntimeDetour.dll
-C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.AudioModule.dll
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Unity.Addressables.dll
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Unity.ResourceManager.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.UnityWebRequestModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.ParticleSystemModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.TerrainModule.dll
@@ -179,9 +182,12 @@ C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bi
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.VRModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.ImageConversionModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.ScreenCaptureModule.dll
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UWE.EditorModifications.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.StreamingModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.Physics2DModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.XRModule.dll
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Unity.Timeline.dll
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.DirectorModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.DSPGraphModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.AndroidJNIModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.AccessibilityModule.dll
@@ -204,7 +210,6 @@ C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bi
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.UnityWebRequestAssetBundleModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.UnityWebRequestAudioModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.UnityWebRequestTextureModule.dll
-C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.DirectorModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.GameCenterModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.SpriteMaskModule.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UnityEngine.TerrainPhysicsModule.dll
@@ -219,11 +224,6 @@ C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bi
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\MonoMod.RuntimeDetour.xml
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.csproj.AssemblyReference.cache
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.csproj.CoreCompileInputs.cache
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodR.0E796A2B.Up2Date
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.pdb
-C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\FMODUnity.dll
-C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Unity.Addressables.dll
-C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Unity.ResourceManager.dll
-C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\UWE.EditorModifications.dll
-C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\Unity.Timeline.dll
-C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodR.0E796A2B.Up2Date

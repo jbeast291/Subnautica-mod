@@ -65,14 +65,6 @@ namespace LifePodRemastered
 
         FMOD.Sound FirstAudio;
 
-        /*public void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.K)) 
-            {
-                HandReticle.main.SetText(HandReticle.TextType.Hand, "test", false, GameInput.Button.LeftHand);
-                HandReticle.main.SetIcon(HandReticle.IconType.Hand, 1f);
-            }
-        }*/
         public void Awake()
         {
             //register onloaded to be called on game finished loading. waiting for game to load essentially
@@ -480,6 +472,8 @@ namespace LifePodRemastered
             Player.main.SetPosition(EscapePod.main.transform.position + new Vector3(0, 3, 0));
             //update their state so they are considered walking and not swimming inside the escape pod
             Player.main.escapePod.Update(true);
+            //reset the players velocity just incase they built up a lot and when set inside hte pod they may die from fall damage otherwise
+            Player.main.groundMotor.SetVelocity(Vector3.zero);
             //reenable hud
             ToggleHud(true);
 

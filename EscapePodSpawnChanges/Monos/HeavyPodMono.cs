@@ -27,37 +27,32 @@ namespace LifePodRemastered.Monos
         }
         public void Start()
         {
+            Action loaded = onLoaded;
             if (!Info.newSave)
             {
-                Action loaded = onLoaded;
+                
                 Nautilus.Utility.SaveUtils.RegisterOneTimeUseOnLoadEvent(loaded);
             } else {
-                updateState();
+                loaded.Invoke();
             }
         }
         public void onLoaded()
         {
-            updateState();
             CoroutineHost.StartCoroutine(freezeLoop());
-        }
-        public void updateState()
-        {
-            if (SaveUtils.inGameSave.HeavyPodToggle)
-            {
-                wf.underwaterGravity = 10f;
-            } else
-            {
-                wf.underwaterGravity = -10f;
-            }
-            EscapePod.main.GetComponent<Rigidbody>().isKinematic = true;
-            //EscapePod.main.GetComponent<Rigidbody>().freezeRotation = true;
         }
 
         IEnumerator freezeLoop()//dont move the pod if the player is not next to it, otherwise it will clip thru terrain
         {
-            yield return new WaitForSeconds(1f);
-            if (Vector3.Distance( new Vector3(Player.main.transform.position.x, Player.main.transform.position.y, Player.main.transform.position.z),
-                new Vector3(EscapePod.main.transform.position.x, EscapePod.main.transform.position.y, EscapePod.main.transform.position.z)) < 20)
+            if (SaveUtils.inGameSave.HeavyPodToggle)
+            {
+                wf.underwaterGravity = BepInEx.myConfig.verticalMotionRate;
+            }
+            else
+            {
+                wf.underwaterGravity = -1 * BepInEx.myConfig.verticalMotionRate;
+            }
+
+            if (Vector3.Distance( Player.main.transform.position, EscapePod.main.transform.position) < 20)
             {
                 EscapePod.main.GetComponent<Rigidbody>().isKinematic = false;
 
@@ -72,6 +67,7 @@ namespace LifePodRemastered.Monos
             {
                 EscapePod.main.transform.position = Vector3.zero;
             }
+            yield return new WaitForSeconds(0.25f);
             CoroutineHost.StartCoroutine(freezeLoop());
         }
     }
