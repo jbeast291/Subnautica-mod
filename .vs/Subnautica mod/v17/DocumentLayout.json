@@ -1,82 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\",
+  "WorkspaceRootPath": "C:\\Users\\J.Smith26\\OneDrive - Bellarmine College Preparatory\\Documents\\Github\\Subnautica-mod\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\monos\\escapepodmainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\monos\\escapepodmainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{65B6F17A-A104-420F-BA33-D98191F21824}|InterpolationFix\\InterpolationFix.csproj|c:\\users\\j.smith26\\onedrive - bellarmine college preparatory\\documents\\github\\subnautica-mod\\interpolationfix\\patches\\playerpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{65B6F17A-A104-420F-BA33-D98191F21824}|InterpolationFix\\InterpolationFix.csproj|solutionrelative:interpolationfix\\patches\\playerpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|c:\\users\\tsmit\\onedrive\\documents\\github\\subnautica-mod\\escapepodspawnchanges\\monos\\heavypodmono.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\monos\\heavypodmono.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{65B6F17A-A104-420F-BA33-D98191F21824}|InterpolationFix\\InterpolationFix.csproj|c:\\users\\j.smith26\\onedrive - bellarmine college preparatory\\documents\\github\\subnautica-mod\\interpolationfix\\bepinex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{65B6F17A-A104-420F-BA33-D98191F21824}|InterpolationFix\\InterpolationFix.csproj|solutionrelative:interpolationfix\\bepinex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\patches\\uguimainmenupatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\patches\\uguimainmenupatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\monos\\escapepodcustomintro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\monos\\escapepodcustomintro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\patches\\playerpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\patches\\playerpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\patches\\randomstartpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\patches\\randomstartpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\patches\\displaymanagerpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\patches\\displaymanagerpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\patches\\escapepodpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\patches\\escapepodpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\patches\\uguisceneintropatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\patches\\uguisceneintropatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\saveutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\saveutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\mod.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\mod.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\patches\\pdamutepatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\patches\\pdamutepatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\bepinex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\bepinex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\util.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\util.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\monos\\savemono.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\monos\\savemono.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\monos\\optionsmono.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\monos\\optionsmono.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\fade\u0026sfxmonos\\textfader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\fade\u0026sfxmonos\\textfader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\info.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\info.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\escapepodspawnchanges\\fade\u0026sfxmonos\\staticoverlayshaker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1429F5D-A1B5-455D-A555-71099823A41F}|EscapePodSpawnChanges\\LifePodRemastered.csproj|solutionrelative:escapepodspawnchanges\\fade\u0026sfxmonos\\staticoverlayshaker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{65B6F17A-A104-420F-BA33-D98191F21824}|InterpolationFix\\InterpolationFix.csproj|c:\\users\\j.smith26\\onedrive - bellarmine college preparatory\\documents\\github\\subnautica-mod\\interpolationfix\\patches\\freezerigidbodywhenfarpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{65B6F17A-A104-420F-BA33-D98191F21824}|InterpolationFix\\InterpolationFix.csproj|solutionrelative:interpolationfix\\patches\\freezerigidbodywhenfarpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -89,246 +25,47 @@
           "SelectedChildIndex": 1,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "HeavyPodMono.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Monos\\HeavyPodMono.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\Monos\\HeavyPodMono.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Monos\\HeavyPodMono.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\Monos\\HeavyPodMono.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAuwDIAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T03:05:42.545Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "EscapePodMainMenu.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Monos\\EscapePodMainMenu.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\Monos\\EscapePodMainMenu.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Monos\\EscapePodMainMenu.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\Monos\\EscapePodMainMenu.cs",
-              "ViewState": "AgIAAOoAAAAAAAAAAAAcwPgAAADiAAAAAAAAAA==",
+              "Title": "PlayerPatch.cs",
+              "DocumentMoniker": "C:\\Users\\J.Smith26\\OneDrive - Bellarmine College Preparatory\\Documents\\Github\\Subnautica-mod\\InterpolationFix\\Patches\\PlayerPatch.cs",
+              "RelativeDocumentMoniker": "InterpolationFix\\Patches\\PlayerPatch.cs",
+              "ToolTip": "C:\\Users\\J.Smith26\\OneDrive - Bellarmine College Preparatory\\Documents\\Github\\Subnautica-mod\\InterpolationFix\\Patches\\PlayerPatch.cs",
+              "RelativeToolTip": "InterpolationFix\\Patches\\PlayerPatch.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAABUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T02:56:01.938Z",
+              "WhenOpened": "2025-06-28T14:01:57.123Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "uGUIMainMenuPatch.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\patches\\uGUIMainMenuPatch.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\patches\\uGUIMainMenuPatch.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\patches\\uGUIMainMenuPatch.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\patches\\uGUIMainMenuPatch.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAQwC8AAAAiAAAAAAAAAA==",
+              "Title": "FreezeRigidbodyWhenFarPatch.cs",
+              "DocumentMoniker": "C:\\Users\\J.Smith26\\OneDrive - Bellarmine College Preparatory\\Documents\\Github\\Subnautica-mod\\InterpolationFix\\Patches\\FreezeRigidbodyWhenFarPatch.cs",
+              "RelativeDocumentMoniker": "InterpolationFix\\Patches\\FreezeRigidbodyWhenFarPatch.cs",
+              "ToolTip": "C:\\Users\\J.Smith26\\OneDrive - Bellarmine College Preparatory\\Documents\\Github\\Subnautica-mod\\InterpolationFix\\Patches\\FreezeRigidbodyWhenFarPatch.cs",
+              "RelativeToolTip": "InterpolationFix\\Patches\\FreezeRigidbodyWhenFarPatch.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAuwBMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-11T06:03:02.511Z",
+              "WhenOpened": "2025-06-28T13:59:42.534Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "EscapePodPatch.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\patches\\EscapePodPatch.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\patches\\EscapePodPatch.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\patches\\EscapePodPatch.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\patches\\EscapePodPatch.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAvwDQAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-11T06:05:57.387Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "DisplayManagerPatch.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\patches\\DisplayManagerPatch.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\patches\\DisplayManagerPatch.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\patches\\DisplayManagerPatch.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\patches\\DisplayManagerPatch.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-11T06:06:28.01Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "RandomStartPatch.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\patches\\RandomStartPatch.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\patches\\RandomStartPatch.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\patches\\RandomStartPatch.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\patches\\RandomStartPatch.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAUwB4AAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-11T06:03:41.304Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "EscapePodCustomIntro.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Monos\\EscapePodCustomIntro.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\Monos\\EscapePodCustomIntro.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Monos\\EscapePodCustomIntro.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\Monos\\EscapePodCustomIntro.cs",
-              "ViewState": "AgIAAOYBAAAAAAAAAAAgwNoBAABFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T03:06:05.316Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "OptionsMono.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Monos\\OptionsMono.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\Monos\\OptionsMono.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Monos\\OptionsMono.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\Monos\\OptionsMono.cs",
-              "ViewState": "AgIAAGUAAAAAAAAAAIA8wIcAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T02:56:04.365Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "SaveUtils.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\SaveUtils.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\SaveUtils.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\SaveUtils.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\SaveUtils.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAEwAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T02:56:40.631Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PlayerPatch.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\patches\\PlayerPatch.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\patches\\PlayerPatch.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\patches\\PlayerPatch.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\patches\\PlayerPatch.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBkAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-11T06:06:42.981Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "PdaMutePatch.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\patches\\PdaMutePatch.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\patches\\PdaMutePatch.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\patches\\PdaMutePatch.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\patches\\PdaMutePatch.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-21T01:57:18.543Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "uGUISceneIntroPatch.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\patches\\uGUISceneIntroPatch.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\patches\\uGUISceneIntroPatch.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\patches\\uGUISceneIntroPatch.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\patches\\uGUISceneIntroPatch.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-11T06:07:06.95Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Util.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Util.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\Util.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Util.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\Util.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAgwA4AAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2023-12-30T02:53:42.844Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 1,
               "Title": "BepInEx.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\BepInEx.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\BepInEx.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\BepInEx.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\BepInEx.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAwwC4AAACTAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\J.Smith26\\OneDrive - Bellarmine College Preparatory\\Documents\\Github\\Subnautica-mod\\InterpolationFix\\BepInEx.cs",
+              "RelativeDocumentMoniker": "InterpolationFix\\BepInEx.cs",
+              "ToolTip": "C:\\Users\\J.Smith26\\OneDrive - Bellarmine College Preparatory\\Documents\\Github\\Subnautica-mod\\InterpolationFix\\BepInEx.cs",
+              "RelativeToolTip": "InterpolationFix\\BepInEx.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T04:11:07.147Z",
+              "WhenOpened": "2025-06-24T22:36:35.718Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "mod.json",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\mod.json",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\mod.json",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\mod.json",
-              "RelativeToolTip": "EscapePodSpawnChanges\\mod.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-11-07T02:56:41.535Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "SaveMono.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Monos\\SaveMono.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\Monos\\SaveMono.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Monos\\SaveMono.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\Monos\\SaveMono.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T02:56:03.703Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "TextFader.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Fade\u0026Sfxmonos\\TextFader.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\Fade\u0026Sfxmonos\\TextFader.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Fade\u0026Sfxmonos\\TextFader.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\Fade\u0026Sfxmonos\\TextFader.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-12T06:11:07.671Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Info.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Info.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\Info.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Info.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\Info.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-08T05:58:19.755Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "StaticOverlayShaker.cs",
-              "DocumentMoniker": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Fade\u0026Sfxmonos\\StaticOverlayShaker.cs",
-              "RelativeDocumentMoniker": "EscapePodSpawnChanges\\Fade\u0026Sfxmonos\\StaticOverlayShaker.cs",
-              "ToolTip": "C:\\Users\\tsmit\\OneDrive\\Documents\\GitHub\\Subnautica-mod\\EscapePodSpawnChanges\\Fade\u0026Sfxmonos\\StaticOverlayShaker.cs",
-              "RelativeToolTip": "EscapePodSpawnChanges\\Fade\u0026Sfxmonos\\StaticOverlayShaker.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-12T05:07:12.948Z"
             }
           ]
         },
