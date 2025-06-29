@@ -62,9 +62,6 @@ namespace LifePodRemastered
         GameObject BlackBackground;
         GameObject PodFallOverlay;
 
-
-        FMOD.Sound FirstAudio;
-
         public void Awake()
         {
             //register onloaded to be called on game finished loading. waiting for game to load essentially
@@ -98,8 +95,8 @@ namespace LifePodRemastered
         public void SetupAudio()
         {
             //register audio from wavs to be played with fmod
-            FirstAudio = CustomSoundHandler.RegisterCustomSound("IntroExplosions", Path.Combine(Info.PathToAudioFolder, "SubnauticaIntro-01.wav"), AudioUtils.BusPaths.PlayerSFXs);
-            FirstAudio = CustomSoundHandler.RegisterCustomSound("IntroEnterOrbit", Path.Combine(Info.PathToAudioFolder, "SubnauticaIntro-02.wav"), AudioUtils.BusPaths.PlayerSFXs);
+            CustomSoundHandler.RegisterCustomSound("IntroExplosions", Path.Combine(Info.PathToAudioFolder, "SubnauticaIntro-01.wav"), AudioUtils.BusPaths.PlayerSFXs);
+            CustomSoundHandler.RegisterCustomSound("IntroEnterOrbit", Path.Combine(Info.PathToAudioFolder, "SubnauticaIntro-02.wav"), AudioUtils.BusPaths.PlayerSFXs);
         }
 
         public void SetupUi()
@@ -225,6 +222,15 @@ namespace LifePodRemastered
             CoroutineHost.StartCoroutine(CheckIfUnderwater());
             CoroutineHost.StartCoroutine(LockCamera());
 
+            //Setup Pontoons
+            HeavyPodMono.main.initPodModelAndEffects();
+            if (settingsCache.HeavyPodToggle)
+            {
+                HeavyPodMono.main.hidePontoons(false);
+            } else
+            {
+                HeavyPodMono.main.showPontoons(false);
+            }
         }
 
 
@@ -495,7 +501,8 @@ namespace LifePodRemastered
             Destroy(CineUiEmpty);
 
             //add Heavy pod script to this pod
-            EscapePod.main.gameObject.EnsureComponent<HeavyPodMono>();
+            HeavyPodMono.main.startLoop(); //this will start the loop
+
 
             //remove script from object
             Destroy(this);

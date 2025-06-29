@@ -60,8 +60,6 @@ namespace LifePodRemastered
 
         GameObject cycleMapButton;
 
-        bool AnimationActive = false;
-
         List<string[]> presetList;
 
         bool hasSelectedPoint = false;
@@ -316,6 +314,7 @@ namespace LifePodRemastered
                     case 3: { CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Freedom));  break; }
                     case 4: { CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(GameMode.Hardcore)); break; }
                 }
+                AreaSeceltor.SetActive(false);
             }
         }
         void OnBackToMenuButtonClick()

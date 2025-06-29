@@ -37,6 +37,11 @@ PrefabInstance:
       propertyPath: m_Animations.Array.data[3]
       value: 
       objectReference: {fileID: 7400000, guid: f10a6d764ffeeca499e522f64815b236, type: 2}
+    - target: {fileID: 3343666582699324425, guid: 9f62b12eddf05bd42a9e041242896ea1,
+        type: 3}
+      propertyPath: m_Name
+      value: ParachuteLeft Variant
+      objectReference: {fileID: 0}
     - target: {fileID: 4054084446947691972, guid: 9f62b12eddf05bd42a9e041242896ea1,
         type: 3}
       propertyPath: m_Name
@@ -97,5 +102,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -11.008852
       objectReference: {fileID: 0}
+    - target: {fileID: 6778779118517676806, guid: 9f62b12eddf05bd42a9e041242896ea1,
+        type: 3}
+      propertyPath: m_Animation
+      value: 
+      objectReference: {fileID: 7400000, guid: f10a6d764ffeeca499e522f64815b236, type: 2}
+    - target: {fileID: 6778779118517676806, guid: 9f62b12eddf05bd42a9e041242896ea1,
+        type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778779118517676806, guid: 9f62b12eddf05bd42a9e041242896ea1,
+        type: 3}
+      propertyPath: m_Animations.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778779118517676806, guid: 9f62b12eddf05bd42a9e041242896ea1,
+        type: 3}
+      propertyPath: m_Animations.Array.data[0]
+      value: 
+      objectReference: {fileID: 7400000, guid: f10a6d764ffeeca499e522f64815b236, type: 2}
+    - target: {fileID: 6778779118517676806, guid: 9f62b12eddf05bd42a9e041242896ea1,
+        type: 3}
+      propertyPath: m_Animations.Array.data[1]
+      value: 
+      objectReference: {fileID: 7400000, guid: 80bed1c4d7446d24c8fe79de212f4d35, type: 2}
+    - target: {fileID: 6778779118517676806, guid: 9f62b12eddf05bd42a9e041242896ea1,
+        type: 3}
+      propertyPath: m_Animations.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778779118517676806, guid: 9f62b12eddf05bd42a9e041242896ea1,
+        type: 3}
+      propertyPath: m_Animations.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778779118517676806, guid: 9f62b12eddf05bd42a9e041242896ea1,
+        type: 3}
+      propertyPath: m_Animations.Array.data[4]
+      value: 
+      objectReference: {fileID: 7400000, guid: 80bed1c4d7446d24c8fe79de212f4d35, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f62b12eddf05bd42a9e041242896ea1, type: 3}

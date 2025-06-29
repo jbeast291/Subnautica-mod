@@ -21,13 +21,12 @@ namespace LifePodRemastered.patches
             [HarmonyPostfix]
             public static void OnStartPostFix(EscapePod __instance)
             {
+                //always have heavy pod, some functions needed in intro
+                __instance.gameObject.EnsureComponent<HeavyPodMono>();
+
                 if (SaveUtils.settingsCache.CustomIntroToggle && Info.newSave)
                 {
                     __instance.gameObject.EnsureComponent<EscapePodCustomIntro>();
-                }
-                else
-                {
-                    __instance.gameObject.EnsureComponent<HeavyPodMono>();
                 }
 
                 if (Info.newSave && !SaveUtils.settingsCache.FirstTimeToggle)

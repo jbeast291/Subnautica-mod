@@ -5690,7 +5690,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7793323478550411499}
   m_HandleRect: {fileID: 9164031614227881892}
   m_Direction: 2
-  m_Value: 1.0000004
+  m_Value: 1
   m_Size: 0.6825977
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -6494,7 +6494,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Settings
+  m_text: Pod Start Config
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9f89ac56aa0225c4ea93c85823e61fa5, type: 2}
   m_sharedMaterial: {fileID: 4053588101860173151, guid: 9f89ac56aa0225c4ea93c85823e61fa5,
@@ -6522,10 +6522,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
+  m_fontSize: 19.4
   m_fontSizeBase: 22
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0

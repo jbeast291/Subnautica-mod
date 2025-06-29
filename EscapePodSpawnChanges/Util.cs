@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static VFXSandSharkDune;
 
 namespace LifePodRemastered
 {
@@ -63,6 +64,19 @@ namespace LifePodRemastered
             }
             return presetlist;
             
+        }
+
+        public static float clipLength(Animator anim, string name)
+        {
+            RuntimeAnimatorController ac = anim.runtimeAnimatorController;
+            for (int i = 0; i < ac.animationClips.Length; i++)
+            {
+                if (ac.animationClips[i].name == name)
+                {
+                    return ac.animationClips[i].length;
+                }
+            }
+            return -1;
         }
     }
 }

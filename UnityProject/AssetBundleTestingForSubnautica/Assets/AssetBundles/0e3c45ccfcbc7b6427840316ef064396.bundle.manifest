@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 533415955
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: af24c14f2a6a8073be9526921c4c59c6
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b1c4c89ef90976e0af8e967bcb404a52
+HashAppended: 0
+ClassTypes:
+- Class: 43
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/pontoons/Life_pod_no_pontoons_1.asset
+- Assets/pontoons/life_pod_pontoons_damaged_01.asset
+Dependencies: []

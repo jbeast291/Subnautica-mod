@@ -122,6 +122,7 @@
     <Compile Include="Monos\SaveMono.cs" />
     <Compile Include="patches\DisplayManagerPatch.cs" />
     <Compile Include="patches\EscapePodPatch.cs" />
+    <Compile Include="patches\funnyMathFuckery.cs" />
     <Compile Include="patches\PdaMutePatch.cs" />
     <Compile Include="patches\PlayerPatch.cs" />
     <Compile Include="patches\RandomStartPatch.cs" />

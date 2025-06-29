@@ -41,6 +41,7 @@ namespace LifePodRemastered
             if (HeavyPodMono.main != null)
             {
                 SaveUtils.inGameSave.HeavyPodToggle = !SaveUtils.inGameSave.HeavyPodToggle;
+                HeavyPodMono.main.sheduleAnimation();
             }
         }
 
