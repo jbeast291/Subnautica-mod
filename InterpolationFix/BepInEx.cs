@@ -21,5 +21,5 @@ namespace InterpolationFix
             Logger.LogInfo("Patching...");
             harmony.PatchAll();
         }
-    }    
+    }
 }

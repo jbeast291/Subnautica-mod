@@ -4,11 +4,7 @@ using Nautilus.Handlers;
 using Nautilus.Utility;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UWE;
 
@@ -30,7 +26,7 @@ namespace LifePodRemastered.Monos
 
         bool playAnimationNext = false;
 
-        private void Awake()
+        public void Awake()
         {
             if (main != null)
             {
@@ -42,24 +38,22 @@ namespace LifePodRemastered.Monos
         }
         public void Start()
         {
-            Action onloaded = onLoaded;
-            if (!Info.newSave)
+            Action onloaded = OnLoaded;
+            if (!Info.newSave || !SaveUtils.settingsCache.CustomIntroToggle)//if the intro is disabled the loop must still run, otherwise let it start the loop after the intro
             {
                 Nautilus.Utility.SaveUtils.RegisterOneTimeUseOnLoadEvent(onloaded);
-            } else {
-                //onloaded.Invoke();
             }
         }
-        public void onLoaded()
+        public void OnLoaded()
         {
-            initPodModelAndEffects();
-            startLoop();
+            InitPodModelAndEffects();
+            StartLoop();
         }
-        public void startLoop()
+        public void StartLoop()
         {
-            CoroutineHost.StartCoroutine(freezeLoop());
+            CoroutineHost.StartCoroutine(FreezeLoop());
         }
-        public void hidePontoons(bool animate)
+        public void HidePontoons(bool animate)
         {
             if (!hasInit)
             {
@@ -88,8 +82,8 @@ namespace LifePodRemastered.Monos
                 pontoon.SetActive(false);
             }
         }
-        
-        private IEnumerator HidePontoonsLater(float time)
+
+        public IEnumerator HidePontoonsLater(float time)
         {
             UnityEngine.Debug.Log(time);
             yield return new WaitForSeconds(time + 0.01f);
@@ -103,7 +97,7 @@ namespace LifePodRemastered.Monos
                
         }
 
-        public void showPontoons(bool animate)
+        public void ShowPontoons(bool animate)
         {
             if (!hasInit)
             {
@@ -128,13 +122,13 @@ namespace LifePodRemastered.Monos
 
 
         }
-        public void sheduleAnimation()
+        public void SheduleAnimation()
         {
             playAnimationNext = true;
         }
 
 
-        public void initPodModelAndEffects() // by default the pontoons will show
+        public void InitPodModelAndEffects() // by default the pontoons will show
         {
             if (hasInit)
             {
@@ -193,17 +187,17 @@ namespace LifePodRemastered.Monos
         }
 
 
-        IEnumerator freezeLoop()//dont move the pod if the player is not next to it, otherwise it will clip thru terrain
+        IEnumerator FreezeLoop()//dont move the pod if the player is not next to it, otherwise it will clip thru terrain
         {          
             if (SaveUtils.inGameSave.HeavyPodToggle)
             {
-                wf.underwaterGravity = BepInEx.myConfig.verticalMotionRate;
-                hidePontoons(playAnimationNext);
+                wf.underwaterGravity = BepInEx.MyConfig.verticalMotionRate;
+                HidePontoons(playAnimationNext);
             }
             else
             {
-                wf.underwaterGravity = -1 * BepInEx.myConfig.verticalMotionRate;
-                showPontoons(playAnimationNext);
+                wf.underwaterGravity = -1 * BepInEx.MyConfig.verticalMotionRate;
+                ShowPontoons(playAnimationNext);
             }
             if (playAnimationNext)
             {
@@ -220,7 +214,7 @@ namespace LifePodRemastered.Monos
             }
 
             yield return new WaitForSeconds(0.25f);
-            CoroutineHost.StartCoroutine(freezeLoop());
+            CoroutineHost.StartCoroutine(FreezeLoop());
         }
     }
 }

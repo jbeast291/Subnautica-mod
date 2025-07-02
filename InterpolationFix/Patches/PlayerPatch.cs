@@ -21,14 +21,9 @@ namespace InterpolationFix.Patches
             {
                 return;
             }
-            Transform playerPlatform = __instance.gameObject.GetComponent<GroundMotor>().movingPlatform.hitPlatform;
-            if (playerPlatform == null)//is null if player isnt standing on anything
-            {
-                return;
-            }
-
+            Transform playerPlatform = __instance.gameObject.GetComponent<GroundMotor>().movingPlatform.hitPlatform;// either null or collider player is standing on
             GameObject escapePod = EscapePod.main.gameObject;
-            bool requiresHPPhysics = lifePodRequiresHighPrecisionPhysics(playerPlatform.root.gameObject);
+            bool requiresHPPhysics = LifePodRequiresHighPrecisionPhysics(playerPlatform);
 
             if (requiresHPPhysics && !registeredForHighFixedTimestep)
             {
@@ -53,14 +48,14 @@ namespace InterpolationFix.Patches
             }
         }
 
-        public static bool lifePodRequiresHighPrecisionPhysics(GameObject platformRoot)
+        public static bool LifePodRequiresHighPrecisionPhysics(Transform platformRoot)
         {
             if (platformRoot == null || EscapePod.main == null || EscapePod.main.gameObject == null)
             {
                 return false;
             }
 
-            if (GameObject.ReferenceEquals(EscapePod.main.gameObject, platformRoot) && 
+            if (platformRoot.IsChildOf(EscapePod.main.transform) && 
                 (EscapePod.main.GetComponent<Rigidbody>().velocity.sqrMagnitude > 0.001f ||
                 EscapePod.main.GetComponent<Rigidbody>().angularVelocity.sqrMagnitude > 0.001f)
             )

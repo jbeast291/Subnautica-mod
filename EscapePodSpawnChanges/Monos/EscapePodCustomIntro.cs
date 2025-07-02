@@ -213,7 +213,7 @@ namespace LifePodRemastered
 
             SetupParachutes();
             SetupFirevfx();
-            setupFakeSpace();
+            SetupFakeSpace();
                 
 
             CoroutineHost.StartCoroutine(Sequence2PodFalling());
@@ -223,13 +223,13 @@ namespace LifePodRemastered
             CoroutineHost.StartCoroutine(LockCamera());
 
             //Setup Pontoons
-            HeavyPodMono.main.initPodModelAndEffects();
+            HeavyPodMono.main.InitPodModelAndEffects();
             if (settingsCache.HeavyPodToggle)
             {
-                HeavyPodMono.main.hidePontoons(false);
+                HeavyPodMono.main.HidePontoons(false);
             } else
             {
-                HeavyPodMono.main.showPontoons(false);
+                HeavyPodMono.main.ShowPontoons(false);
             }
         }
 
@@ -276,7 +276,7 @@ namespace LifePodRemastered
             parachute2.transform.localScale = new Vector3(350, 350, 350);
             parachute2.SetActive(false);
         }
-        void setupFakeSpace()
+        void SetupFakeSpace()
         {
             FakeSpace = Instantiate(assetBundle.LoadAsset<GameObject>("BlackSPhere1"));
             FakeSpace.transform.parent = EscapePod.main.gameObject.transform;
@@ -501,7 +501,7 @@ namespace LifePodRemastered
             Destroy(CineUiEmpty);
 
             //add Heavy pod script to this pod
-            HeavyPodMono.main.startLoop(); //this will start the loop
+            HeavyPodMono.main.StartLoop(); //this will start the loop
 
 
             //remove script from object

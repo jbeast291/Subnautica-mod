@@ -24,7 +24,7 @@ namespace LifePodRemastered
 
         internal static new ManualLogSource Logger;
 
-        internal static MyConfig myConfig { get; } = OptionsPanelHandler.RegisterModOptions<MyConfig>();
+        internal static MyConfig MyConfig { get; } = OptionsPanelHandler.RegisterModOptions<MyConfig>();
         public void Awake()
         {
             Logger = base.Logger;
@@ -41,7 +41,7 @@ namespace LifePodRemastered
             if (HeavyPodMono.main != null)
             {
                 SaveUtils.inGameSave.HeavyPodToggle = !SaveUtils.inGameSave.HeavyPodToggle;
-                HeavyPodMono.main.sheduleAnimation();
+                HeavyPodMono.main.SheduleAnimation();
             }
         }
 

@@ -133,7 +133,7 @@ namespace LifePodRemastered
             OptionsPannel.gameObject.EnsureComponent<OptionsMono>();
             SelectedPointIndicator.GetComponent<Animation>().Play();//start loop
 
-            cycleMaps();
+            CycleMaps();
         }
 
         public void Update()
@@ -406,9 +406,9 @@ namespace LifePodRemastered
             {
                 currentMapSelected = 1;
             }
-            cycleMaps();
+            CycleMaps();
         }
-        void cycleMaps()
+        void CycleMaps()
         {
             switch (currentMapSelected)
             {
