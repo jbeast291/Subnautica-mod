@@ -1,0 +1,13 @@
+{
+
+  "LPR.ModeSpecificName": "Specific Point",
+  "LPR.ModeSpecificDescription": "Click a position on the map to set were the pod spawns.\r\n\r\n\r\nPress play to \r\nstart!",
+  "LPR.ModePresetName": "Preset Point",
+  "LPR.ModePresetDescription": "Choose from one of the preset points on the left\r\n\r\n\r\nPress play to \r\nstart!",
+  "LPR.ModeInputTextName": "Type Coords",
+  "LPR.ModeInputTextDescription": "For more advanced users type your desired coords in manually\r\n\r\n\r\nPress play to \r\nstart!",
+  "LPR.ModeRandomName": "Random Point",
+  "LPR.ModeRandomDescription": "Press the button \"Randomize Point\" for a randompoint (can be in void so be carefull)\r\n\r\nPress play to \r\nstart!",
+
+  "LPR.OptionsDescription": "Modify experimental spawning properties or post-intro settings!\r\n\r\nPress play to \r\nstart!"
+}

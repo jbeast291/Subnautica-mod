@@ -7,139 +7,138 @@ using UnityEngine;
 using UnityEngine.UI;
 using static LifePodRemastered.SaveUtils;
 
-namespace LifePodRemastered
+namespace LifePodRemastered;
+
+internal class OptionsMono : MonoBehaviour
 {
-    internal class OptionsMono : MonoBehaviour
+    Toggle heavyPodToggle;
+    Toggle firstTimeAnimToggle;
+    Toggle experimentalSettingToggle;
+    Toggle customIntroToggle;
+    Toggle heightReqToggle;
+    Toggle cinematicOverlayToggle;
+
+    GameObject experimentalSettingsGroup;
+
+    public void Awake()
     {
-        Toggle heavyPodToggle;
-        Toggle firstTimeAnimToggle;
-        Toggle experimentalSettingToggle;
-        Toggle customIntroToggle;
-        Toggle heightReqToggle;
-        Toggle cinematicOverlayToggle;
+        heavyPodToggle = GameObject.Find("HeavyPodToggle").GetComponent<Toggle>();
+        firstTimeAnimToggle = GameObject.Find("FirstTimeAnimationsToggle").GetComponent<Toggle>();
+        experimentalSettingToggle = GameObject.Find("ExperimentalToggle").GetComponent<Toggle>();
+        customIntroToggle = GameObject.Find("CustomIntroToggle").GetComponent<Toggle>();
+        heightReqToggle = GameObject.Find("HeightReqToggle").GetComponent<Toggle>();
+        cinematicOverlayToggle = GameObject.Find("CinematicOverlayToggle").GetComponent<Toggle>();
 
-        GameObject experimentalSettingsGroup;
+        experimentalSettingsGroup = GameObject.Find("ExperimentalSettings"); 
+    }
+    public void Start()
+    {
+        heavyPodToggle.onValueChanged.AddListener(delegate{
+            HeavyPodToggle(heavyPodToggle);
+        });
+        firstTimeAnimToggle.onValueChanged.AddListener(delegate {
+            FirstTimeAnimToggle(firstTimeAnimToggle);
+        });
+        experimentalSettingToggle.onValueChanged.AddListener(delegate {
+            ExperimentalSettingToggle(experimentalSettingToggle);
+        });
+        customIntroToggle.onValueChanged.AddListener(delegate {
+            CustomIntroToggle(customIntroToggle);
+        });
+        heightReqToggle.onValueChanged.AddListener(delegate {
+            HeightReqToggle(heightReqToggle);
+        });
+        cinematicOverlayToggle.onValueChanged.AddListener(delegate {
+            CinematicOverlayToggle(cinematicOverlayToggle);
+        });
+        heavyPodToggle.isOn = settingsCache.HeavyPodToggle;
+        firstTimeAnimToggle.isOn = settingsCache.FirstTimeToggle;
+        experimentalSettingToggle.isOn = settingsCache.ExSettingToggle;
+        customIntroToggle.isOn = settingsCache.CustomIntroToggle;
+        heightReqToggle.isOn = settingsCache.HeightReqToggle;
+        cinematicOverlayToggle.isOn = settingsCache.CinematicOverlayToggle;
+        if (!settingsCache.ExSettingToggle)
+        {
+            experimentalSettingsGroup.SetActive(false);
+        }
+    }
 
-        public void Awake()
+    public void HeavyPodToggle(Toggle change)
+    {
+        if (change.isOn)
         {
-            heavyPodToggle = GameObject.Find("HeavyPodToggle").GetComponent<Toggle>();
-            firstTimeAnimToggle = GameObject.Find("FirstTimeAnimationsToggle").GetComponent<Toggle>();
-            experimentalSettingToggle = GameObject.Find("ExperimentalToggle").GetComponent<Toggle>();
-            customIntroToggle = GameObject.Find("CustomIntroToggle").GetComponent<Toggle>();
-            heightReqToggle = GameObject.Find("HeightReqToggle").GetComponent<Toggle>();
-            cinematicOverlayToggle = GameObject.Find("CinematicOverlayToggle").GetComponent<Toggle>();
-
-            experimentalSettingsGroup = GameObject.Find("ExperimentalSettings"); 
+            settingsCache.HeavyPodToggle = true;
         }
-        public void Start()
+        else
         {
-            heavyPodToggle.onValueChanged.AddListener(delegate{
-                HeavyPodToggle(heavyPodToggle);
-            });
-            firstTimeAnimToggle.onValueChanged.AddListener(delegate {
-                FirstTimeAnimToggle(firstTimeAnimToggle);
-            });
-            experimentalSettingToggle.onValueChanged.AddListener(delegate {
-                ExperimentalSettingToggle(experimentalSettingToggle);
-            });
-            customIntroToggle.onValueChanged.AddListener(delegate {
-                CustomIntroToggle(customIntroToggle);
-            });
-            heightReqToggle.onValueChanged.AddListener(delegate {
-                HeightReqToggle(heightReqToggle);
-            });
-            cinematicOverlayToggle.onValueChanged.AddListener(delegate {
-                CinematicOverlayToggle(cinematicOverlayToggle);
-            });
-            heavyPodToggle.isOn = settingsCache.HeavyPodToggle;
-            firstTimeAnimToggle.isOn = settingsCache.FirstTimeToggle;
-            experimentalSettingToggle.isOn = settingsCache.ExSettingToggle;
-            customIntroToggle.isOn = settingsCache.CustomIntroToggle;
-            heightReqToggle.isOn = settingsCache.HeightReqToggle;
-            cinematicOverlayToggle.isOn = settingsCache.CinematicOverlayToggle;
-            if (!settingsCache.ExSettingToggle)
-            {
-                experimentalSettingsGroup.SetActive(false);
-            }
+            settingsCache.HeavyPodToggle = false;
         }
-
-        public void HeavyPodToggle(Toggle change)
+        WriteSettingsToModFolder();
+    }
+    public void FirstTimeAnimToggle(Toggle change)
+    {
+        if (change.isOn)
         {
-            if (change.isOn)
-            {
-                settingsCache.HeavyPodToggle = true;
-            }
-            else
-            {
-                settingsCache.HeavyPodToggle = false;
-            }
-            WriteSettingsToModFolder();
+            settingsCache.FirstTimeToggle = true;
         }
-        public void FirstTimeAnimToggle(Toggle change)
+        else
         {
-            if (change.isOn)
-            {
-                settingsCache.FirstTimeToggle = true;
-            }
-            else
-            {
-                settingsCache.FirstTimeToggle = false;
-            }
-            WriteSettingsToModFolder();
+            settingsCache.FirstTimeToggle = false;
         }
-        public void CinematicOverlayToggle(Toggle change)
+        WriteSettingsToModFolder();
+    }
+    public void CinematicOverlayToggle(Toggle change)
+    {
+        if (change.isOn)
         {
-            if (change.isOn)
-            {
-                settingsCache.CinematicOverlayToggle = true;
-            }
-            else
-            {
-                settingsCache.CinematicOverlayToggle = false;
-            }
-            WriteSettingsToModFolder();
+            settingsCache.CinematicOverlayToggle = true;
         }
-        public void ExperimentalSettingToggle(Toggle change)
+        else
         {
-            if(change.isOn)
-            {
-                experimentalSettingsGroup.SetActive(true);
-                settingsCache.ExSettingToggle = true;
-            }
-            else
-            {
-                experimentalSettingsGroup.SetActive(false);
-                settingsCache.ExSettingToggle = false;
-                settingsCache.CustomIntroToggle = true;
-                settingsCache.HeightReqToggle = true;
-                customIntroToggle.isOn = true;
-                heightReqToggle.isOn = true;
-            }
-            WriteSettingsToModFolder();
+            settingsCache.CinematicOverlayToggle = false;
         }
-        public void CustomIntroToggle(Toggle change)
+        WriteSettingsToModFolder();
+    }
+    public void ExperimentalSettingToggle(Toggle change)
+    {
+        if(change.isOn)
         {
-            if (change.isOn)
-            {
-                settingsCache.CustomIntroToggle = true;
-            }
-            else
-            {
-                settingsCache.CustomIntroToggle = false;
-            }
-            WriteSettingsToModFolder();
+            experimentalSettingsGroup.SetActive(true);
+            settingsCache.ExSettingToggle = true;
         }
-        public void HeightReqToggle(Toggle change)
+        else
         {
-            if (change.isOn)
-            {
-                settingsCache.HeightReqToggle = true;
-            }
-            else
-            {
-                settingsCache.HeightReqToggle = false;
-            }
-            WriteSettingsToModFolder();
+            experimentalSettingsGroup.SetActive(false);
+            settingsCache.ExSettingToggle = false;
+            settingsCache.CustomIntroToggle = true;
+            settingsCache.HeightReqToggle = true;
+            customIntroToggle.isOn = true;
+            heightReqToggle.isOn = true;
         }
+        WriteSettingsToModFolder();
+    }
+    public void CustomIntroToggle(Toggle change)
+    {
+        if (change.isOn)
+        {
+            settingsCache.CustomIntroToggle = true;
+        }
+        else
+        {
+            settingsCache.CustomIntroToggle = false;
+        }
+        WriteSettingsToModFolder();
+    }
+    public void HeightReqToggle(Toggle change)
+    {
+        if (change.isOn)
+        {
+            settingsCache.HeightReqToggle = true;
+        }
+        else
+        {
+            settingsCache.HeightReqToggle = false;
+        }
+        WriteSettingsToModFolder();
     }
 }

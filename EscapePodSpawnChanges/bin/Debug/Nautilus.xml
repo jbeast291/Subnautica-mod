@@ -1317,66 +1317,60 @@
         </member>
         <member name="T:Nautilus.Assets.Gadgets.UpgradeModuleGadget">
             <summary>
-            Represents a vehicle module (or upgrade) gadget.
+            Represents a vehicle upgrade module gadget.
             </summary>
         </member>
         <member name="P:Nautilus.Assets.Gadgets.UpgradeModuleGadget.MaxCharge">
             <summary>
-            Max charge of this item.
-            Should apply to modules of vehicles and to chargeable items.
+            Defines the max charge in units of energy of this upgrade module when activated.
+            Applicable for chargeable vehicle modules.
             </summary>
         </member>
         <member name="P:Nautilus.Assets.Gadgets.UpgradeModuleGadget.EnergyCost">
             <summary>
-            Energy cost of this item.
-            Should apply to modules of vehicles.
+            Defines the energy cost of this upgrade module when activated. Applicable for all usable vehicle modules.
             </summary>
+            <remarks>For chargeable modules, this defines the number of units of energy expended per second.</remarks>
         </member>
         <member name="P:Nautilus.Assets.Gadgets.UpgradeModuleGadget.Cooldown">
             <summary>
-            Cooldown for this module.
-            Does not work with Toggleable items.
-            May not work with certain vehicles.
+            Defines the cooldown of this upgrade module after being activated. Applicable for non-toggleable vehicle modules,
+            with some potential limitations.
             </summary>
         </member>
         <member name="P:Nautilus.Assets.Gadgets.UpgradeModuleGadget.CrushDepth">
             <summary>
-            Crush depth of this upgrade.
-            Leave to -1f to disable
+            Defines the crush depth of this upgrade module. Default value is -1. Only used when values are above 0.
             </summary>
         </member>
         <member name="P:Nautilus.Assets.Gadgets.UpgradeModuleGadget.AbsoluteDepth">
             <summary>
-            Wether the depth provided should be absolute or added to the default depth of the vehicle.
+            Whether the crush depth provided (if any) should be absolute or added to the default depth of the vehicle.
             Default value is false.
             </summary>
         </member>
         <member name="P:Nautilus.Assets.Gadgets.UpgradeModuleGadget.delegateOnAdded">
             <summary>
-            This happens when the module is added to the vehicle.
-            <para>Action that is executed after Nautilus' default action (if there is) on this event.</para>
+            The Action that is executed after the vehicle module is added, called after default events.
             </summary>
         </member>
         <member name="P:Nautilus.Assets.Gadgets.UpgradeModuleGadget.delegateOnRemoved">
             <summary>
-            This happens when the module is removed from the vehicle.
-            <para>Action that is executed after Nautilus' default action (if there is) on this event.</para>
+            The Action that is executed after the vehicle module is removed.
             </summary>
         </member>
         <member name="P:Nautilus.Assets.Gadgets.UpgradeModuleGadget.delegateOnUsed">
             <summary>
-            This happens when the module is used.
-            The delegate is not run when the module is a toggleable.
-            <para>Action that is executed after Nautilus' default action (if there is) on this event.</para>
+            The Action that is executed when the module is used. Applies to non-toggleable vehicle modules.
             </summary>
         </member>
         <member name="P:Nautilus.Assets.Gadgets.UpgradeModuleGadget.delegateOnToggled">
             <summary>
-            This happens when the module is toggled.<br/>
-            The boolean represents wether the module is on or off.<br/>
-            The delegate is not executed when the module is a selectable, selectableChargeable or a chargeable.
-            <para>Action that is executed after Nautilus' default action (if there is) on this event.</para>
+            The Action that is executed when the module is toggled. Only applies to toggleable vehicle modules.
             </summary>
+            <remarks>
+            The boolean represents whether the module is on or off.
+            </remarks>
         </member>
         <member name="M:Nautilus.Assets.Gadgets.UpgradeModuleGadget.#ctor(Nautilus.Assets.ICustomPrefab)">
             <summary>
@@ -1386,76 +1380,71 @@
         </member>
         <member name="M:Nautilus.Assets.Gadgets.UpgradeModuleGadget.WithMaxCharge(System.Double)">
             <summary>
-            The maximum charge of the item.
-            Usually used as a multiplier for vehicle modules.
-            (Seamoth defense perimeter, Seatruck defense perimeter)
-            <para>Example: The Seamoth defense perimeter can be charged by holding the action key to make its damage bigger.</para>
+            Sets the maximum charge of an upgrade module, in units of energy.
             </summary>
-            <param name="maxCharge">Charge multiplier</param>
-            <returns>A reference to this instance after the operation has completed.</returns>
+            <param name="maxCharge">The maximum charge in total units of energy that can be expended.</param>
+            <returns>A reference to this instance after the operation has been completed.</returns>
+            <remarks>
+            This is used for the Seamoth and Seatruck Perimeter Defense Module to provide a strength modifier
+            based on how long the player holds the key.
+            </remarks>
         </member>
         <member name="M:Nautilus.Assets.Gadgets.UpgradeModuleGadget.WithEnergyCost(System.Double)">
             <summary>
-            The energy cost of the item.
-            Usually used for vehicle modules to consume energy.
-            (Seamoth perimeter defense, Seamoth sonar)
+            Sets the energy cost of this upgrade module when used.
             </summary>
-            <param name="energyCost">Energy cost</param>
-            <returns>A reference to this instance after the operation has completed.</returns>
+            <param name="energyCost">The energy cost per use (or per second for chargeable modules).</param>
+            <returns>A reference to this instance after the operation has been completed.</returns>
+            <remarks>
+            For chargeable modules, this defines the number of units of energy expended per second
+            towards the total charge.
+            </remarks>
         </member>
         <member name="M:Nautilus.Assets.Gadgets.UpgradeModuleGadget.WithCooldown(System.Double)">
             <summary>
-            The cooldown of the module when it is used.
-            <para>Cooldown may not work with certain vehicles.</para>
-            <para>Does not work with toggleable and passive items.</para>
+            Sets the cooldown of the module after it is used.
             </summary>
-            <param name="cooldown">Cooldown of the module in seconds.</param>
-            <returns>A reference to thihs instance after the operation has completed.</returns>
+            <param name="cooldown">The cooldown of the module in seconds.</param>
+            <returns>A reference to this instance after the operation has been completed.</returns>
+            <remarks>Does not work with toggleable or passive items, and may not be implemented by all vehicles.</remarks>
         </member>
         <member name="M:Nautilus.Assets.Gadgets.UpgradeModuleGadget.WithDepthUpgrade(System.Single,System.Boolean)">
             <summary>
             Sets the crush depth given by this upgrade.
             </summary>
-            <param name="newCrushDepth">New crush depth, in meters.</param>
-            <param name="absolute">Wether the provided depth should be absolute or added to the default max depth of the vehicle.</param>
-            <returns>A reference to this instance after the operation has completed.</returns>
+            <param name="newCrushDepth">The new crush depth in meters.</param>
+            <param name="absolute">Whether the provided depth should be absolute or added to the default max depth of the vehicle.</param>
+            <returns>A reference to this instance after the operation has been completed.</returns>
         </member>
         <member name="M:Nautilus.Assets.Gadgets.UpgradeModuleGadget.WithOnModuleAdded(System.Action{Vehicle,System.Int32})">
             <summary>
-            What happens when the module is added to a vehicle ?<br/>
-            This action is run <b>after</b> Nautilus' default action (if the module is a hull, the new hull of the vehicle is automatically updated).<br/>
-            For removed, see also <see cref="M:Nautilus.Assets.Gadgets.UpgradeModuleGadget.WithOnModuleRemoved(System.Action{Vehicle,System.Int32})"/>.
+            Defines extra functionality when this upgrade module is added.
             </summary>
-            <param name="onAdded">Action that occurs when the module is added.</param>
-            <returns>A reference to this instance after the operation has completed.</returns>
+            <param name="onAdded">Action that occurs after the module is added.</param>
+            <returns>A reference to this instance after the operation has been completed.</returns>
         </member>
         <member name="M:Nautilus.Assets.Gadgets.UpgradeModuleGadget.WithOnModuleRemoved(System.Action{Vehicle,System.Int32})">
             <summary>
-            What happens when the module is removed from a vehicle ?<br/>
-            This action is run <b>after</b> Nautilus' default action (if the module is a hull, the new hull of the vehicle is automatically updated).<br/>
-            For added, see also <see cref="M:Nautilus.Assets.Gadgets.UpgradeModuleGadget.WithOnModuleAdded(System.Action{Vehicle,System.Int32})"/>.
+            Defines extra functionality when this upgrade module is removed.
             </summary>
-            <param name="onRemoved">Action that occurs when the module is removed.</param>
-            <returns>A reference to this instance after the operation has completed.</returns>
+            <param name="onRemoved">Action that occurs after the module is removed.</param>
+            <returns>A reference to this instance after the operation has been completed.</returns>
         </member>
         <member name="M:Nautilus.Assets.Gadgets.UpgradeModuleGadget.WithOnModuleUsed(System.Action{Vehicle,System.Int32,System.Single,System.Single})">
             <summary>
-            What happens when the module is used ?<br/>
-            This action is run <b>after</b> Nautilus' default action (cooldown and energy consumption are automatically set).<br/>
-            For toggle, see also <see cref="M:Nautilus.Assets.Gadgets.UpgradeModuleGadget.WithOnModuleToggled(System.Action{Vehicle,System.Int32,System.Single,System.Boolean})"/>.
+            Defines extra functionality when this upgrade module is used, for non-toggleable modules.
             </summary>
             <param name="onUsed">Action that occurs when the module is used.</param>
-            <returns>A reference to this instance after the operation has completed.</returns>
+            <returns>A reference to this instance after the operation has been completed.</returns>
+            <remarks>The first <c>float</c> represents the current quick slot charge, and the second one represents the charge scalar.</remarks>
         </member>
         <member name="M:Nautilus.Assets.Gadgets.UpgradeModuleGadget.WithOnModuleToggled(System.Action{Vehicle,System.Int32,System.Single,System.Boolean})">
             <summary>
-            What happens when the module is toggled ?<br/>
-            This actions is run <b>after</b> Nautilus' default action (energy consumption is automatically set).<br/>
-            For use, see also <see cref="M:Nautilus.Assets.Gadgets.UpgradeModuleGadget.WithOnModuleUsed(System.Action{Vehicle,System.Int32,System.Single,System.Single})"/>.
+            Defines extra functionality when this upgrade module is toggled.
             </summary>
-            <param name="onToggled">Action that occurs <b>when the module turns on and when it turns off</b>.<br/>
-            The boolean determines wether it is added or removed (added=true).</param>
-            <returns>A reference to this instance after the operation has completed.</returns>
+            <param name="onToggled">Action that occurs when the module is toggled.</param>
+            <returns>A reference to this instance after the operation has been completed.</returns>
+            <remarks>The boolean represents whether it is being added or removed.</remarks>
         </member>
         <member name="M:Nautilus.Assets.Gadgets.UpgradeModuleGadget.Build">
             <inheritdoc/>
@@ -2716,6 +2705,78 @@
             If the <paramref name="type"/> isn't wrapped, it is returned as-is.
             </returns>
         </member>
+        <member name="T:Nautilus.FMod.AssetBundleSoundSource">
+            <summary>
+            Enables loading sounds from an asset bundle by the name of AudioClips.
+            </summary>
+        </member>
+        <member name="M:Nautilus.FMod.AssetBundleSoundSource.#ctor(UnityEngine.AssetBundle)">
+            <summary>
+            Creates a sound source that loads sounds from the given asset bundle. 
+            </summary>
+            <param name="bundle">The bundle containing the audio clips to be accessed.</param>
+        </member>
+        <member name="M:Nautilus.FMod.AssetBundleSoundSource.InitializeCachedSounds">
+            <summary>
+            Creates and returns a list of all AudioClip names in the asset bundle.
+            </summary>
+            <returns>A list of all sound names.</returns>
+        </member>
+        <member name="T:Nautilus.FMod.CustomSoundSourceBase">
+            <summary>
+            The base class used for loading sounds.
+            </summary>
+            <remarks>
+            Used by the <see cref="T:Nautilus.FMod.FModSoundBuilder"/> to determine how it locates and loads its sounds.
+            </remarks>
+        </member>
+        <member name="M:Nautilus.FMod.CustomSoundSourceBase.#ctor(System.String)">
+            <summary>
+            The base constructor for a custom sound source.
+            </summary>
+            <param name="identifier">Used for debugging and identification purposes.</param>
+        </member>
+        <member name="M:Nautilus.FMod.CustomSoundSourceBase.InitializeCachedSounds">
+            <summary>
+            Fetches the names of all valid sounds in the source. Is expected to only be called once.
+            </summary>
+            <returns>Must return a list of all valid sound names.</returns>
+        </member>
+        <member name="M:Nautilus.FMod.CustomSoundSourceBase.ToString">
+            <summary>
+            Returns the 'identifier' as determined by the constructor.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nautilus.FMod.CustomSoundSourceBase.GetAllCachedSounds">
+            <summary>
+            Gets or creates a dictionary of all valid sound names.
+            </summary>
+            <returns>A dictionary that contains the name of every sound name. The key is the truncated 'name' of the sound,
+            equivalent to <see cref="P:Nautilus.FMod.CustomSoundSourceBase.CachedSound.Name"/>.</returns>
+        </member>
+        <member name="T:Nautilus.FMod.CustomSoundSourceBase.CachedSound">
+            <summary>
+            Contains the locator and truncated name of a sound file.
+            </summary>
+        </member>
+        <member name="P:Nautilus.FMod.CustomSoundSourceBase.CachedSound.Locator">
+            <summary>
+            The full name of the sound file, including the file extension and path if applicable. 
+            </summary>
+        </member>
+        <member name="P:Nautilus.FMod.CustomSoundSourceBase.CachedSound.Name">
+            <summary>
+            The shortened name of the sound file, used for predicates and comparisons.
+            </summary>
+        </member>
+        <member name="M:Nautilus.FMod.CustomSoundSourceBase.CachedSound.#ctor(System.String,System.String)">
+            <summary>
+            The primary constructor.
+            </summary>
+            <param name="locator">The full, unprocessed name of the sound. Could be the file path or a unique ID.</param>
+            <param name="name">A truncated name of the sound to be used in predicates.</param>
+        </member>
         <member name="T:Nautilus.FMod.FModMultiSounds">
             <summary>
             This class is used to register FMOD events with multiple sounds in one event.
@@ -2752,6 +2813,34 @@
             <param name="busPath"><see cref="T:FMOD.Studio.Bus"/> path to play these sounds under.</param>
             <param name="randomizeSounds">Makes the sounds play in a randomized order. when <c>false</c>, sounds will play subsequently.</param>
         </member>
+        <member name="T:Nautilus.FMod.FModSoundBuilder">
+            <summary>
+            Allows for easy creation and registration of sounds from an Asset Bundle.
+            </summary>
+        </member>
+        <member name="M:Nautilus.FMod.FModSoundBuilder.#ctor(Nautilus.FMod.CustomSoundSourceBase)">
+            <summary>
+            Creates a new sound builder that loads sounds from a given source.
+            </summary>
+            <param name="loader">Determines how the sound builder locates and loads sounds.</param>
+            <seealso cref="T:Nautilus.FMod.AssetBundleSoundSource"/>
+            <seealso cref="T:Nautilus.FMod.ModFolderSoundSource"/>
+        </member>
+        <member name="M:Nautilus.FMod.FModSoundBuilder.CreateNewEvent(System.String,System.String)">
+            <summary>
+            Begins constructing a new FMOD sound event with the given parameters.
+            </summary>
+            <param name="id">The unique ID or event path of the sound.</param>
+            <param name="bus">The bus that the sound is played on.
+            See <see cref="T:Nautilus.Utility.AudioUtils.BusPaths"/>.</param>
+            <returns>An instance of the builder for further setup.</returns>
+        </member>
+        <member name="M:Nautilus.FMod.FModSoundBuilder.ToString">
+            <summary>
+            Returns a string representing this object for debugging purposes.
+            </summary>
+            <returns>A string with some information to help identify the context of the object.</returns>
+        </member>
         <member name="T:Nautilus.FMod.Interfaces.IFModSound">
             <summary>
             This interface is used to integrate with <see cref="T:Nautilus.Handlers.CustomSoundHandler"/>.
@@ -2763,6 +2852,101 @@
             </summary>
             <param name="channel">The channel on which the sound was created.</param>
             <returns>If the sound was reported as played.</returns>
+        </member>
+        <member name="T:Nautilus.FMod.Interfaces.IFModSoundBuilder">
+            <summary>
+            The interface for registering FMOD Sounds using the <see cref="T:Nautilus.FMod.FModSoundBuilder"/> class. 
+            </summary>
+        </member>
+        <member name="M:Nautilus.FMod.Interfaces.IFModSoundBuilder.SetMode(FMOD.MODE)">
+            <summary>
+            Sets the current mode to <paramref name="mode"/>, overriding any previous value.
+            </summary>
+            <param name="mode">The set of mode flags to use for the sound.
+            <see href="https://documentation.help/fmod-studio-api/FMOD_MODE.html">See here for documentation</see>.</param>
+            <returns>A reference to the builder for further setup.</returns>
+        </member>
+        <member name="M:Nautilus.FMod.Interfaces.IFModSoundBuilder.SetMode3D(System.Single,System.Single,System.Boolean)">
+            <summary>
+            Sets the mode to <see cref="F:Nautilus.Utility.AudioUtils.StandardSoundModes_3D"/>.
+            </summary>
+            <param name="minDistance">The distance where volume falloff begins.</param>
+            <param name="maxDistance">The maximum distance that the sound can be heard from.</param>
+            <param name="looping">If true, the sound also uses the <see cref="F:FMOD.MODE.LOOP_NORMAL"/> flag.</param>
+            <returns>A reference to the builder for further setup.</returns>
+        </member>
+        <member name="M:Nautilus.FMod.Interfaces.IFModSoundBuilder.SetMode2D(System.Boolean)">
+            <summary>
+            Sets the mode to <see cref="F:Nautilus.Utility.AudioUtils.StandardSoundModes_2D"/>.
+            </summary>
+            <param name="looping">If true, the sound also uses the <see cref="F:FMOD.MODE.LOOP_NORMAL"/> flag.</param>
+            <returns>A reference to the builder for further setup.</returns>
+        </member>
+        <member name="M:Nautilus.FMod.Interfaces.IFModSoundBuilder.SetModeMusic(System.Boolean)">
+            <summary>
+            Sets the mode to <see cref="F:Nautilus.Utility.AudioUtils.StandardSoundModes_Stream"/>.
+            </summary>
+            <param name="looping">If true, the sound also uses the <see cref="F:FMOD.MODE.LOOP_NORMAL"/> flag.</param>
+            <returns>A reference to the builder for further setup.</returns>
+        </member>
+        <member name="M:Nautilus.FMod.Interfaces.IFModSoundBuilder.SetFadeDuration(System.Single)">
+            <summary>
+            Sets the fade duration for the sound, which applies when it is stopped.
+            </summary>
+            <param name="fadeDuration">The length of the fade in seconds.</param>
+            <returns>A reference to the builder for further setup.</returns>
+        </member>
+        <member name="M:Nautilus.FMod.Interfaces.IFModSoundBuilder.SetSound(System.String)">
+            <summary>
+            Uses a sound from the sound source that matches the name defined in <see cref="!:clipName"/>. Does not use file extensions.
+            </summary>
+            <param name="clipName">The name of the sound to load. File extensions should not be used.</param>
+            <returns>A reference to the builder for further setup.</returns>
+        </member>
+        <member name="M:Nautilus.FMod.Interfaces.IFModSoundBuilder.SetSounds(System.Boolean,System.String[])">
+            <summary>
+            Loads multiple sounds for this sound event, locating each by name. Does not use file extensions.
+            </summary>
+            <param name="randomizeOrder">If true, the sounds will play in a random order instead of sequentially.</param>
+            <param name="clipNames">The names of the sounds to load. File extensions should not be used.</param>
+            <returns>A reference to the builder for further setup.</returns>
+        </member>
+        <member name="M:Nautilus.FMod.Interfaces.IFModSoundBuilder.SetSounds(System.Boolean,System.Func{System.String,System.Boolean})">
+            <summary>
+            Loads multiple sounds for this sound event, using each one for which the predicate returns true. Does not use file extensions.
+            </summary>
+            <param name="randomizeOrder">If true, the sounds will play in a random order instead of sequentially.</param>
+            <param name="predicate">The predicate that defines which sounds should be loaded.
+            The file extension is not passed and should not be considered.</param>
+            <returns>A reference to the builder for further setup.</returns>
+            <remarks>This method traverses over every sound in the sound source, making it considerably slower than other methods.</remarks>
+        </member>
+        <member name="M:Nautilus.FMod.Interfaces.IFModSoundBuilder.Register">
+            <summary>
+            Finalizes and registers the FMOD event with the given settings.
+            </summary>
+        </member>
+        <member name="T:Nautilus.FMod.ModFolderSoundSource">
+            <summary>
+            Enables loading sounds from a folder by the name of each sound file, EXCLUDING extensions.
+            </summary>
+        </member>
+        <member name="M:Nautilus.FMod.ModFolderSoundSource.#ctor(System.String,System.Reflection.Assembly)">
+            <summary>
+            Enables an <see cref="T:Nautilus.FMod.FModSoundBuilder"/> to load its sounds from the given folder path inside the mod directory.
+            </summary>
+            <param name="soundFileFolder">The name of or path to the folder that contains the sound files.
+            Relative to the mod folder (the folder containing <paramref name="overrideAssembly"/>).</param>
+            <param name="overrideAssembly">The assembly of the mod, used for locating the mod folder.
+            If left null, this is automatically resolved to the calling assembly.
+            Using a cached reference can be slightly more performant.</param>
+            <remarks>Recursive folder structures are not supported.</remarks>
+        </member>
+        <member name="M:Nautilus.FMod.ModFolderSoundSource.InitializeCachedSounds">
+            <summary>
+            Gets all files in the folder and caches their names.
+            </summary>
+            <returns>A list of all sound names from the folder.</returns>
         </member>
         <member name="T:Nautilus.Handlers.BiomeHandler">
             <summary>
@@ -4002,6 +4186,58 @@
             <param name="text">The new tooltip for the chosen <see cref="T:TechType"/>.</param>
             <param name="language">The language for this entry. Defaults to English.</param>
         </member>
+        <member name="T:Nautilus.Handlers.LoadingScreen.LoadingScreenHandler">
+            <summary>
+            Handles custom loading screens
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.RegisterLoadingScreen(BepInEx.BaseUnityPlugin,Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.LoadingScreenData[])">
+            <summary>
+            Register loading screens with Nautilus. Note that custom loading screens will only appear when your mod is selected as the current theme
+            </summary>
+            <param name="plugin">The plugin registering the loading screens</param>
+            <param name="loadingScreenDatas">The loading screens to register</param>
+        </member>
+        <member name="T:Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.LoadingScreenData">
+            <summary>
+            A data class containing info for Nautilus to register a custom loading screen
+            </summary>
+        </member>
+        <member name="F:Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.LoadingScreenData.loadingScreenImage">
+            <summary>
+            The image shown while loading
+            </summary>
+        </member>
+        <member name="F:Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.LoadingScreenData.priority">
+            <summary>
+            The priority over other loading screens registered
+            </summary>
+        </member>
+        <member name="F:Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.LoadingScreenData.timeToNextScreen">
+            <summary>
+            The time between loading screen transitions
+            </summary>
+        </member>
+        <member name="F:Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.LoadingScreenData.storyGoalRequirement">
+            <summary>
+            The story goal required for the loading screen to show
+            </summary>
+        </member>
+        <member name="F:Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.LoadingScreenData.customRequirement">
+            <summary>
+            A custom requirement for the loading screen to show
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.LoadingScreenData.#ctor(UnityEngine.Sprite,System.Int32,System.Single,System.String,System.Func{System.Boolean})">
+            <summary>
+            Creates a new instance of <see cref="T:Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.LoadingScreenData"/>
+            </summary>
+            <param name="loadingScreenImage">The image shown while loading</param>
+            <param name="priority">The priority over other loading screens registered</param>
+            <param name="timeToNextScreen">The time between loading screen transitions</param>
+            <param name="storyGoalRequirement">The story goal required for the loading screen to show</param>
+            <param name="customRequirement">A custom requirement for the loading screen to show</param>
+        </member>
         <member name="T:Nautilus.Handlers.LootDistributionHandler">
             <summary>
             A handler that manages the distribution of spawned resources throughout the world. Used for fish, items, outcrops, fragments, eggs, etc...
@@ -4586,6 +4822,290 @@
             <param name="customAction"> the Action to perform.</param>
             <param name="isEdible">set it to <see langword="true" /> if the item is edible and has the <see cref="T:Eatable"/> component attached to it. 
             </param>
+        </member>
+        <member name="T:Nautilus.Handlers.TitleScreen.MusicTitleAddon">
+            <summary>
+            Enables and disables custom music depending on what mod theme is selected.
+            </summary>
+        </member>
+        <member name="F:Nautilus.Handlers.TitleScreen.MusicTitleAddon.Asset">
+            <summary>
+            The FMOD asset passed into the instance when created.
+            </summary>
+        </member>
+        <member name="F:Nautilus.Handlers.TitleScreen.MusicTitleAddon.CustomEmitter">
+            <summary>
+            The custom emitter created in <see cref="M:Nautilus.Handlers.TitleScreen.MusicTitleAddon.OnInitialize"/>.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.MusicTitleAddon.#ctor(FMODAsset,System.String[])">
+            <summary>
+            Creates a new <see cref="T:Nautilus.Handlers.TitleScreen.MusicTitleAddon"/>. The music will be enabled when your mod is selected and disabled when the game starts or
+            if your theme is unselected.
+            </summary>
+            <param name="asset">The FMOD asset for the music you want to play. A fade out time is HIGHLY recommended.</param>
+            <param name="requiredGUIDs">The required mod GUIDs for this addon to enable. Each required mod must approve
+            this addon by using <see cref="M:Nautilus.Handlers.TitleScreen.TitleScreenHandler.ApproveTitleCollaboration(BepInEx.BaseUnityPlugin,Nautilus.Handlers.TitleScreen.TitleScreenHandler.CollaborationData)"/>.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.MusicTitleAddon.OnInitialize">
+            <summary>
+            Sets up the FMOD looping emitter with the provided asset.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.MusicTitleAddon.OnEnable">
+            <summary>
+            Enables the music.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.MusicTitleAddon.OnDisable">
+            <summary>
+            Disables the music.
+            </summary>
+        </member>
+        <member name="T:Nautilus.Handlers.TitleScreen.SkyChangeTitleAddon">
+            <summary>
+            Handles changes to the sky in the main menu.
+            </summary>
+            <remarks>
+            Only one instance is ever expected to exist at once. Otherwise, one instance will be arbitrarily chosen.
+            </remarks>
+            <seealso cref="T:uSkyManager"/>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.SkyChangeTitleAddon.#ctor(System.Single,Nautilus.Handlers.TitleScreen.SkyChangeTitleAddon.Settings,System.String[])">
+            <summary>
+            Activates the specified <see cref="T:uSkyManager"/> settings when the mod is selected.
+            </summary>
+            <param name="fadeInDuration">How long it takes in seconds for these changes to apply.</param>
+            <param name="settings">Your custom settings that override the default uSkyManager values.</param>
+            <param name="requiredGUIDs">The required mod GUIDs for this addon to enable. Each required mod must approve
+            this addon by using <see cref="M:Nautilus.Handlers.TitleScreen.TitleScreenHandler.ApproveTitleCollaboration(BepInEx.BaseUnityPlugin,Nautilus.Handlers.TitleScreen.TitleScreenHandler.CollaborationData)"/>.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.SkyChangeTitleAddon.OnEnable">
+            <summary>
+            Activates the sky change.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.SkyChangeTitleAddon.OnDisable">
+            <summary>
+            De-activates the sky change.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.SkyChangeTitleAddon.ManagedUpdate">
+            <summary>
+            Called every frame while registered.
+            </summary>
+        </member>
+        <member name="T:Nautilus.Handlers.TitleScreen.SkyChangeTitleAddon.Settings">
+            <summary>
+            Settings pertaining to the <see cref="T:uSkyManager"/> class.
+            </summary>
+        </member>
+        <member name="P:Nautilus.Handlers.TitleScreen.SkyChangeTitleAddon.Settings.TimeOfDay">
+            <summary>
+            The time of day, roughly corresponding to Earth hours.
+            </summary>
+            <remarks>
+            The default value is 6.8 in SN1 and 15.1 in BZ.
+            <list type="bullet">
+            <item><description><b>Night (AM)</b>: 0.0–5.2</description></item>
+            <item><description><b>Dawn</b>: 5.2–6.0</description></item>
+            <item><description><b>Morning</b>: 6.0–12.0</description></item>
+            <item><description><b>Noon</b>: 12.0</description></item>
+            <item><description><b>Afternoon</b>: 12.0–18.0</description></item>
+            <item><description><b>Dusk</b>: 18.0–18.8</description></item>
+            <item><description><b>Night (PM)</b>: 18.0–24.0</description></item>
+            </list>
+            </remarks>
+        </member>
+        <member name="P:Nautilus.Handlers.TitleScreen.SkyChangeTitleAddon.Settings.Exposure">
+            <summary>
+            The sky's exposure value, directly correlated with the brightness of the sky.
+            </summary>
+            <remarks>
+            Only positive values are supported. The default value is 0.66 in SN1 and 0.9 in BZ.
+            </remarks>
+        </member>
+        <member name="P:Nautilus.Handlers.TitleScreen.SkyChangeTitleAddon.Settings.RayleighScattering">
+            <summary>
+            The strength of rayleigh scattering, affecting how strongly light scatters from particles in the atmosphere.
+            </summary>
+            <remarks>
+            Only positive values are supported. The default value is 1.0 in SN1 and 0.9 in BZ. By the way, this is what makes the sky blue.
+            </remarks>
+        </member>
+        <member name="P:Nautilus.Handlers.TitleScreen.SkyChangeTitleAddon.Settings.FogDensity">
+            <summary>
+            The strength/density of the fog.
+            </summary>
+            <remarks>
+            Only positive values are supported. The default value is 0.0002 in SN1 and 0.001 in BZ.
+            </remarks>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.SkyChangeTitleAddon.Settings.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            The main constructor.
+            </summary>
+            <param name="timeOfDay">The time of day, similar to 24-hour Earth time.</param>
+            <param name="exposure">The exposure or brightness of the sky.</param>
+            <param name="rayleighScattering">The strength of light scattering in the sky.</param>
+            <param name="fogDensity">The strength/density of fog. Can.</param>
+        </member>
+        <member name="T:Nautilus.Handlers.TitleScreen.TitleAddon">
+            <summary>
+            A custom title addon for the main menu. Inherit from this class to create your own main menu functionality.
+            </summary>
+        </member>
+        <member name="P:Nautilus.Handlers.TitleScreen.TitleAddon.ModGuid">
+            <summary>
+            The GUID of the mod that owns this addon.
+            </summary>
+        </member>
+        <member name="P:Nautilus.Handlers.TitleScreen.TitleAddon.IsEnabled">
+            <summary>
+            Whether the addon is currently enabled.
+            </summary>
+        </member>
+        <member name="P:Nautilus.Handlers.TitleScreen.TitleAddon.RequiredGUIDs">
+            <summary>
+            The required mod GUIDs for this addon to be enabled.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.TitleAddon.#ctor">
+            <summary>
+            Creates a new instance of TitleAddon.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.TitleAddon.#ctor(System.String[])">
+            <summary>
+            Creates a new instance of TitleAddon.
+            </summary>
+            <param name="requiredGUIDs">The required mod GUIDs for this addon to enable. Each required mod must approve
+            this addon by using <see cref="M:Nautilus.Handlers.TitleScreen.TitleScreenHandler.ApproveTitleCollaboration(BepInEx.BaseUnityPlugin,Nautilus.Handlers.TitleScreen.TitleScreenHandler.CollaborationData)"/>.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.TitleAddon.OnInitialize">
+            <summary>
+            Runs initialization code once before the main menu is loaded to set up required fields.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.TitleAddon.OnEnable">
+            <summary>
+            Called when the addon is enabled. This occurs when your mod is selected as the current theme.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.TitleAddon.OnDisable">
+            <summary>
+            Called when the addon is disabled. This occurs when your mod is deselected as the current theme, or
+            if the addon inherits from <see cref="T:Nautilus.Handlers.TitleScreen.MusicTitleAddon"/> and the game starts.
+            </summary>
+        </member>
+        <member name="T:Nautilus.Handlers.TitleScreen.TitleScreenHandler">
+            <summary>
+            Handles custom additions to the main menu (Title screen).
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.TitleScreenHandler.RegisterTitleScreenObject(BepInEx.BaseUnityPlugin,Nautilus.Handlers.TitleScreen.TitleScreenHandler.CustomTitleData)">
+            <summary>
+            Register title screen additions with Nautilus for automatic handling.
+            </summary>
+            <param name="plugin">The plugin for your mod.</param>
+            <param name="customTitleData">The custom title data for your additions.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.TitleScreenHandler.ApproveTitleCollaboration(BepInEx.BaseUnityPlugin,Nautilus.Handlers.TitleScreen.TitleScreenHandler.CollaborationData)">
+            <summary>
+            Approve another mod to make specific title screen additions when your mod is installed.
+            </summary>
+            <param name="plugin">The plugin for your mod.</param>
+            <param name="collaborationData">The collaboration data for the plugins you want to approve.</param>
+        </member>
+        <member name="T:Nautilus.Handlers.TitleScreen.TitleScreenHandler.CustomTitleData">
+            <summary>
+            A data class containing additions for Nautilus to add to the main menu when your mod is selected as the current theme.
+            </summary>
+        </member>
+        <member name="F:Nautilus.Handlers.TitleScreen.TitleScreenHandler.CustomTitleData.localizationKey">
+            <summary>
+            The localization key for the name of your mod. Will be shown in the selectable themes option.
+            </summary>
+        </member>
+        <member name="F:Nautilus.Handlers.TitleScreen.TitleScreenHandler.CustomTitleData.addons">
+            <summary>
+            The additions to the main menu that should be active when your mod is selected.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.TitleScreenHandler.CustomTitleData.#ctor(System.String,Nautilus.Handlers.TitleScreen.TitleAddon[])">
+            <summary>
+            Creates a new instance of <see cref="T:Nautilus.Handlers.TitleScreen.TitleScreenHandler.CustomTitleData"/>
+            </summary>
+            <param name="localizationKey">The localization key for the name of your mod. Will be shown in the selectable themes option.</param>
+            <param name="addons">The additions to the main menu that should be active when your mod is selected.</param>
+        </member>
+        <member name="T:Nautilus.Handlers.TitleScreen.TitleScreenHandler.CollaborationData">
+            <summary>
+            A data class containing info allowing other mods to add mod-specific additions to the title screen.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.TitleScreenHandler.CollaborationData.#ctor(System.Collections.Generic.Dictionary{System.String,System.Type[]})">
+            <summary>
+            Creates a new instance of <see cref="T:Nautilus.Handlers.TitleScreen.TitleScreenHandler.CollaborationData"/> with specific approved addon types.
+            </summary>
+            <param name="modApprovedAddons">The GUIDs for the approved mods and their allowed addon types.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.TitleScreenHandler.CollaborationData.#ctor(System.String[])">
+            <summary>
+            Creates a new instance of <see cref="T:Nautilus.Handlers.TitleScreen.TitleScreenHandler.CollaborationData"/> with all addon types approved.
+            </summary>
+            <param name="GUIDs">The GUIDs of the mods to approve.</param>
+        </member>
+        <member name="T:Nautilus.Handlers.TitleScreen.WorldObjectTitleAddon">
+            <summary>
+            Enables and disables a custom GameObject in the main menu depending on what mod theme is selected.
+            </summary>
+        </member>
+        <member name="F:Nautilus.Handlers.TitleScreen.WorldObjectTitleAddon.SpawnObject">
+            <summary>
+            The func to spawn the world object. Set in the constructor.
+            </summary>
+        </member>
+        <member name="F:Nautilus.Handlers.TitleScreen.WorldObjectTitleAddon.FadeInTime">
+            <summary>
+            The duration that it takes for an object to fade in when enabled/disabled.
+            </summary>
+        </member>
+        <member name="F:Nautilus.Handlers.TitleScreen.WorldObjectTitleAddon.WorldObject">
+            <summary>
+            The object that is spawned in the world and managed.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.WorldObjectTitleAddon.#ctor(System.Func{UnityEngine.GameObject},System.Single,System.String[])">
+            <summary>
+            Spawns in the specified <see cref="T:UnityEngine.GameObject"/> when your mod is selected.
+            </summary>
+            <param name="spawnObject">A function to get the object to enable. It is recommended to spawn your object in this method to ensure
+            returning to the main menu from a save does not cause NREs.</param>
+            <param name="fadeInTime">The duration of the fade in for enabling/disabling objects.
+            The spawnObject must have SN shaders applied for this to work.</param>
+            <param name="requiredGUIDs">The required mod GUIDs for this addon to enable. Each required mod must approve
+            this addon by using <see cref="M:Nautilus.Handlers.TitleScreen.TitleScreenHandler.ApproveTitleCollaboration(BepInEx.BaseUnityPlugin,Nautilus.Handlers.TitleScreen.TitleScreenHandler.CollaborationData)"/>.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.WorldObjectTitleAddon.OnInitialize">
+            <summary>
+            Sets the correct sky appliers on the managed object.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.WorldObjectTitleAddon.OnEnable">
+            <summary>
+            Enables the managed object.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.WorldObjectTitleAddon.OnDisable">
+            <summary>
+            Disables the managed object.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.WorldObjectTitleAddon.ManagedUpdate">
+            <summary>
+            Called every frame while registered.
+            </summary>
         </member>
         <member name="T:Nautilus.Handlers.WorldEntityDatabaseHandler">
             <summary>
@@ -7294,6 +7814,16 @@
             Used for player and hand-held tools SFXs. Tied to the master volume.
             </summary>
         </member>
+        <member name="F:Nautilus.Utility.AudioUtils.BusPaths.SFX">
+            <summary>
+            Used for general SFX that plays above and below water. Tied to the ambient volume.
+            </summary>
+        </member>
+        <member name="F:Nautilus.Utility.AudioUtils.BusPaths.CyclopsVoice">
+            <summary>
+            Used for the Cyclops voice. Tied to the voice volume.
+            </summary>
+        </member>
         <member name="T:Nautilus.Utility.BasicText">
             <summary>
             <para>
@@ -7872,11 +8402,91 @@
             <summary>
             Sets the <see cref="P:UnityEngine.Material.color"/> property on all materials.
             </summary>
-            <param name="color"></param>
+            <param name="color">The new color to be used.</param>
         </member>
         <member name="M:Nautilus.Utility.MaterialModifiers.ColorModifier.EditMaterial(UnityEngine.Material,UnityEngine.Renderer,System.Int32,Nautilus.Utility.MaterialUtils.MaterialType)">
             <summary>
             Applies the color changes to the material.
+            </summary>
+        </member>
+        <member name="T:Nautilus.Utility.MaterialModifiers.DoubleSidedModifier">
+            <summary>
+            A material modifier that changes materials of the specified type to be double-sided.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Utility.MaterialModifiers.DoubleSidedModifier.#ctor(Nautilus.Utility.MaterialUtils.MaterialType[])">
+            <summary>
+            Changes all materials of the types defined in <paramref name="typesToAffect"/> to be double-sided.
+            </summary>
+            <param name="typesToAffect">Only materials with these types will be affected.</param>
+        </member>
+        <member name="M:Nautilus.Utility.MaterialModifiers.DoubleSidedModifier.EditMaterial(UnityEngine.Material,UnityEngine.Renderer,System.Int32,Nautilus.Utility.MaterialUtils.MaterialType)">
+            <summary>
+            Applies changes to the specified material.
+            </summary>
+        </member>
+        <member name="T:Nautilus.Utility.MaterialModifiers.FresnelModifier">
+            <summary>
+            A material modifier that changes the '_Fresnel' property of all materials.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Utility.MaterialModifiers.FresnelModifier.#ctor(System.Single)">
+            <summary>
+            Changes the fresnel of all materials based on the '<paramref name="fresnel"/>' parameter.
+            </summary>
+            <param name="fresnel">This factor determines how much the reflection intensity changes based on the angle of incidence.</param>
+            <remarks>
+            Example values:
+            <list type="bullet">
+            <item>0.00: no fresnel; uniform reflection intensity regardless of view direction.</item>
+            <item>0.25: average fresnel; edges are shinier.</item>
+            <item>0.70: high fresnel; ideal for transparent membranes (ghost leviathans use this value).</item>
+            <item>1.00: full fresnel. Only geometry at a 90° angle is shiny, which results in essentially no reflections.</item>
+            </list></remarks>
+        </member>
+        <member name="M:Nautilus.Utility.MaterialModifiers.FresnelModifier.EditMaterial(UnityEngine.Material,UnityEngine.Renderer,System.Int32,Nautilus.Utility.MaterialUtils.MaterialType)">
+            <summary>
+            Applies changes to the specified material.
+            </summary>
+        </member>
+        <member name="T:Nautilus.Utility.MaterialModifiers.GlowStrengthNightModifier">
+            <summary>
+            A material modifier that changes the glow strength of materials with options related to the time of day.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Utility.MaterialModifiers.GlowStrengthNightModifier.#ctor(System.Single)">
+            <summary>
+            Changes the glow strength of the materials when rendered at nighttime.
+            </summary>
+            <param name="nightGlowStrength">New nighttime glows strength. Corresponds to the '_GlowStrengthNight' property.</param>
+            <remarks>Default glow strength values are 1.</remarks>
+        </member>
+        <member name="M:Nautilus.Utility.MaterialModifiers.GlowStrengthNightModifier.#ctor(System.Single,System.Single)">
+            <summary>
+            Changes the glow strength of the materials when rendered at daytime and nighttime, individually.
+            </summary>
+            <param name="nightGlowStrength">Nighttime glow strength. Corresponds to the '_GlowStrengthNight' property.</param>
+            <param name="dayGlowStrength">Daytime glow strength. Corresponds to the '_GlowStrength' property.</param>
+            <remarks>These two properties do not interfere with each other, aside from at "dawn" and "dusk" when a mix of the two is used.</remarks>
+        </member>
+        <member name="M:Nautilus.Utility.MaterialModifiers.GlowStrengthNightModifier.EditMaterial(UnityEngine.Material,UnityEngine.Renderer,System.Int32,Nautilus.Utility.MaterialUtils.MaterialType)">
+            <summary>
+            Applies changes to the specified material.
+            </summary>
+        </member>
+        <member name="T:Nautilus.Utility.MaterialModifiers.IgnoreParticleSystemsModifier">
+            <summary>
+            A simple material modifier that prevents materials on ParticleSystems from being converted to MarmosetUBER. 
+            </summary>
+        </member>
+        <member name="M:Nautilus.Utility.MaterialModifiers.IgnoreParticleSystemsModifier.BlockShaderConversion(UnityEngine.Material,UnityEngine.Renderer,Nautilus.Utility.MaterialUtils.MaterialType)">
+            <summary>
+            Returns true if the given <see cref="T:UnityEngine.Renderer"/> is a <see cref="T:UnityEngine.ParticleSystemRenderer"/>.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Utility.MaterialModifiers.IgnoreParticleSystemsModifier.EditMaterial(UnityEngine.Material,UnityEngine.Renderer,System.Int32,Nautilus.Utility.MaterialUtils.MaterialType)">
+            <summary>
+            Applies changes to the specified material.
             </summary>
         </member>
         <member name="T:Nautilus.Utility.MaterialModifiers.MaterialModifier">
@@ -7902,6 +8512,38 @@
             <param name="renderer">The renderer using the <paramref name="material"/>.</param>
             <param name="materialType">The type of material that this can be expected to be. Determined in <see cref="M:Nautilus.Utility.MaterialUtils.ApplySNShaders(UnityEngine.GameObject,System.Single,System.Single,System.Single,Nautilus.Utility.MaterialModifiers.MaterialModifier[])"/> based on specific keywords.</param>
             <returns></returns>
+        </member>
+        <member name="T:Nautilus.Utility.MaterialModifiers.WavingEffectModifier">
+            <summary>
+            A material modifier that enables a "waving" effect on all materials, commonly used for plants.
+            </summary>
+        </member>
+        <member name="P:Nautilus.Utility.MaterialModifiers.WavingEffectModifier.Scale">
+            <summary>
+            The scale of the waving effect. X, Y and Z values refer to respective directions while W refers to "rustling".
+            </summary>
+        </member>
+        <member name="P:Nautilus.Utility.MaterialModifiers.WavingEffectModifier.Frequency">
+            <summary>
+            The frequency of the waving effect. X, Y and Z values refer to respective directions while W refers to "rustling".
+            </summary>
+        </member>
+        <member name="P:Nautilus.Utility.MaterialModifiers.WavingEffectModifier.Speed">
+            <summary>
+            The speed of the waving effect. The X value refers to speed while the Y value refers to rustling speed.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Utility.MaterialModifiers.WavingEffectModifier.#ctor(System.Single)">
+            <summary>
+            Creates a <see cref="T:Nautilus.Utility.MaterialModifiers.WavingEffectModifier"/> that enables the plant waving effect on all materials.
+            </summary>
+            <param name="waveUpMin">Also referred to as the "influence cutoff y". Range is 0-1. Higher values tend to lead
+            to higher intensities of the waving effect towards the "base" of the plant.</param>
+        </member>
+        <member name="M:Nautilus.Utility.MaterialModifiers.WavingEffectModifier.EditMaterial(UnityEngine.Material,UnityEngine.Renderer,System.Int32,Nautilus.Utility.MaterialUtils.MaterialType)">
+            <summary>
+            Applies changes to the specified material.
+            </summary>
         </member>
         <member name="T:Nautilus.Utility.MaterialUtils">
             <summary>
@@ -8141,6 +8783,12 @@
             <param name="recipient">The address of the <see cref="T:Nautilus.Utility.ModMessages.ModInbox"/> that the message will go to. In C# terms, this is analogous to the class name.</param>
             <param name="subject">The subject of the message. Determines the purpose of a message. In C# terms, this is analogous to the method name.</param>
             <param name="contents">Any arbitrary data sent through the message. Optional. In C# terms, this is analogous to the method's parameters.</param>
+        </member>
+        <member name="M:Nautilus.Utility.ModMessages.ModMessage.ToString">
+            <summary>
+            Returns the message data represented as a string. 
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Nautilus.Utility.ModMessages.ModMessageReader">
             <summary>
@@ -8530,6 +9178,19 @@
             <param name="storageRootName">The name of the object that internally holds all of the batteries.</param>
             <returns>A reference to the added <see cref="T:EnergyMixin"/> instance.</returns>
         </member>
+        <member name="M:Nautilus.Utility.PrefabUtils.AddEnergyMixin``1(UnityEngine.GameObject,System.String,TechType,System.Collections.Generic.List{TechType},EnergyMixin.BatteryModels[],System.String)">
+            <summary>
+            <para>Adds the <see cref="T:EnergyMixin"/> component to an object that is expected to have a slot for one battery or other power source.</para>
+            <para>Due to how this component needs to be initialized, this method will disable the object and re-enable it after the component is added (assuming it was already active). This all happens within the same frame and will not be seen.</para>
+            </summary>
+            <param name="prefabRoot">The root of the prefab object, where the component is added.</param>
+            <param name="storageRootClassId">A unique string for the <see cref="T:ChildObjectIdentifier"/> component.</param>
+            <param name="defaultBattery">The TechType of the battery that is added by default. If there should be no default, set this value to <see cref="F:TechType.None"/>.</param>
+            <param name="compatibleBatteries">The list of all compatible batteries. By default is typically <see cref="F:TechType.Battery"/> and <see cref="F:TechType.PrecursorIonBattery"/>. Must not be null!</param>
+            <param name="batteryModels">If assigned a value, allows different models to appear with different battery TechTypes. Also consider <see cref="F:EnergyMixin.controlledObjects"/> for a more basic version of this that is not TechType-dependent.</param>
+            <param name="storageRootName">The name of the object that internally holds all of the batteries.</param>
+            <returns>A reference to the added <see cref="T:EnergyMixin"/> instance.</returns>
+        </member>
         <member name="M:Nautilus.Utility.PrefabUtils.AddResourceTracker(UnityEngine.GameObject,TechType)">
             <summary>
             Adds the <see cref="T:ResourceTracker"/> component to the passed game object to allow scanning via the Scanner Room.
@@ -8537,6 +9198,19 @@
             <param name="gameObject">the game object to add the resource tracker component to.</param>
             <param name="categoryTechType">TechType of the category in which this object will be displayed under in the Scanner Room.</param>
             <returns>A reference to the added <see cref="T:ResourceTracker"/> instance.</returns>
+        </member>
+        <member name="M:Nautilus.Utility.PrefabUtils.AddWorldForces(UnityEngine.GameObject,System.Single,System.Single,System.Single,System.Boolean)">
+            <summary>
+            Adds the World Forces component to the prefab, which is required for proper physics handling.
+            </summary>
+            <param name="prefab">The prefab to modify.</param>
+            <param name="mass">The mass of the new rigidbody (only if a rigidbody is being added).
+            If the prefab already has a Rigidbody, this has NO EFFECT.</param>
+            <param name="underwaterGravity">The underwater gravity in m/s/s.</param>
+            <param name="underwaterDrag">The underwater drag coefficient (using Unity's arbitrary unit for drag).</param>
+            <param name="isKinematic">If true, the Rigidbody will be kinematic when spawned and therefore immovable.
+            Note that if the player picks up an item and drops it, its kinematic state will be reset to false.</param>
+            <returns>A reference to the newly added (or previously existing) <see cref="T:WorldForces"/> component.</returns>
         </member>
         <member name="T:Nautilus.Utility.ReflectionHelper">
             <summary>
@@ -8911,6 +9585,36 @@
             <returns>
             The collection of techtypes allowed in the container.
             </returns>
+        </member>
+        <member name="T:Nautilus.Utility.ThunderkitUtilities.ApplyMaterialModification">
+            <summary>
+            A MonoBehaviour component designed for Thunderkit which allows for user-friendly modification of material properties
+            on models within modded prefabs, directly from the Unity Editor. Can act either standalone or as a part of custom systems.
+            </summary>
+        </member>
+        <member name="F:Nautilus.Utility.ThunderkitUtilities.ApplyMaterialModification.applyOnStart">
+            <summary>
+            If true, this material modification will be applied in Start. In most cases, this should be left false in favor
+            of custom implementation during prefab creation, because Start is called a frame late (meaning this change is visible to users).
+            </summary>
+        </member>
+        <member name="F:Nautilus.Utility.ThunderkitUtilities.ApplyMaterialModification.renderer">
+            <summary>
+            Defines the renderer that this material modification is applied to.
+            </summary>
+        </member>
+        <member name="F:Nautilus.Utility.ThunderkitUtilities.ApplyMaterialModification.materialFilter">
+            <summary>
+            If this has a length greater than zero, only materials with the same name as the materials in this array will be modified.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Utility.ThunderkitUtilities.ApplyMaterialModification.ApplyMaterialModifications">
+            <summary>
+            Applies all material modifications that are defined in this instance.
+            </summary>
+            <remarks>This is automatically called in the behaviour's <c>Start()</c> method if <see cref="F:Nautilus.Utility.ThunderkitUtilities.ApplyMaterialModification.applyOnStart"/> is true,
+            but it is recommended to instead implement your own system to apply this during prefab creation to prevent incorrect materials in the first frame.</remarks>
+            <exception cref="T:System.NullReferenceException"></exception>
         </member>
         <member name="T:Nautilus.Utility.ThunderkitUtilities.ApplySNLayer.LayerName">
             <summary>

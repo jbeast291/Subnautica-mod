@@ -7,23 +7,22 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace LifePodRemastered.patches
+namespace LifePodRemastered.patches;
+
+internal class PdaMutePatch
 {
-    internal class PdaMutePatch
+    [HarmonyPatch(typeof(SoundQueue))]
+    internal class PatchGetRandomStartPoint
     {
-        [HarmonyPatch(typeof(SoundQueue))]
-        internal class PatchGetRandomStartPoint
+        [HarmonyPatch(typeof(SoundQueue), "Play")]
+        [HarmonyPrefix]
+        public static bool SoundQueuePreFix()
         {
-            [HarmonyPatch(typeof(SoundQueue), "Play")]
-            [HarmonyPrefix]
-            public static bool SoundQueuePreFix()
+            if (Info.mutePdaEvents)
             {
-                if (Info.mutePdaEvents)
-                {
-                    return false;
-                }
-                return true;
+                return false;
             }
+            return true;
         }
     }
 }

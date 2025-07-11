@@ -6,32 +6,31 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace LifePodRemastered.patches
+namespace LifePodRemastered.patches;
+
+internal class RandomStartPatch
 {
-    internal class RandomStartPatch
+    /**
+     * Patch the lifepods spawn location to be whatever is set
+     */
+    [HarmonyPatch(typeof(RandomStart))]
+    internal class PatchGetRandomStartPoint
     {
-        /**
-         * Patch the lifepods spawn location to be whatever is set
-         */
-        [HarmonyPatch(typeof(RandomStart))]
-        internal class PatchGetRandomStartPoint
+        [HarmonyPatch(typeof(RandomStart), "GetRandomStartPoint")]
+        [HarmonyPrefix]
+        public static bool NewGetRandomStartPoint(ref Vector3 __result)
         {
-            [HarmonyPatch(typeof(RandomStart), "GetRandomStartPoint")]
-            [HarmonyPrefix]
-            public static bool NewGetRandomStartPoint(ref Vector3 __result)
+            float y = 2000f;
+            if (!SaveUtils.settingsCache.HeightReqToggle)
             {
-                float y = 2000f;
-                if (!SaveUtils.settingsCache.HeightReqToggle)
-                {
-                    y = 0f;
-                }
-                if (!SaveUtils.settingsCache.HeightReqToggle && Info.OverideSpawnHeight)
-                {
-                    y = Info.SelectedSpawn.y;
-                }
-                __result = new Vector3(Info.SelectedSpawn.x, y, Info.SelectedSpawn.z);
-                return false;
+                y = 0f;
             }
+            if (!SaveUtils.settingsCache.HeightReqToggle && Info.OverideSpawnHeight)
+            {
+                y = Info.SelectedSpawn.y;
+            }
+            __result = new Vector3(Info.SelectedSpawn.x, y, Info.SelectedSpawn.z);
+            return false;
         }
     }
 }

@@ -8,30 +8,29 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
-namespace LifePodRemastered.patches
-{
-    internal class PlayerPatch
-    {
-        [HarmonyPatch(typeof(Player))]
-        internal class OnLandPreFixPatch
-        {
-            [HarmonyPatch(nameof(Player.OnLand))]
-            [HarmonyPrefix]
-            public static bool OnLandPreFix()
-            {
-                if (Info.CinematicActive)
-                {
-                    return false;
-                }
-                return true;
-            }
+namespace LifePodRemastered.patches;
 
-            [HarmonyPatch(nameof(Player.Start))]
-            [HarmonyPostfix]
-            public static void StartPostFix(Player __instance)
+internal class PlayerPatch
+{
+    [HarmonyPatch(typeof(Player))]
+    internal class OnLandPreFixPatch
+    {
+        [HarmonyPatch(nameof(Player.OnLand))]
+        [HarmonyPrefix]
+        public static bool OnLandPreFix()
+        {
+            if (Info.CinematicActive)
             {
-                __instance.gameObject.EnsureComponent<SaveMono>();
+                return false;
             }
+            return true;
+        }
+
+        [HarmonyPatch(nameof(Player.Start))]
+        [HarmonyPostfix]
+        public static void StartPostFix(Player __instance)
+        {
+            __instance.gameObject.EnsureComponent<SaveMono>();
         }
     }
 }

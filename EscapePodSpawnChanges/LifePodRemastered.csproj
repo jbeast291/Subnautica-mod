@@ -9,9 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LifePodRemastered</RootNamespace>
     <AssemblyName>LifePodRemastered</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -120,6 +122,11 @@
     <Compile Include="Fade&amp;Sfxmonos\StaticOverlayShaker.cs" />
     <Compile Include="Fade&amp;Sfxmonos\SkyFader.cs" />
     <Compile Include="Monos\SaveMono.cs" />
+    <Compile Include="objects\Mode.cs" />
+    <Compile Include="objects\ModeInputText.cs" />
+    <Compile Include="objects\ModePreset.cs" />
+    <Compile Include="objects\ModeRandom.cs" />
+    <Compile Include="objects\ModeSpecific.cs" />
     <Compile Include="patches\DisplayManagerPatch.cs" />
     <Compile Include="patches\EscapePodPatch.cs" />
     <Compile Include="patches\PdaMutePatch.cs" />
@@ -134,10 +141,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Localization\English.json" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\$(TargetName)"
-copy /Y "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\$(TargetName)"</PostBuildEvent>
+copy /Y "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\$(TargetName)"
+xcopy /E /Y /I "$(ProjectDir)Localization" "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\$(TargetName)\Localization"</PostBuildEvent>
   </PropertyGroup>
 </Project>

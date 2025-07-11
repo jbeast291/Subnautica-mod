@@ -6,24 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace LifePodRemastered.Monos
+namespace LifePodRemastered.Monos;
+
+internal class SaveMono : MonoBehaviour
 {
-    internal class SaveMono : MonoBehaviour
+    public void Awake()
     {
-        public void Awake()
+        if (!Info.newSave)
         {
-            if (!Info.newSave)
-            {
-                SaveUtils.CreateDefaultSlotSettingsIfNotExist();
-                SaveUtils.ReadSettingsFromCurrectSlot();
-            }
-            Action save = OnSave;
-            Nautilus.Utility.SaveUtils.RegisterOnSaveEvent(save);
+            SaveUtils.CreateDefaultSlotSettingsIfNotExist();
+            SaveUtils.ReadSettingsFromCurrectSlot();
         }
-        
-        void OnSave()//called when the game is saved
-        {
-            SaveUtils.WriteSettingsToCurrentSlot();
-        }
+        Action save = OnSave;
+        Nautilus.Utility.SaveUtils.RegisterOnSaveEvent(save);
+    }
+    
+    void OnSave()//called when the game is saved
+    {
+        SaveUtils.WriteSettingsToCurrentSlot();
     }
 }
