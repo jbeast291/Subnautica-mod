@@ -10,10 +10,12 @@ using Nautilus.Handlers;
 using UnityEngine;
 using LifePodRemastered.Monos;
 using static UserStorageXSave;
+using Nautilus.Utility.ModMessages;
 
 namespace LifePodRemastered;
 
 [BepInDependency("Jbeast291.InterpolationFix", BepInDependency.DependencyFlags.HardDependency)]
+[BepInDependency("com.snmodding.nautilus", BepInDependency.DependencyFlags.HardDependency)]
 [BepInPlugin(myGUID, pluginName, pluginVersion)]
 public class BepInEx : BaseUnityPlugin
 {
@@ -28,6 +30,7 @@ public class BepInEx : BaseUnityPlugin
     internal static MyConfig MyConfig { get; } = OptionsPanelHandler.RegisterModOptions<MyConfig>();
     public void Awake()
     {
+        ModMessageSystem.SendGlobal("FindMyUpdates", "https://raw.githubusercontent.com/RamuneNeptune/SubnauticaMods/refs/heads/main/Source/FindMyUpdates/Version.json");
         Logger = base.Logger;
         Logger.LogInfo(pluginName + " " + pluginVersion + " " + "has been loaded!");
         harmony.PatchAll();

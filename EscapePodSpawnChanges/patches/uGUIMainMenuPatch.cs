@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace LifePodRemastered.patches;
 
@@ -21,7 +22,7 @@ internal class uGUIMainMenuPatch
         public static bool OnButtonSurvival()
         {
             Info.showmap = true;
-            Info.GameMode = GameMode.Survival;
+            EscapePodMainMenu.main.enableUI(GameMode.Survival);
             return false;
         }
         [HarmonyPatch(typeof(uGUI_MainMenu), "OnButtonCreative")]
@@ -29,7 +30,7 @@ internal class uGUIMainMenuPatch
         public static bool OnButtonCreative()
         {
             Info.showmap = true;
-            Info.GameMode = GameMode.Creative;
+            EscapePodMainMenu.main.enableUI(GameMode.Creative);
             return false;
         }
         [HarmonyPatch(typeof(uGUI_MainMenu), "OnButtonFreedom")]
@@ -37,7 +38,7 @@ internal class uGUIMainMenuPatch
         public static bool OnButtonFreedom()
         {
             Info.showmap = true;
-            Info.GameMode = GameMode.Freedom;
+            EscapePodMainMenu.main.enableUI(GameMode.Freedom);
             return false;
         }
         [HarmonyPatch(typeof(uGUI_MainMenu), "OnButtonHardcore")]
@@ -45,7 +46,7 @@ internal class uGUIMainMenuPatch
         public static bool OnButtonHardcore()
         {
             Info.showmap = true;
-            Info.GameMode = GameMode.Hardcore;
+            EscapePodMainMenu.main.enableUI(GameMode.Hardcore);
             return false;
         }
         [HarmonyPatch(typeof(uGUI_MainMenu), "Start")]
@@ -59,8 +60,12 @@ internal class uGUIMainMenuPatch
             SaveUtils.ReadSettingsFromModFolder();//load for menu
             Info.resetInfo();
 
-            __instance.gameObject.EnsureComponent<EscapePodMainMenu>();
+            GameObject AreaSeceltor = GameObject.Instantiate(EscapePodMainMenu.assetBundle.LoadAsset<GameObject>("LifePodRemasteredCanvas"));
+            SceneManager.MoveGameObjectToScene(AreaSeceltor, SceneManager.GetSceneByName("XMenu"));
+            AreaSeceltor.transform.localPosition = new Vector3(0, 0, 7500);
+            AreaSeceltor.SetActive(true);
+
+            AreaSeceltor.gameObject.EnsureComponent<EscapePodMainMenu>();
         }
     }
-
 }

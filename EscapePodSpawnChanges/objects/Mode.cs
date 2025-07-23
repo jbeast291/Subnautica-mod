@@ -24,6 +24,10 @@ class Mode
     {
         
     }
+    public virtual void ReloadLanguage()
+    {
+
+    }
 
     public String Name()
     {

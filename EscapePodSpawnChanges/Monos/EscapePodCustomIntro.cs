@@ -51,6 +51,7 @@ internal class EscapePodCustomIntro : MonoBehaviour
     float WfAboveOffset = 0f;
     float WfUnderOffset = 0f;
     float FirstZoomOffset = 1.001f;
+    bool parachuteDeployed = false;
     float FirstMove1 = 0;
     float FirstMove2 = 0;
 
@@ -109,11 +110,14 @@ internal class EscapePodCustomIntro : MonoBehaviour
         PressAnyButtonText = GameObject.Find("uGUI(Clone)/CustomIntroCanvas(Clone)/BlackBackground/PressAnyButton");
         PressAnyButtonText.AddComponent<TextFader>();
         PressAnyButtonText.GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 0);
+        PressAnyButtonText.GetComponent<TextMeshProUGUI>().text = Language.main.Get("PressAnyButton");
         //Set text to be transparent. tried seting the object active and setting this in the editor but it caused issues regarless
 
         PresentingText = GameObject.Find("uGUI(Clone)/CustomIntroCanvas(Clone)/BlackBackground/PresentingText");
         PresentingText.AddComponent<TextFader>();
         PresentingText.GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 0);
+        PresentingText.GetComponent<TextMeshProUGUI>().text = Language.main.Get("IntroUWEPresents");
+
 
         SubnauticaLogoImage = GameObject.Find("uGUI(Clone)/CustomIntroCanvas(Clone)/BlackBackground/SubnauticaLogo");
         SubnauticaLogoImage.AddComponent<ImageFader>();
@@ -217,7 +221,6 @@ internal class EscapePodCustomIntro : MonoBehaviour
             
 
         CoroutineHost.StartCoroutine(Sequence2PodFalling());
-        //CoroutineHost.StartCoroutine(Parachute());
         CoroutineHost.StartCoroutine(CheckIfLanded());
         CoroutineHost.StartCoroutine(CheckIfUnderwater());
         CoroutineHost.StartCoroutine(LockCamera());
@@ -267,12 +270,27 @@ internal class EscapePodCustomIntro : MonoBehaviour
         parachute.transform.position = EscapePod.main.transform.position;
         parachute.transform.localPosition = new Vector3(2.5544f, 3.6072f, 0.0001f);
         parachute.transform.localScale = new Vector3(60, 60, 60);
-        //setupShaders
 
+        parachute2 = Instantiate(assetBundle.LoadAsset<GameObject>("ParachuteMK2"));
+        parachute2.transform.parent = EscapePod.main.gameObject.transform;
+        parachute2.transform.position = EscapePod.main.transform.position;
+        parachute2.transform.localPosition = new Vector3(-2.833f, 3.6072f, 0.0001f);
+        parachute2.transform.localScale = new Vector3(60, 60, 60);
+        parachute2.transform.rotation = Quaternion.Euler(0, 180, 0);
+
+        //setupShaders
+        setupParachuteShader(parachute);
+        setupParachuteShader(parachute2);
+
+        parachute.SetActive(false);
+        parachute2.SetActive(false);
+    }
+    void setupParachuteShader(GameObject parachuteGameObject)
+    {
         //steal shader off of life pod
         SkinnedMeshRenderer oldSMRfromLifePod = GameObject.Find("EscapePod/models/Life_Pod_damaged_03/lifepod_damaged_03_geo/life_pod_damaged").GetComponent<SkinnedMeshRenderer>();
 
-        GameObject connectorMeshObj = parachute.FindChild("Connector");
+        GameObject connectorMeshObj = parachuteGameObject.FindChild("Connector");
         connectorMeshObj.GetComponent<MeshRenderer>().material.shader = oldSMRfromLifePod.material.shader;
         connectorMeshObj.GetComponent<MeshRenderer>().material.shaderKeywords = new string[] { "MARMO_SPECMAP", "_ZWRITE_ON" };
         connectorMeshObj.GetComponent<MeshRenderer>().material.SetFloat("_SpecInt", 1.0f);
@@ -282,7 +300,7 @@ internal class EscapePodCustomIntro : MonoBehaviour
         connectorMeshObj.GetComponent<MeshRenderer>().material.SetColor("_Color", new Color(0.5f, 0.5f, 0.5f, 1.0f));
         connectorMeshObj.GetComponent<MeshRenderer>().material.SetColor("_SpecColor", new Color(0.3f, 0.3f, 0.3f, 1.0f));
 
-        GameObject parachuteMeshObj = parachute.FindChild("Parachute");
+        GameObject parachuteMeshObj = parachuteGameObject.FindChild("Parachute");
         parachuteMeshObj.GetComponent<MeshRenderer>().material.shader = oldSMRfromLifePod.material.shader;
         parachuteMeshObj.GetComponent<MeshRenderer>().material.shaderKeywords = new string[] { "MARMO_SPECMAP", "_ZWRITE_ON" };
         parachuteMeshObj.GetComponent<MeshRenderer>().material.SetFloat("_SpecInt", 1.0f);
@@ -290,30 +308,21 @@ internal class EscapePodCustomIntro : MonoBehaviour
         parachuteMeshObj.GetComponent<MeshRenderer>().material.SetFloat("_Fresnel", 0.6f);
         parachuteMeshObj.GetComponent<MeshRenderer>().material.SetFloat("_IBLreductionAtNight", 1f);
 
-        GameObject parachuteRopesMeshObj = parachute.FindChild("ParachuteRopes");
+        GameObject parachuteRopesMeshObj = parachuteGameObject.FindChild("ParachuteRopes");
         parachuteRopesMeshObj.GetComponent<MeshRenderer>().material.shader = oldSMRfromLifePod.material.shader;
         parachuteRopesMeshObj.GetComponent<MeshRenderer>().material.shaderKeywords = new string[] { "MARMO_SPECMAP", "_ZWRITE_ON" };
         parachuteRopesMeshObj.GetComponent<MeshRenderer>().material.SetFloat("_SpecInt", 1.0f);
         parachuteRopesMeshObj.GetComponent<MeshRenderer>().material.SetFloat("_Shininess", 8.0f);
         parachuteRopesMeshObj.GetComponent<MeshRenderer>().material.SetFloat("_Fresnel", 0.0f);
-
-        parachute.SetActive(false);
-
-        /*
-        parachute = Instantiate(assetBundle.LoadAsset<GameObject>("ParachuteRight Variant"));
-        parachute.transform.parent = EscapePod.main.gameObject.transform;
-        parachute.transform.position = EscapePod.main.transform.position;
-        parachute.transform.localPosition = new Vector3(-3, 2.5f, 0);
-        parachute.transform.localScale = new Vector3(350, 350, 350);
-        parachute.SetActive(false);
-
-        parachute2 = Instantiate(assetBundle.LoadAsset<GameObject>("ParachuteLeft Variant"));
-        parachute2.transform.parent = EscapePod.main.gameObject.transform;
-        parachute2.transform.position = EscapePod.main.transform.position;
-        parachute2.transform.localPosition = new Vector3(3, 2.5f, 0);
-        parachute2.transform.localScale = new Vector3(350, 350, 350);
-        parachute2.SetActive(false);
-        */
+    }
+    void updateParachuteSpecularIntensity(GameObject parachuteGameObject, float intensity)
+    {
+        GameObject connectorMeshObj = parachuteGameObject.FindChild("Connector");
+        connectorMeshObj.GetComponent<MeshRenderer>().material.SetFloat("_SpecInt", intensity);
+        GameObject parachuteMeshObj = parachuteGameObject.FindChild("Parachute");
+        parachuteMeshObj.GetComponent<MeshRenderer>().material.SetFloat("_SpecInt", intensity);
+        GameObject parachuteRopesMeshObj = parachuteGameObject.FindChild("ParachuteRopes");
+        parachuteRopesMeshObj.GetComponent<MeshRenderer>().material.SetFloat("_SpecInt", intensity);
     }
     void SetupFakeSpace()
     {
@@ -374,6 +383,10 @@ internal class EscapePodCustomIntro : MonoBehaviour
         MainCameraControl.main.ShakeCamera(1f, 0.5f, MainCameraControl.ShakeMode.Linear, 1f);
         CoroutineHost.StartCoroutine(WfAboveScaler());
 
+        // start move camera above pod
+        yield return new WaitForSeconds(3f);
+        parachuteDeployed = true;
+
         //wait for the pod to hit the water
         while (!podHitWater)
         {
@@ -382,19 +395,9 @@ internal class EscapePodCustomIntro : MonoBehaviour
         if (settingsCache.HeavyPodToggle)
         {
             CoroutineHost.StartCoroutine(WfWaterScaler());
+            HeavyPodMono.main.StartSpecIntLoop();
+            CoroutineHost.StartCoroutine(SpecularIntensityWithDepthLoop());
         }
-    }
-
-    IEnumerator Parachute()
-    {
-        yield return new WaitForSeconds(0.1f);
-        while (parachute.transform.position.y > -40.9f)
-        {
-            yield return null;
-        }
-        parachute.GetComponent<Animation>().Play();
-        yield return new WaitForSeconds(5.1f);
-        Destroy(parachute);
     }
 
     IEnumerator LockCamera()
@@ -414,7 +417,7 @@ internal class EscapePodCustomIntro : MonoBehaviour
             yield return null;
         }
 
-        while (EscapePod.main.transform.position.y > 0 && !podlanded)
+        while (!parachuteDeployed && !podlanded)
         {
             Player.main.SetPosition(EscapePod.main.transform.position + new Vector3(0, 0, 20));
 
@@ -425,16 +428,17 @@ internal class EscapePodCustomIntro : MonoBehaviour
             yield return null;
         }
 
-        while (FirstMove1 <= 10 && FirstMove2 <= 10 && !podlanded)
+        while (!podlanded)
         {
+            FirstMove1 = Mathf.Min(FirstMove1 + 1.75f * Time.deltaTime, 20f);
+            FirstMove2 = Mathf.Min(FirstMove2 + 1.5f * Time.deltaTime, 12f);
+
             Player.main.SetPosition(EscapePod.main.transform.position + new Vector3(0, 0 + FirstMove1, 20 - FirstMove2));
-
             PlayerCam.GetComponent<MainCameraControl>().LookAt(EscapePod.main.transform.position);
-
-            FirstMove1 += 1f * Time.deltaTime;
-            FirstMove2 += 1f * Time.deltaTime;
-
             oxygenManager.AddOxygen(10f);
+
+            // exit if both finished moving
+            if (FirstMove1 >= 20f && FirstMove2 >= 12f) break;
 
             yield return null;
         }
@@ -442,7 +446,7 @@ internal class EscapePodCustomIntro : MonoBehaviour
         //move this code to its own place should not be here :/
         while (!podlanded)
         {
-            Player.main.SetPosition(EscapePod.main.transform.position + new Vector3(0, 10, 10));
+            Player.main.SetPosition(EscapePod.main.transform.position + new Vector3(0, 20, 8));
 
             PlayerCam.GetComponent<MainCameraControl>().LookAt(EscapePod.main.transform.position);
 
@@ -493,8 +497,8 @@ internal class EscapePodCustomIntro : MonoBehaviour
         LastPos = EscapePod.main.transform.position;
         yield return new WaitForSeconds(0.5f);
 
-        if (EscapePod.main.transform.position.y <= (LastPos.y + 0.5) && 
-            EscapePod.main.transform.position.y >= (LastPos.y - 0.5) &&
+        if ((EscapePod.main.transform.position.y <= (LastPos.y + 0.5) && 
+            EscapePod.main.transform.position.y >= (LastPos.y - 0.5) || EscapePod.main.transform.position.y < -1000) &&
             Time.deltaTime != 0)
         {
             podlanded = true;
@@ -503,33 +507,49 @@ internal class EscapePodCustomIntro : MonoBehaviour
         CoroutineHost.StartCoroutine(CheckIfLanded());
     }
 
+    IEnumerator SpecularIntensityWithDepthLoop()
+    {
+        float surfaceValue = 1.0f;
+        if (EscapePod.main.transform.position.y < -1)
+        {
+            float depth = Mathf.Abs(EscapePod.main.transform.position.y);
+            float maxDepth = 30f;
+
+            // value will be surfaceValue at depth=0, and approach 0 as depth approaches maxDepth
+            float underwater = surfaceValue * Mathf.Clamp01(1 - (depth / maxDepth));
+
+            updateParachuteSpecularIntensity(parachute, underwater);
+            updateParachuteSpecularIntensity(parachute2, underwater);
+        }
+        else
+        {
+            updateParachuteSpecularIntensity(parachute, surfaceValue);
+            updateParachuteSpecularIntensity(parachute2, surfaceValue);
+        }
+        yield return new WaitForSeconds(0.25f);
+        CoroutineHost.StartCoroutine(SpecularIntensityWithDepthLoop());
+    }
+
     void EndCutscene()
     {
-        //reset pod above water gravity to normal
         wf.aboveWaterGravity = 9.8f; 
 
         //first person body
         PlayerBody.SetActive(true);
-        //give back camera controll
         PlayerCam.GetComponent<MainCameraControl>()._cinematicMode = false;
 
-        //put player in escape pod
         Player.main.SetPosition(EscapePod.main.transform.position + new Vector3(0, 3, 0));
         //update their state so they are considered walking and not swimming inside the escape pod
         Player.main.escapePod.Update(true);
         //reset the players velocity just incase they built up a lot and when set inside hte pod they may die from fall damage otherwise
         Player.main.groundMotor.SetVelocity(Vector3.zero);
-        //reenable hud
         ToggleHud(true);
 
-        //renable pausing
         IngameMenu.main.canBeOpen = true;
 
-        //renable pda notifs
         Info.CinematicActive = false;
         Info.mutePdaEvents = false;
 
-        //destroy unneeded gameobjects
         Destroy(parachute);
         Destroy(parachute2);
         Destroy(FireVfx);
@@ -539,19 +559,16 @@ internal class EscapePodCustomIntro : MonoBehaviour
         Destroy(FakeSpace);
         Destroy(CineUiEmpty);
 
-        //add Heavy pod script to this pod
-        HeavyPodMono.main.StartLoop(); //this will start the loop
+        HeavyPodMono.main.StartFreezeLoop();
 
-
-        //remove script from object
         Destroy(this);
     }
     void StartParaAnim()
     {
         parachute.SetActive(true);
-        //parachute2.SetActive(true);
-        //parachute.GetComponent<Animation>().Play();
-        //parachute2.GetComponent<Animation>().Play();
+        parachute2.SetActive(true);
+        parachute.GetComponent<Animator>().Play("ParachuteDeployMK2");
+        parachute2.GetComponent<Animator>().Play("ParachuteDeployMK2");
     }
 
     void ToggleHud(bool ToggleValue)

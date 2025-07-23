@@ -19,6 +19,7 @@ internal class HeavyPodMono : MonoBehaviour
     //this should not be fucked with, double models causes(ed) major issues
     protected bool hasInit = false;
 
+    GameObject newLifePodModel;
     GameObject pontoon;
     GameObject noPontoon;
 
@@ -49,11 +50,16 @@ internal class HeavyPodMono : MonoBehaviour
     public void OnLoaded()
     {
         InitPodModelAndEffects();
-        StartLoop();
+        StartFreezeLoop();
+        StartSpecIntLoop();
     }
-    public void StartLoop()
+    public void StartFreezeLoop()
     {
         CoroutineHost.StartCoroutine(FreezeLoop());
+    }
+    public void StartSpecIntLoop()
+    {
+        CoroutineHost.StartCoroutine(SpecularIntensityWithDepthLoop());
     }
     public void HidePontoons(bool animate)
     {
@@ -77,26 +83,10 @@ internal class HeavyPodMono : MonoBehaviour
                 VECTOR vel = EscapePod.main.rigidbodyComponent.velocity.ToFMODVector();
                 channel.set3DAttributes(ref podLocation, ref vel);
             }
-            //disable the pontoon after the animation is complete
-            //CoroutineHost.StartCoroutine(HidePontoonsLater(Util.clipLength(pontoon.GetComponent<Animator>(), "PontoonDeflate")));
         }else
         {
             pontoon.SetActive(false);
         }
-    }
-
-    public IEnumerator HidePontoonsLater(float time)
-    {
-        UnityEngine.Debug.Log(time);
-        yield return new WaitForSeconds(time + 0.01f);
-        yield return new WaitForEndOfFrame();
-        //ensure it should still be disabled
-        if (SaveUtils.inGameSave.HeavyPodToggle)
-        {
-            UnityEngine.Debug.Log(time);
-            pontoon.SetActive(false);
-        }
-           
     }
 
     public void ShowPontoons(bool animate)
@@ -137,21 +127,21 @@ internal class HeavyPodMono : MonoBehaviour
             BepInEx.Logger.LogError("Do not Init the Escape pod Model twice!!");
             return;
         }
-        GameObject testingObj = Instantiate(Info.assetBundle.LoadAsset<GameObject>("LifePodModel"));
-        testingObj.transform.parent = EscapePod.main.gameObject.transform;
-        testingObj.transform.position = EscapePod.main.transform.position;
-        testingObj.transform.localPosition = new Vector3(-0.1468f, -0.2f, -0.0031f);
-        testingObj.transform.localScale = new Vector3(10000, 10000, 10000);
-        testingObj.transform.localRotation = Quaternion.Euler(new Vector3(-90, 0, 0));//rotation fix needed
+        newLifePodModel = Instantiate(Info.assetBundle.LoadAsset<GameObject>("LifePodModel"));
+        newLifePodModel.transform.parent = EscapePod.main.gameObject.transform;
+        newLifePodModel.transform.position = EscapePod.main.transform.position;
+        newLifePodModel.transform.localPosition = new Vector3(-0.1468f, -0.2f, -0.0031f);
+        newLifePodModel.transform.localScale = new Vector3(10000, 10000, 10000);
+        newLifePodModel.transform.localRotation = Quaternion.Euler(new Vector3(-90, 0, 0));//rotation fix needed
 
         SkinnedMeshRenderer oldSMRfromLifePod = GameObject.Find("EscapePod/models/Life_Pod_damaged_03/lifepod_damaged_03_geo/life_pod_damaged").GetComponent<SkinnedMeshRenderer>();
 
         this.marmosetUber = oldSMRfromLifePod.material.shader;
 
         //add MarmosetUber
-        testingObj.GetComponent<MeshRenderer>().material.shader = oldSMRfromLifePod.material.shader;
+        newLifePodModel.GetComponent<MeshRenderer>().material.shader = oldSMRfromLifePod.material.shader;
         // copy shader props
-        testingObj.GetComponent<MeshRenderer>().material.CopyPropertiesFromMaterial(oldSMRfromLifePod.material);
+        newLifePodModel.GetComponent<MeshRenderer>().material.CopyPropertiesFromMaterial(oldSMRfromLifePod.material);
 
         // remove/hide old model
         GameObject.Find("EscapePod/models/Life_Pod_damaged_03/lifepod_damaged_03_geo/life_pod_damaged").SetActive(false);
@@ -164,20 +154,20 @@ internal class HeavyPodMono : MonoBehaviour
         wcp.UpdateMaterial();
 
         // decals
-        GameObject decalsObj = testingObj.FindChild("Decals");
+        GameObject decalsObj = newLifePodModel.FindChild("Decals");
         decalsObj.GetComponent<MeshRenderer>().material.shader = oldSMRfromLifePod.materials[1].shader;
         // copy shader props, note that there are multiple materials and the decals are always at index 1
         decalsObj.GetComponent<MeshRenderer>().material.CopyPropertiesFromMaterial(oldSMRfromLifePod.materials[1]);
 
         // No Pontoons Shaders/Material Properties (the texture is already applied from the Asset Bundle)
-        noPontoon = testingObj.FindChild("NoPontoons");
+        noPontoon = newLifePodModel.FindChild("NoPontoons");
         noPontoon.GetComponent<MeshRenderer>().material.shader = oldSMRfromLifePod.material.shader;
         noPontoon.GetComponent<MeshRenderer>().material.shaderKeywords = new string[] { "MARMO_SPECMAP", "_ZWRITE_ON" };
         noPontoon.GetComponent<MeshRenderer>().material.SetFloat("_SpecInt", 0.1f);
         noPontoon.GetComponent<MeshRenderer>().material.SetFloat("_Fresnel", 0.9f);
 
         // Pontoons Shaders/Material Properties
-        pontoon = testingObj.FindChild("Pontoons");
+        pontoon = newLifePodModel.FindChild("Pontoons");
         pontoon.GetComponent<MeshRenderer>().material.shader = oldSMRfromLifePod.material.shader;
         pontoon.GetComponent<MeshRenderer>().material.CopyPropertiesFromMaterial(oldSMRfromLifePod.material);
 
@@ -219,5 +209,29 @@ internal class HeavyPodMono : MonoBehaviour
 
         yield return new WaitForSeconds(0.25f);
         CoroutineHost.StartCoroutine(FreezeLoop());
+    }
+    IEnumerator SpecularIntensityWithDepthLoop()
+    {
+        float surfaceValue = 1.5f;
+        if (EscapePod.main.transform.position.y < -1)
+        {
+            float depth = Mathf.Abs(EscapePod.main.transform.position.y);
+            float maxDepth = 30f;
+
+            // value will be surfaceValue at depth=0, and approach 0 as depth approaches maxDepth
+            float underwater = surfaceValue * Mathf.Clamp01(1 - (depth / maxDepth));
+
+            newLifePodModel.GetComponent<MeshRenderer>().material.SetFloat("_SpecInt", underwater);
+            noPontoon.GetComponent<MeshRenderer>().material.SetFloat("_SpecInt", underwater/15);
+            pontoon.GetComponent<MeshRenderer>().material.SetFloat("_SpecInt", underwater);
+        }
+        else
+        {
+            newLifePodModel.GetComponent<MeshRenderer>().material.SetFloat("_SpecInt", surfaceValue);
+            noPontoon.GetComponent<MeshRenderer>().material.SetFloat("_SpecInt", surfaceValue/15);
+            pontoon.GetComponent<MeshRenderer>().material.SetFloat("_SpecInt", surfaceValue);
+        }
+        yield return new WaitForSeconds(0.25f);
+        CoroutineHost.StartCoroutine(SpecularIntensityWithDepthLoop());
     }
 }

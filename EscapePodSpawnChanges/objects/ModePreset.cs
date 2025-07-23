@@ -15,6 +15,9 @@ internal class ModePreset : Mode
 
     TextMeshProUGUI presetText;
 
+    TextMeshProUGUI presetSubText;
+    TextMeshProUGUI presetSubSubText; // lol
+
     List<string[]> presetList;
     int CurrentPreset = 1;
 
@@ -30,14 +33,25 @@ internal class ModePreset : Mode
 
         presetText = presetRoot.FindChild("PresetText").GetComponent<TextMeshProUGUI>();
 
+        presetSubText = presetRoot.GetComponent<TextMeshProUGUI>();
+        presetSubSubText = presetRoot.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+
         string[] selectedPreset = presetList[CurrentPreset - 1];
         presetText.text = selectedPreset[0];
+
+        ReloadLanguage();
     }
     public override void ToggleMode(bool toggle)
     {
         presetRoot.SetActive(toggle);
-    }   
-    public void UpdateSelectedPresetText()
+        UpdateSelectedPresetInUI();
+    }
+    public override void ReloadLanguage()
+    {
+        presetSubText.text = Language.main.Get("LPR.ModePresetText");
+        presetSubSubText.text = Language.main.Get("LPR.ModePresetSubText");
+    }
+    public void UpdateSelectedPresetInUI()
     {
         string[] selectedPreset = presetList[CurrentPreset - 1];
         presetText.text = selectedPreset[0];
@@ -51,7 +65,7 @@ internal class ModePreset : Mode
             CurrentPreset--;
             escapePodMainMenu.PlayButtonPressSound();
         }
-        UpdateSelectedPresetText();
+        UpdateSelectedPresetInUI();
     }
     public void MovePresetRight()
     {
@@ -60,7 +74,7 @@ internal class ModePreset : Mode
             CurrentPreset++;
             escapePodMainMenu.PlayButtonPressSound();
         }
-        UpdateSelectedPresetText();
+        UpdateSelectedPresetInUI();
     }
 }
 

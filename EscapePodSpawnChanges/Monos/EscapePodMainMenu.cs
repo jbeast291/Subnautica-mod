@@ -1,5 +1,6 @@
 ﻿using FMOD;
 using HarmonyLib;
+using LifePodRemastered.Monos;
 using LifePodRemastered.objects;
 using Nautilus.Assets;
 using System;
@@ -19,20 +20,18 @@ namespace LifePodRemastered;
 
 public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
 {
+    public static EscapePodMainMenu main;
+    public static AssetBundle assetBundle = Info.assetBundle;
+
+    GameMode selectedGameMode = GameMode.None;
+
     GameObject HoverSound;
     GameObject ClickSound;
     GameObject ButtonHoverSharp;
 
-    public static AssetBundle assetBundle = Info.assetBundle;
-
     Canvas originalGameCanvas;
 
-    GameObject AreaSeceltor;
-
-    GameObject Rightside;
-    GameObject Primaryoptions;
     GameObject OptionsPannel;
-
     GameObject ModeChoiceText;
 
     GameObject mapsBackground;
@@ -46,52 +45,60 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
 
     TextMeshProUGUI RightSideInfoText;
 
+    GameObject ModeChoiceTitleText;
+    GameObject BackButton;
+    GameObject SettingsButton;
+    GameObject StartGameButton;
+
+
     int currentModeIndex = 0;
 
-    //Used in map cycle
+    Button playButton;
+    bool hasSelectedPoint = false;
 
     GameObject cycleMapButton;
-
-    bool hasSelectedPoint = false;
-    Button playButton;
-    
     int currentMapSelected = 0;
     List<GameObject> mapVariants;
 
     List<Mode> modes;
+    List<Action<PointerEventData>> registeredMouseDownEvents;
 
-    Action specificPointMouseUp;
+    bool showModSettings = false;
 
     public void Awake()
     {
-        Rightside = GameObject.Find("RightSide");
-        Primaryoptions = GameObject.Find("PrimaryOptions");
+        if (main != null)
+        {
+            Debug.LogError("Duplicate EscapePodMainMenu found!");
+            Destroy(this);
+            return;
+        }
+        main = this;
 
         originalGameCanvas = GameObject.Find("Menu canvas").GetComponent<Canvas>();
-
-
-        AreaSeceltor = Instantiate(assetBundle.LoadAsset<GameObject>("LifePodRemasteredCanvas"));
-        SceneManager.MoveGameObjectToScene(AreaSeceltor, SceneManager.GetSceneByName("XMenu"));
-        AreaSeceltor.transform.localPosition = new Vector3(0, 0, 7500);
-        AreaSeceltor.SetActive(true);
+        registeredMouseDownEvents = new List<Action<PointerEventData>>();//just init
     }
     public void Start()
     {
+
+        //Sounds
         HoverSound = GameObject.Find("ButtonHover");
         ClickSound = GameObject.Find("ButtonClick");
         ButtonHoverSharp = GameObject.Find("ButtonHoverSharp");
 
-
-        GameObject.Find("SettingModsButton").GetComponent<Button>().onClick.AddListener(OnSettingsModButtonClick);
-        GameObject.Find("StartGameButton").GetComponent<Button>().onClick.AddListener(OnStartGameButtonClick);
-        GameObject.Find("BackToMenuButton").GetComponent<Button>().onClick.AddListener(OnBackToMenuButtonClick);
-
+        //Butons
+        SettingsButton = GameObject.Find("SettingModsButton");
+        SettingsButton.GetComponent<Button>().onClick.AddListener(OnSettingsModButtonClick);
+        StartGameButton = GameObject.Find("StartGameButton");
+        StartGameButton.GetComponent<Button>().onClick.AddListener(OnStartGameButtonClick);
+        BackButton = GameObject.Find("BackToMenuButton");
+        BackButton.GetComponent<Button>().onClick.AddListener(OnBackToMenuButtonClick);
         GameObject.Find("ModeChoiceleft").GetComponent<Button>().onClick.AddListener(OnModeChoiceleftClick);
         GameObject.Find("ModeChoiceRight").GetComponent<Button>().onClick.AddListener(OnModeChoiceRightClick);
 
+        //Modes
         modes = new List<Mode>();
         ModeSpecific ModeSpecificPoint = new ModeSpecific(this, "LPR.ModeSpecificName", "LPR.ModeSpecificDescription");
-        specificPointMouseUp = ModeSpecificPoint.getOnClickAction();
         modes.Add(ModeSpecificPoint);
 
         GameObject ModePresetPointRoot = GameObject.Find("ModePresetPoint");
@@ -106,19 +113,21 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
         ModeInputText ModeInputTextPoint = new ModeInputText(this, "LPR.ModeInputTextName", "LPR.ModeInputTextDescription", ModeInputTextRoot);
         modes.Add(ModeInputTextPoint);
 
-
+        //Map
         cycleMapButton = GameObject.Find("CycleMapButton");
         cycleMapButton.GetComponent<Button>().onClick.AddListener(OnMapButtonClick);
+        mapVariants = new List<GameObject> {
+            GameObject.Find("MapText"),
+            GameObject.Find("MapNoText"),
+            GameObject.Find("MapDepth"),
+            GameObject.Find("MapXRay")
+        };
 
-
-
+        //Dynamic General Gameobjects
         playButton = GameObject.Find("StartGameButton").GetComponent<Button>();
-
-
         ModeChoiceText = GameObject.Find("ModeChoiceText");
         SelectedPoint = GameObject.Find("SelectedPoint");
         SelectedPointIndicator = GameObject.Find("SelectedPointIndicator");
-
         mapsBackground = GameObject.Find("MapBackground");
         CoordsDisplay = GameObject.Find("CoordsDisplay");
         ScalePoint1 = GameObject.Find("ScalePoint1");
@@ -126,44 +135,46 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
         BoundBottomLeft = GameObject.Find("BoundBottomLeft");
         BoundTopRight = GameObject.Find("BoundTopRight");
         OptionsPannel = GameObject.Find("OptionsBackGround");
-
         RightSideInfoText = GameObject.Find("RightSideInfoText").GetComponent<TextMeshProUGUI>();
 
-        mapVariants = new List<GameObject> { 
-            GameObject.Find("MapText"), 
-            GameObject.Find("MapNoText"), 
-            GameObject.Find("MapDepth"), 
-            GameObject.Find("MapXRay") 
-        };
 
-        AreaSeceltor.SetActive(false);
-        OptionsPannel.SetActive(false);
+        //For Language Changes Only
+        ModeChoiceTitleText = GameObject.Find("ModeChoice");
 
+
+        gameObject.SetActive(false);
         OptionsPannel.gameObject.EnsureComponent<OptionsMono>();
         SelectedPointIndicator.GetComponent<Animation>().Play();//start loop
 
         UpdateCurrentMode(currentModeIndex);
         CycleMaps();
+        reloadLanguage();
     }
-    
-    public void OnPointerDown(PointerEventData eventData)
+    public void reloadLanguage()
     {
-        Debug.Log("Mouse button down on UI object");
+        ModeChoiceTitleText.GetComponent<TextMeshProUGUI>().text = Language.main.Get("LPR.ModeTitle");
+        SettingsButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Language.main.Get("LPR.ConfigButton");
+        BackButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Language.main.Get("LPR.BackButton");
+        StartGameButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Language.main.Get("LPR.PlayButton");
+        CoordsDisplay.GetComponent<TextMeshProUGUI>().text = Language.main.Get("LPR.CoordsDisplay");
+        ReloadCurrentModeText(currentModeIndex);
+        ReloadAllModesLanguage();
     }
-
-    public void Update()
+    public void ReloadAllModesLanguage()
     {
-        
-        if (Info.showmap && !Info.Showsettings)
+        for (int i = 0; i < modes.Count; i++)
         {
-            AreaSeceltor.SetActive(true);
-            mapsBackground.SetActive(true);
-            OptionsPannel.SetActive(false);
-            Rightside.SetActive(false);
-            Primaryoptions.SetActive(false);
-
-            originalGameCanvas.enabled = false;
+            modes[i].ReloadLanguage();
         }
+    }
+    public void enableUI(GameMode gameMode)
+    {
+        reloadLanguage();
+        selectedGameMode = gameMode;
+        gameObject.SetActive(true);
+        mapsBackground.SetActive(true);
+        OptionsPannel.SetActive(false);
+        originalGameCanvas.enabled = false;
     }
     public void UpdateCurrentMode(int modeIndex)
     {
@@ -177,6 +188,18 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
 
             if (toggleVal)
             {
+                ModeChoiceText.GetComponent<TextMeshProUGUI>().text = mode.Name();
+                RightSideInfoText.text = mode.Description();
+            }
+        }
+    }
+    public void ReloadCurrentModeText(int modeIndex)
+    {
+        for (int i = 0; i < modes.Count; i++)
+        {
+            if (i == modeIndex)
+            {
+                Mode mode = modes[i];
                 ModeChoiceText.GetComponent<TextMeshProUGUI>().text = mode.Name();
                 RightSideInfoText.text = mode.Description();
             }
@@ -228,7 +251,7 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
 
         SelectedPoint.GetComponent<RectTransform>().localPosition = calculatedSelectorLocalPosition;
         Info.SelectedSpawn = WorldPoint;
-        CoordsDisplay.GetComponent<TextMeshProUGUI>().text = "Coords: " + WorldPoint;
+        CoordsDisplay.GetComponent<TextMeshProUGUI>().text = Language.main.Get("LPR.CoordsDisplay") + " " + WorldPoint;
 
         playButton.interactable = true;//make the start button pressable, once point is selected
         hasSelectedPoint = true;
@@ -237,9 +260,10 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
 
     void OnSettingsModButtonClick()
     {
-        Info.Showsettings = !Info.Showsettings;
-        OptionsPannel.SetActive(Info.Showsettings);
-        mapsBackground.SetActive(!Info.Showsettings);
+        RightSideInfoText.text = Language.main.Get("LPR.OptionsDescription");
+        showModSettings = !showModSettings;
+        OptionsPannel.SetActive(showModSettings);
+        mapsBackground.SetActive(!showModSettings);
         ClickSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
     }
     void OnStartGameButtonClick()
@@ -251,20 +275,19 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
             Info.newSave = true;
             SaveUtils.LoadChachedSettingsToSlotSave();
 
-            CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(Info.GameMode));
+            CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(selectedGameMode));
 
-            AreaSeceltor.SetActive(false);
+            main = null;
+
+            gameObject.SetActive(false);
         }
     }
     void OnBackToMenuButtonClick()
     {
         ClickSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
         Info.showmap = false;
-        Info.Showsettings = false;
         OptionsPannel.SetActive(false);
-        AreaSeceltor.SetActive(false);
-        Rightside.SetActive(true);
-        Primaryoptions.SetActive(true);
+        gameObject.SetActive(false);
 
         originalGameCanvas.enabled = true;
     }
@@ -308,5 +331,21 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
     public void PlayButtonPressSound()
     {
         ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
+    }
+
+    public void registerPointerDownEvent(Action<PointerEventData> action)
+    {
+        registeredMouseDownEvents.Add(action);
+    }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if(mapsBackground.activeSelf == false)
+        {
+            return;
+        }
+        for(int i = 0;i < registeredMouseDownEvents.Count; i++)
+        {
+            registeredMouseDownEvents[i].Invoke(eventData);
+        }
     }
 }

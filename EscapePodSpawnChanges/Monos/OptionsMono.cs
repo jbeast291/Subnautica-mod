@@ -1,8 +1,10 @@
-﻿using System;
+﻿using LifePodRemastered.objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static LifePodRemastered.SaveUtils;
@@ -11,134 +13,134 @@ namespace LifePodRemastered;
 
 internal class OptionsMono : MonoBehaviour
 {
-    Toggle heavyPodToggle;
-    Toggle firstTimeAnimToggle;
-    Toggle experimentalSettingToggle;
-    Toggle customIntroToggle;
-    Toggle heightReqToggle;
-    Toggle cinematicOverlayToggle;
+    GameObject VerticalLayout;
+    GameObject Content;
+    GameObject ToggleTemplate;
 
-    GameObject experimentalSettingsGroup;
+    TextMeshProUGUI OptionsTitle;
+
+    //Toggle heavyPodToggle;
+    //Toggle firstTimeAnimToggle;
+    //Toggle experimentalSettingToggle;
+    //Toggle customIntroToggle;
+    //Toggle heightReqToggle;
+    //Toggle cinematicOverlayToggle;
+
+    //GameObject experimentalSettingsGroup;
+
+    List<ToggleOption> toggleOptions = new();
 
     public void Awake()
     {
-        heavyPodToggle = GameObject.Find("HeavyPodToggle").GetComponent<Toggle>();
-        firstTimeAnimToggle = GameObject.Find("FirstTimeAnimationsToggle").GetComponent<Toggle>();
-        experimentalSettingToggle = GameObject.Find("ExperimentalToggle").GetComponent<Toggle>();
-        customIntroToggle = GameObject.Find("CustomIntroToggle").GetComponent<Toggle>();
-        heightReqToggle = GameObject.Find("HeightReqToggle").GetComponent<Toggle>();
-        cinematicOverlayToggle = GameObject.Find("CinematicOverlayToggle").GetComponent<Toggle>();
+        VerticalLayout = GameObject.Find("OptionsVerticalLayout");
+        Content = GameObject.Find("OptionsContent");
+        OptionsTitle = GameObject.Find("OptionsTitle").GetComponent<TextMeshProUGUI>();
 
-        experimentalSettingsGroup = GameObject.Find("ExperimentalSettings"); 
+        ToggleTemplate = GameObject.Find("ToggleTemplate");
+        ToggleTemplate.SetActive(false);
+
+        ToggleOption heavyPodOption = new ToggleOption(
+            getNewToggleOption().GetComponent<Toggle>(), 
+            "LPR.HeavyPodTitle", 
+            "LPR.HeavyPodDescription",
+            settingsCache.HeavyPodToggle,
+            new Action<bool>(onHeavyPodToggle));
+        toggleOptions.Add(heavyPodOption);
+
+        ToggleOption firstTimeAnimationsOption = new ToggleOption(
+            getNewToggleOption().GetComponent<Toggle>(), 
+            "LPR.FirstTimeAnimationsTitle", 
+            "LPR.FirstTimeAnimationsDescription",
+            settingsCache.FirstTimeToggle,
+            new Action<bool>(onFirstTimeAnimToggle));
+        toggleOptions.Add(firstTimeAnimationsOption);
+
+        ToggleOption cinematicOverlayOption = new ToggleOption(
+            getNewToggleOption().GetComponent<Toggle>(), 
+            "LPR.CinematicOverlayTitle", 
+            "LPR.CinematicOverlayDescription",
+            settingsCache.CinematicOverlayToggle,
+            new Action<bool>(onCinematicOverlayToggle));
+        toggleOptions.Add(cinematicOverlayOption);
+
+        ToggleOption customIntroOption = new ToggleOption(
+            getNewToggleOption().GetComponent<Toggle>(), 
+            "LPR.CustomIntroTitle", 
+            "LPR.CustomIntroDescription",
+            settingsCache.CustomIntroToggle,
+            new Action<bool>(onCustomIntroToggle));
+        toggleOptions.Add(customIntroOption);
+
+        ToggleOption airSpawnOption = new ToggleOption(
+            getNewToggleOption().GetComponent<Toggle>(), 
+            "LPR.AirSpawnTitle", 
+            "LPR.AirSpawnDescription",
+            settingsCache.HeightReqToggle,
+            new Action<bool>(HeightReqToggle));
+        toggleOptions.Add(airSpawnOption);
+
+        OptionsTitle.text = Language.main.Get("LPR.OptionsTitle");
+
+        updateViewPortHeight();
     }
-    public void Start()
+    public GameObject getNewToggleOption()
     {
-        heavyPodToggle.onValueChanged.AddListener(delegate{
-            HeavyPodToggle(heavyPodToggle);
-        });
-        firstTimeAnimToggle.onValueChanged.AddListener(delegate {
-            FirstTimeAnimToggle(firstTimeAnimToggle);
-        });
-        experimentalSettingToggle.onValueChanged.AddListener(delegate {
-            ExperimentalSettingToggle(experimentalSettingToggle);
-        });
-        customIntroToggle.onValueChanged.AddListener(delegate {
-            CustomIntroToggle(customIntroToggle);
-        });
-        heightReqToggle.onValueChanged.AddListener(delegate {
-            HeightReqToggle(heightReqToggle);
-        });
-        cinematicOverlayToggle.onValueChanged.AddListener(delegate {
-            CinematicOverlayToggle(cinematicOverlayToggle);
-        });
-        heavyPodToggle.isOn = settingsCache.HeavyPodToggle;
-        firstTimeAnimToggle.isOn = settingsCache.FirstTimeToggle;
-        experimentalSettingToggle.isOn = settingsCache.ExSettingToggle;
-        customIntroToggle.isOn = settingsCache.CustomIntroToggle;
-        heightReqToggle.isOn = settingsCache.HeightReqToggle;
-        cinematicOverlayToggle.isOn = settingsCache.CinematicOverlayToggle;
-        if (!settingsCache.ExSettingToggle)
+        GameObject toggleOption = Instantiate(ToggleTemplate);
+        toggleOption.transform.SetParent(VerticalLayout.transform, false);
+        toggleOption.SetActive(true);
+        return toggleOption;
+    }
+    public void updateViewPortHeight()
+    {
+        float totalHeight = 0;
+        for (int i = 0; i < toggleOptions.Count; i++)
         {
-            experimentalSettingsGroup.SetActive(false);
+            totalHeight += toggleOptions[i].GetHeight();
         }
+
+        RectTransform VerticalLayoutRT = VerticalLayout.GetComponent<RectTransform>();
+        VerticalLayoutRT.sizeDelta = new Vector2(VerticalLayoutRT.sizeDelta.x, totalHeight);
+
+        RectTransform ContentRT = Content.GetComponent<RectTransform>();
+        ContentRT.sizeDelta = new Vector2(ContentRT.sizeDelta.x, totalHeight);
+    }
+    void OnEnable()
+    {
+        reloadLanguage();
+    }
+    public void reloadLanguage()
+    {
+        for (int i = 0; i < toggleOptions.Count; i++)
+        {
+            toggleOptions[i].reloadLanguage();
+        }
+        OptionsTitle.text = Language.main.Get("OptionsTitle");
     }
 
-    public void HeavyPodToggle(Toggle change)
+    public void onHeavyPodToggle(bool value)
     {
-        if (change.isOn)
-        {
-            settingsCache.HeavyPodToggle = true;
-        }
-        else
-        {
-            settingsCache.HeavyPodToggle = false;
-        }
+        settingsCache.HeavyPodToggle = value;
         WriteSettingsToModFolder();
     }
-    public void FirstTimeAnimToggle(Toggle change)
+    
+    public void onFirstTimeAnimToggle(bool value)
     {
-        if (change.isOn)
-        {
-            settingsCache.FirstTimeToggle = true;
-        }
-        else
-        {
-            settingsCache.FirstTimeToggle = false;
-        }
+        settingsCache.FirstTimeToggle = value;
         WriteSettingsToModFolder();
     }
-    public void CinematicOverlayToggle(Toggle change)
+    public void onCinematicOverlayToggle(bool value)
     {
-        if (change.isOn)
-        {
-            settingsCache.CinematicOverlayToggle = true;
-        }
-        else
-        {
-            settingsCache.CinematicOverlayToggle = false;
-        }
+        settingsCache.CinematicOverlayToggle = value;
         WriteSettingsToModFolder();
     }
-    public void ExperimentalSettingToggle(Toggle change)
+    public void onCustomIntroToggle(bool value)
     {
-        if(change.isOn)
-        {
-            experimentalSettingsGroup.SetActive(true);
-            settingsCache.ExSettingToggle = true;
-        }
-        else
-        {
-            experimentalSettingsGroup.SetActive(false);
-            settingsCache.ExSettingToggle = false;
-            settingsCache.CustomIntroToggle = true;
-            settingsCache.HeightReqToggle = true;
-            customIntroToggle.isOn = true;
-            heightReqToggle.isOn = true;
-        }
+        settingsCache.CustomIntroToggle = value;
         WriteSettingsToModFolder();
     }
-    public void CustomIntroToggle(Toggle change)
+    public void HeightReqToggle(bool value)
     {
-        if (change.isOn)
-        {
-            settingsCache.CustomIntroToggle = true;
-        }
-        else
-        {
-            settingsCache.CustomIntroToggle = false;
-        }
-        WriteSettingsToModFolder();
-    }
-    public void HeightReqToggle(Toggle change)
-    {
-        if (change.isOn)
-        {
-            settingsCache.HeightReqToggle = true;
-        }
-        else
-        {
-            settingsCache.HeightReqToggle = false;
-        }
+        settingsCache.HeightReqToggle = value;
         WriteSettingsToModFolder();
     }
 }

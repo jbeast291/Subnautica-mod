@@ -1,13 +1,35 @@
 {
+  "LPR.ModeTitle": "Mode:",
+  "LPR.ConfigButton": "Pod Start Config",
+  "LPR.BackButton": "Back To Menu",
+  "LPR.PlayButton": "Play",
+  "LPR.CoordsDisplay": "Coords:",
 
   "LPR.ModeSpecificName": "Specific Point",
   "LPR.ModeSpecificDescription": "Click a position on the map to set were the pod spawns.\r\n\r\n\r\nPress play to \r\nstart!",
   "LPR.ModePresetName": "Preset Point",
   "LPR.ModePresetDescription": "Choose from one of the preset points on the left\r\n\r\n\r\nPress play to \r\nstart!",
+  "LPR.ModePresetText": "Presets:",
+  "LPR.ModePresetSubText": "*Presets can be modified in mod folder,\r\n/Presets/presets.txt,",
   "LPR.ModeInputTextName": "Type Coords",
   "LPR.ModeInputTextDescription": "For more advanced users type your desired coords in manually\r\n\r\n\r\nPress play to \r\nstart!",
+  "LPR.ModeInputTextPlaceholder": "Enter Coords...",
+  "LPR.ModeInputExample": "Example:\n10, 10, 10",
   "LPR.ModeRandomName": "Random Point",
   "LPR.ModeRandomDescription": "Press the button \"Randomize Point\" for a randompoint (can be in void so be carefull)\r\n\r\nPress play to \r\nstart!",
+  "LPR.ModeRandomButton": "Randomize Point",
 
-  "LPR.OptionsDescription": "Modify experimental spawning properties or post-intro settings!\r\n\r\nPress play to \r\nstart!"
+  "LPR.OptionsTitle": "In-Game Settings",
+  "LPR.OptionsDescription": "Modify experimental spawning properties or post-intro settings!\r\n\r\nPress play to \r\nstart!",
+
+  "LPR.HeavyPodTitle": "Heavy Pod",
+  "LPR.HeavyPodDescription": "Toggle the life pod sinking underwater at the start of the game. Can be disabled later though the [unfinished asset]",
+  "LPR.FirstTimeAnimationsTitle": "First Time Animations",
+  "LPR.FirstTimeAnimationsDescription": "Toggle the unique animations the first time you leave the pod",
+  "LPR.CinematicOverlayTitle": "Cinematic Overlay",
+  "LPR.CinematicOverlayDescription": "Toggle the overlay durring the pod falling cinematic, disable if you experience eye strain or nausea",
+  "LPR.CustomIntroTitle": "Custom Intro",
+  "LPR.CustomIntroDescription": "Toggle Custom intro. (You know, how the pod falls from orbit with this mod installed)",
+  "LPR.AirSpawnTitle": "Spawn Pod In The Air",
+  "LPR.AirSpawnDescription": "Toggle the life pod spawning in the air. This setting will be ignored if the custom into is enabled"
 }

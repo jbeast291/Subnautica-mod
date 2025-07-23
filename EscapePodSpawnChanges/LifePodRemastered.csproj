@@ -46,10 +46,14 @@
     <Reference Include="BepInEx">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
+    <Reference Include="FindMyUpdates">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\FindMyUpdates\FindMyUpdates.dll</HintPath>
+    </Reference>
     <Reference Include="FMODUnity">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\FMODUnity.dll</HintPath>
     </Reference>
-    <Reference Include="Nautilus">
+    <Reference Include="Nautilus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\Nautilus\Nautilus.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -127,6 +131,7 @@
     <Compile Include="objects\ModePreset.cs" />
     <Compile Include="objects\ModeRandom.cs" />
     <Compile Include="objects\ModeSpecific.cs" />
+    <Compile Include="objects\ToggleOption.cs" />
     <Compile Include="patches\DisplayManagerPatch.cs" />
     <Compile Include="patches\EscapePodPatch.cs" />
     <Compile Include="patches\PdaMutePatch.cs" />
@@ -143,11 +148,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Localization\English.json" />
+    <None Include="Localization\Spanish.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Presets\presets.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\$(TargetName)"
 copy /Y "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\$(TargetName)"
-xcopy /E /Y /I "$(ProjectDir)Localization" "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\$(TargetName)\Localization"</PostBuildEvent>
+xcopy /E /Y /I "$(ProjectDir)Localization" "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\$(TargetName)\Localization"
+xcopy /E /Y /I "$(ProjectDir)Presets" "C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\$(TargetName)\Presets"</PostBuildEvent>
   </PropertyGroup>
 </Project>

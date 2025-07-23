@@ -20,6 +20,8 @@ public class SaveUtils
     {
         public bool HeavyPodToggle;
     }
+    public static InGameSave inGameSave = new InGameSave();
+
     [System.Serializable]
     public class SettingsCache
     {
@@ -28,13 +30,10 @@ public class SaveUtils
         public bool FirstTimeToggle;
         public bool CinematicOverlayToggle;
 
-        //experimental
-        public bool ExSettingToggle;
-        //by default all should be true
         public bool CustomIntroToggle;
         public bool HeightReqToggle;
     }
-    public static InGameSave inGameSave = new InGameSave();
+
     public static SettingsCache settingsCache = new SettingsCache();
 
     public static void WriteSettingsToCurrentSlot()
@@ -83,8 +82,6 @@ public class SaveUtils
         settingsCache.HeavyPodToggle = true;
         settingsCache.FirstTimeToggle = true;
         settingsCache.CinematicOverlayToggle = true;
-
-        settingsCache.ExSettingToggle = false;
 
         settingsCache.CustomIntroToggle = true;
         settingsCache.HeightReqToggle = true;
