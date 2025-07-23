@@ -23,7 +23,7 @@
   "LPR.OptionsDescription": "Modify experimental spawning properties or post-intro settings!\r\n\r\nPress play to \r\nstart!",
 
   "LPR.HeavyPodTitle": "Heavy Pod",
-  "LPR.HeavyPodDescription": "Toggle the life pod sinking underwater at the start of the game. Can be disabled later though the [unfinished asset]",
+  "LPR.HeavyPodDescription": "Toggle the life pod sinking underwater at the start of the game. Can be disabled later though the mod config in the pause menu",
   "LPR.FirstTimeAnimationsTitle": "First Time Animations",
   "LPR.FirstTimeAnimationsDescription": "Toggle the unique animations the first time you leave the pod",
   "LPR.CinematicOverlayTitle": "Cinematic Overlay",
