@@ -1,2 +1,0 @@
-C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\DayCounterChip\obj\Release\DayCounterChip.csproj.AssemblyReference.cache
-C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\DayCounterChip\obj\Release\DayCounterChip.csproj.CoreCompileInputs.cache
