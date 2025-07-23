@@ -225,6 +225,8 @@ EscapePodSpawnChanges/bin/Debug/UnityEngine.VideoModule.dll
 EscapePodSpawnChanges/bin/Debug/UnityEngine.VRModule.dll
 EscapePodSpawnChanges/bin/Debug/UnityEngine.WindModule.dll
 EscapePodSpawnChanges/bin/Debug/UnityEngine.XRModule.dll
+EscapePodSpawnChanges/bin/*
+EscapePodSpawnChanges/obj/*
 EscapePodSpawnChanges/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
 EscapePodSpawnChanges/obj/Debug/DesignTimeResolveAssemblyReferences.cache
 EscapePodSpawnChanges/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
@@ -261,6 +263,7 @@ EscapePodSpawnChanges/obj/Debug/EscapePodSpawnChanges.pdb
 [Aa]ssets/Plugins/Editor/JetBrains*
 
 # Visual Studio cache directory
+.vs/*
 vs/
 
 # Gradle cache directory
@@ -306,3 +309,8 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 [Aa]ssets/[Ss]treamingAssets/aa.meta
 [Aa]ssets/[Ss]treamingAssets/aa/*
+/EscapePodSpawnChanges/obj
+*.cache
+EscapePodSpawnChanges/obj/Debug/LifePodRemastered.csproj.AssemblyReference.cache
+/EscapePodSpawnChanges/bin
+/.vs

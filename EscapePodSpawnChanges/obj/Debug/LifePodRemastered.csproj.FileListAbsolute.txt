@@ -227,3 +227,4 @@ C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\ob
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodR.0E796A2B.Up2Date
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.dll
 C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\obj\Debug\LifePodRemastered.pdb
+C:\Users\tsmit\OneDrive\Documents\GitHub\Subnautica-mod\EscapePodSpawnChanges\bin\Debug\FindMyUpdates.dll
