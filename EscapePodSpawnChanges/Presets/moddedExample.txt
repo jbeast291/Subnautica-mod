@@ -1,0 +1,17 @@
+{
+  "ConfigVersion": 1, //NO TOUCHY 
+  "Author": "Jbeast291",
+  "Location": "0, 0, 0",
+  "StorageSize": "4x8",
+  "HeavyPod": false,
+  "StartRepaired": false,
+  "CustomIntro": false,
+  "LifePodStorage": [
+    {
+      "Name": "PdaMinimapUpgrade",
+      "Quantity": 1,
+      "IsModded": true,
+      "ModGUID": "com.lee23.pdaupgradechips"
+    }
+  ]
+}

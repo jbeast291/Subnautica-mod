@@ -1,0 +1,303 @@
+How To Add Presets!
+
+===Preamble===
+Firstly, understand that presets are intended to be hand-crafted experiences for the start of the game, all bundled in a json file.
+If you simply want to change a pre-existing preset's settings, it may be easier to just copy what it sets in-game and modify away.
+Secondly, a preset should ideally give the player everything they need to start the game at that existing location and survive.
+A lot of the items normally in the Safe Shallows can’t be found deep underwater but are needed for creating batteries or fabricators to progress.
+So it is recomended to take that into account in creating the item list.
+
+===Creating A New Preset===
+All files within the /Presets folder with a .json extension will be attempted to load at runtime. So this file will not, as it is a .txt.
+To get started, copy and paste or duplicate one of the existing presets as a base for your new preset.
+1. Generally, it should be quite simple to modify the true/false variables.
+2. The storage size, though, must match one of the existing options in settings.
+3. Do not modify the ConfigVersion unless you know what you are doing!
+4. The name of the preset comes from the file name — so everything before .json.
+5. Vanilla and modded items are both supported. The list of available vanilla names is at the end of this list.
+
+===Modded Items===
+Modded items require a little extra special sauce to get working properly.
+Open up moddedExample.txt to view an example of a modded item (from lee23's PdaChips).  
+NOTE: moddedExample.txt has a .txt extension to not be loaded into the game; change it to .json if you wish it to be loaded.
+{
+   "Name": "PdaMinimapUpgrade",
+   "Quantity": 1,
+   "IsModded": true,
+   "ModGUID": "com.lee23.pdaupgradechips"
+}
+Each item has 2 extra fields that tell Life Pod Remastered to load it differently.
+The `"IsModded": true` tells it to treat the item as modded and search for it through Nautilus.
+"ModGUID" tells what mod the item is intended to come from. It is technically optional but is highly recommended for troubleshooting and for other users of the preset.
+To get the ModGUID of any mod, use Lee23's Subnautica Mod Manager https://www.nexusmods.com/subnautica/mods/1168. It is by far the easiest way to get a loaded mod’s GUID.
+
+===Vanilla Items===
+These item IDs were generated from this page on the Subnautica wiki: https://subnautica.fandom.com/wiki/Spawn_IDs_(Subnautica)
+If an item ID listed doesn’t work here, try to find it on the wiki to double-check its accuracy.
+
+===Raw Materials===
+
+acidmushroom
+seatreaderpoop
+bloodoil
+coralchunk
+crashpowder
+copper
+creepvinepiece
+creepvineseedcluster
+sulphur
+whitemushroom
+diamond
+treemushroompiece
+gaspod
+jellyplant
+gold
+precursorioncrystal
+kyanite
+lead
+lithium
+magnetite
+scrapmetal
+nickel
+pinkmushroom
+quartz
+aluminumoxide
+salt
+silver
+smallmelon
+purplerattle
+stalkertooth
+jeweleddiskpiece
+titanium
+uraninitecrystal
+
+===Basic Materials===
+
+bleach
+enameledglass
+fibermesh
+glass
+lubricant
+plasteelingot
+silicone
+titaniumingot
+
+===Electronics===
+
+advancedwiringkit
+battery
+computerchip
+copperwire
+precursorionbattery
+precursorionpowercell
+powercell
+reactorrod
+wiringkit
+
+===Equipment===
+
+compass
+fins
+fireextinguisher
+firstaidkit
+pipesurfacefloater
+doubletank
+plasteeltank
+pipe
+radiationsuit
+rebreather
+reinforceddivesuit
+tank
+stillsuit
+swimchargefins
+ultraglidefins
+highcapacitytank
+
+===Tools===
+
+airbladder
+flare
+flashlight
+builder
+lasercutter
+ledlight
+divereel
+propulsioncannon
+welder
+repulsioncannon
+scanner
+stasisrifle
+knife
+heatblade
+
+===Deployables===
+
+beacon
+cyclopsdecoy
+gravsphere
+constructor
+seaglide
+smallstorage
+
+===Scanner Room Upgrades===
+
+maproomcamera
+maproomhudchip
+maproomupgradescanrange
+maproomupgradescanspeed
+
+===Advanced Materials===
+
+aerogel
+benzene
+hydrochloricacid
+polyaniline
+aramidfibers
+
+===Eggs===
+
+shockeregg
+bonesharkegg
+crabsnakeegg
+crabsquidegg
+crashegg
+cutefishegg
+gasopodegg
+jellyrayegg
+lavalizardegg
+mesmeregg
+rabbitrayegg
+reefbackegg
+sandsharkegg
+jumperegg
+spadefishegg
+stalkeregg
+
+===Seeds===
+
+acidmushroomspore
+bloodoil
+bluepalmseed
+purplebraincoralpiece
+kooshchunk
+bulbotreepiece
+purplebranchesseed
+purplevegetable
+creepvinepiece
+whitemushroomspore
+eyesplantseed
+fernpalmseed
+redrollplantseed
+gabesfeatherseed
+jellyplantseed
+redgreententacleseed
+orangepetalsplantseed
+orangemushroomspore
+snakemushroomspore
+hangingfruit
+melonseed
+membraintreeseed
+purplevaseplantseed
+pinkmushroomspore
+smallfanseed
+redbushseed
+redconeplantseed
+redbasketplantseed
+seacrownseed
+purplerattlespore
+shellgrassseed
+spottedleavesplantseed
+spikeplantseed
+purplefanseed
+purplestalkseed
+pinkflowerseed
+purpletentacleseed
+
+===Placeable Items===
+
+arcadegorgetoy
+starshipsouvenir
+posteraurora
+cap2
+luggagebag
+labcontainer3
+labequipment1
+labequipment2
+cap1
+posterkitty
+labcontainer
+poster
+posterexosuit1
+posterexosuit2
+labequipment3
+labcontainer2
+toycar
+
+===Uncooked Food===
+
+bladderfish
+boomerang
+eyeye
+garryfish
+holefish
+hoopfish
+hoverfish
+lavaboomerang
+oculus
+peeper
+lavaeyeye
+reginald
+spadefish
+spinefish
+
+===Cooked Food===
+
+cookedbladderfish
+cookedboomerang
+cookedeyeye
+cookedgarryfish
+cookedholefish
+cookedhoopfish
+cookedhoverfish
+cookedlavaboomerang
+cookedoculus
+cookedpeeper
+cookedlavaeyeye
+cookedreginald
+cookedspadefish
+cookedspinefish
+
+===Cured Food===
+
+curedbladderfish
+curedboomerang
+curedeyeye
+curedgarryfish
+curedholefish
+curedhoopfish
+curedhoverfish
+curedlavaboomerang
+curedoculus
+curedpeeper
+curedlavaeyeye
+curedreginald
+curedspadefish
+curedspinefish
+
+===Raw Food===
+
+purplevegetable
+hangingfruit
+melon
+snack1
+nutrientblock
+snack3
+snack2
+
+===Water===
+
+coffee
+disinfectedwater
+filteredwater
+bigfilteredwater
+waterfiltrationsuitwater

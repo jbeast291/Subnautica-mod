@@ -21,7 +21,7 @@ namespace InterpolationFix.Patches
             {
                 return;
             }
-            Transform playerPlatform = __instance.gameObject.GetComponent<GroundMotor>().movingPlatform.hitPlatform;// either null or collider player is standing on
+            Transform playerPlatform = __instance.gameObject.GetComponent<GroundMotor>().movingPlatform.activePlatform;// either null or collider player is standing on
             GameObject escapePod = EscapePod.main.gameObject;
             bool requiresHPPhysics = LifePodRequiresHighPrecisionPhysics(playerPlatform);
 

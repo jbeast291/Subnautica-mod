@@ -1,0 +1,31 @@
+{
+  "ConfigVersion": 1, //NO TOUCHY 
+  "Author": "Jbeast291",
+  "Location": "919, -346, -1120",
+  "StorageSize": "6x10",
+  "HeavyPod": true,
+  "StartRepaired": false,
+  "CustomIntro": true,
+  "LifePodStorage": [
+    {
+      "Name": "filteredwater",
+      "Quantity": 1
+    },
+    {
+      "Name": "nutrientblock",
+      "Quantity": 1
+    },
+    {
+      "Name": "acidmushroom",
+      "Quantity": 6
+    },
+    {
+      "Name": "silicone",
+      "Quantity": 1
+    },
+    {
+      "Name": "fibermesh",
+      "Quantity": 1
+    }
+  ]
+}

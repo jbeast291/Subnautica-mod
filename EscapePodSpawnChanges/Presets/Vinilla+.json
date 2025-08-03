@@ -1,0 +1,23 @@
+{
+  "ConfigVersion": 1, //NO TOUCHY 
+  "Author": "Jbeast291",
+  "Location": "-101, -46, 269",
+  "StorageSize": "8x10",
+  "HeavyPod": true,
+  "StartRepaired": false,
+  "CustomIntro": true,
+  "LifePodStorage": [
+    {
+      "Name": "filteredwater",
+      "Quantity": 2
+    },
+    {
+      "Name": "nutrientblock",
+      "Quantity": 2
+    },
+    {
+      "Name": "ledlight",
+      "Quantity": 4
+    }
+  ]
+}

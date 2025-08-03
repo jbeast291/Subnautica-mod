@@ -19,7 +19,7 @@ internal class PlayerPatch
         [HarmonyPrefix]
         public static bool OnLandPreFix()
         {
-            if (Info.CinematicActive)
+            if (LPRGlobals.CinematicActive)
             {
                 return false;
             }

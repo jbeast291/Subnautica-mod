@@ -16,7 +16,7 @@ internal class DisplayManagerPatch
         [HarmonyPostfix]
         public static void OnResolutionChangedPostFix(DisplayManager __instance)
         {
-            Info.currentRes = __instance.resolution; // sets the resolution in Info to what is currently set
+            LPRGlobals.currentRes = __instance.resolution; // sets the resolution in Info to what is currently set
         }
     }
 }

@@ -17,7 +17,10 @@ internal class uGUISceneIntroPatch
         [HarmonyPrefix]
         public static void OnEscapeHoldPreFix(uGUI_SceneIntro __instance)
         {
-            __instance.Stop(true);
+            if (SaveUtils.settingsCache.customIntroToggle || SaveUtils.settingsCache.autoSkipVinillaIntroToggle)
+            {
+                __instance.Stop(true);
+            }
         }
     }
 }

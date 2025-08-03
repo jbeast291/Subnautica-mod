@@ -1,9 +1,10 @@
 ﻿using FMOD;
 using HarmonyLib;
 using LifePodRemastered.Monos;
-using LifePodRemastered.objects;
+using LifePodRemastered.presetSystem;
 using Nautilus.Assets;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UWE;
+using static GameAnalytics;
 using static LifePodRemastered.SaveUtils;
 using static UnityEngine.UI.Selectable;
 using Debug = UnityEngine.Debug;
@@ -18,10 +20,10 @@ using Random = UnityEngine.Random;
 
 namespace LifePodRemastered;
 
-public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
+public class EscapePodMainMenu : MonoBehaviour
 {
     public static EscapePodMainMenu main;
-    public static AssetBundle assetBundle = Info.assetBundle;
+    public static AssetBundle assetBundle = LPRGlobals.assetBundle;
 
     GameMode selectedGameMode = GameMode.None;
 
@@ -42,26 +44,29 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
     GameObject BoundTopRight;
     GameObject SelectedPoint;
     GameObject SelectedPointIndicator;
+    GameObject ModeChoiceLeft;
+    GameObject ModeChoiceRight;
 
     TextMeshProUGUI RightSideInfoText;
 
     GameObject ModeChoiceTitleText;
     GameObject BackButton;
     GameObject SettingsButton;
+    GameObject MapTypeButton;
     GameObject StartGameButton;
 
 
-    int currentModeIndex = 0;
+    public int currentModeIndex = 0;
 
     Button playButton;
-    bool hasSelectedPoint = false;
+    public MapDisplayType activeMapDisplayType = MapDisplayType.ThreeDimensional;
 
     GameObject cycleMapButton;
     int currentMapSelected = 0;
     List<GameObject> mapVariants;
 
-    List<Mode> modes;
-    List<Action<PointerEventData>> registeredMouseDownEvents;
+    public List<Mode> modes;
+    public List<Action> registeredMouseDownEvents;
 
     bool showModSettings = false;
 
@@ -69,14 +74,14 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
     {
         if (main != null)
         {
-            Debug.LogError("Duplicate EscapePodMainMenu found!");
+            UnityEngine.Debug.LogError($"Duplicate {this.GetType().Name} found!");
             Destroy(this);
             return;
         }
         main = this;
 
         originalGameCanvas = GameObject.Find("Menu canvas").GetComponent<Canvas>();
-        registeredMouseDownEvents = new List<Action<PointerEventData>>();//just init
+        registeredMouseDownEvents = new List<Action>();//just init
     }
     public void Start()
     {
@@ -89,16 +94,21 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
         //Butons
         SettingsButton = GameObject.Find("SettingModsButton");
         SettingsButton.GetComponent<Button>().onClick.AddListener(OnSettingsModButtonClick);
+        MapTypeButton = GameObject.Find("MapTypeButton");
+        MapTypeButton.GetComponent<Button>().onClick.AddListener(OnMapTypeButtonClick);
         StartGameButton = GameObject.Find("StartGameButton");
         StartGameButton.GetComponent<Button>().onClick.AddListener(OnStartGameButtonClick);
         BackButton = GameObject.Find("BackToMenuButton");
         BackButton.GetComponent<Button>().onClick.AddListener(OnBackToMenuButtonClick);
-        GameObject.Find("ModeChoiceleft").GetComponent<Button>().onClick.AddListener(OnModeChoiceleftClick);
-        GameObject.Find("ModeChoiceRight").GetComponent<Button>().onClick.AddListener(OnModeChoiceRightClick);
+        ModeChoiceLeft = GameObject.Find("ModeChoiceleft");
+        ModeChoiceLeft.GetComponent<Button>().onClick.AddListener(OnModeChoiceleftClick);
+        ModeChoiceRight = GameObject.Find("ModeChoiceRight");
+        ModeChoiceRight.GetComponent<Button>().onClick.AddListener(OnModeChoiceRightClick);
 
         //Modes
         modes = new List<Mode>();
-        ModeSpecific ModeSpecificPoint = new ModeSpecific(this, "LPR.ModeSpecificName", "LPR.ModeSpecificDescription");
+        GameObject YLevelNoticeBackground = GameObject.Find("YLevelNoticeBackground");
+        ModeSpecific ModeSpecificPoint = new ModeSpecific(this, "LPR.ModeSpecificName", "OVERRIDEN, Check ModeSpecific.cs", YLevelNoticeBackground);
         modes.Add(ModeSpecificPoint);
 
         GameObject ModePresetPointRoot = GameObject.Find("ModePresetPoint");
@@ -146,6 +156,8 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
         OptionsPannel.gameObject.EnsureComponent<OptionsMono>();
         SelectedPointIndicator.GetComponent<Animation>().Play();//start loop
 
+        MiniWorldController.instantiateMiniWorldMainMenu();
+
         UpdateCurrentMode(currentModeIndex);
         CycleMaps();
         reloadLanguage();
@@ -154,9 +166,9 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
     {
         ModeChoiceTitleText.GetComponent<TextMeshProUGUI>().text = Language.main.Get("LPR.ModeTitle");
         SettingsButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Language.main.Get("LPR.ConfigButton");
+        MapTypeButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Language.main.Get("LPR.MapTypeToggleButton");
         BackButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Language.main.Get("LPR.BackButton");
         StartGameButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Language.main.Get("LPR.PlayButton");
-        CoordsDisplay.GetComponent<TextMeshProUGUI>().text = Language.main.Get("LPR.CoordsDisplay");
         ReloadCurrentModeText(currentModeIndex);
         ReloadAllModesLanguage();
     }
@@ -169,27 +181,45 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
     }
     public void enableUI(GameMode gameMode)
     {
+        showModSettings = false;
+        ResetInteractables();
         reloadLanguage();
         selectedGameMode = gameMode;
         gameObject.SetActive(true);
-        mapsBackground.SetActive(true);
+        mapsBackground.SetActive(false);
         OptionsPannel.SetActive(false);
         originalGameCanvas.enabled = false;
+        UpdateCoordsDisplay();
+        if (activeMapDisplayType == MapDisplayType.ThreeDimensional)
+        {
+            MiniWorldController.main.ShowMiniworld();
+        }
     }
     public void UpdateCurrentMode(int modeIndex)
     {
-        for(int i = 0; i < modes.Count; i++)
+        for (int i = 0; i < modes.Count; i++)
         {
             Mode mode = modes[i];
 
-            bool toggleVal = (i == modeIndex);
+            bool isEnabled = (i == modeIndex);
 
-            mode.ToggleMode(toggleVal);
+            mode.ToggleMode(isEnabled);
 
-            if (toggleVal)
+            if (isEnabled)
             {
                 ModeChoiceText.GetComponent<TextMeshProUGUI>().text = mode.Name();
                 RightSideInfoText.text = mode.Description();
+            }
+        }
+    }
+    public void ToggleCurrentModeInteraction(int modeIndex, bool toggleVal)
+    {
+        for (int i = 0; i < modes.Count; i++)
+        {
+            if (i == modeIndex)
+            {
+                Mode mode = modes[i];
+                mode.EnableInteraction(toggleVal);
             }
         }
     }
@@ -205,13 +235,29 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
             }
         }
     }
+    public Mode GetCurrentMode()
+    {
+        return modes[currentModeIndex];
+    }
+
+    public Mode GetRegisteredModeByType(Type type)
+    {
+        for(int i = 0; i < modes.Count; i++)
+        {
+            if (modes[i].GetType() == type)
+            {
+                return modes[i];
+            }
+        }
+        return null;
+    }
 
     public bool CheckValidMousePosition(Vector3 MousePos)
     {
         //check if it is in the bounds
         Vector3 vectorOfRelativePositionToMap = WorldPointToMousePosition(MousePositionToWorldPoint(MousePos));
 
-        RectTransform cycleMapButtonRectTransform= cycleMapButton.GetComponent<RectTransform>();
+        RectTransform cycleMapButtonRectTransform = cycleMapButton.GetComponent<RectTransform>();
 
         //If more things need to be excluded in the future, just make a dynamic system to check an array 
         if ((MousePos.y >= BoundBottomLeft.transform.position.y && MousePos.y <= BoundTopRight.transform.position.y && MousePos.x >= BoundBottomLeft.transform.position.x && MousePos.x <= BoundTopRight.transform.position.x) && (
@@ -229,18 +275,16 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
         }
     }
 
-
-
     public Vector3 WorldPointToMousePosition(Vector3 WorldPoint)
     {
-        Vector3 calculatedSelectorLocalPosition = new Vector3(WorldPoint.x * System.Math.Abs(ScalePoint1.transform.localPosition.x) / 1500, 
+        Vector3 calculatedSelectorLocalPosition = new Vector3(WorldPoint.x * System.Math.Abs(ScalePoint1.transform.localPosition.x) / 1500,
             WorldPoint.z * System.Math.Abs(ScalePoint2.transform.localPosition.y) / 1500, 0);
         return calculatedSelectorLocalPosition;
     }
     public Vector3 MousePositionToWorldPoint(Vector3 MousePos)
     {
-        Vector3 calculatedWorldPoint = new Vector3((MousePos.x - Info.currentRes.width / 2) * (1500 / (Info.currentRes.width / 2 - ScalePoint1.transform.position.x)), 0,
-            (MousePos.y - Info.currentRes.height / 2) * (1500 / (Info.currentRes.height / 2 - ScalePoint2.transform.position.y)));
+        Vector3 calculatedWorldPoint = new Vector3((MousePos.x - LPRGlobals.currentRes.width / 2) * (1500 / (LPRGlobals.currentRes.width / 2 - ScalePoint1.transform.position.x)), 0,
+            (MousePos.y - LPRGlobals.currentRes.height / 2) * (1500 / (LPRGlobals.currentRes.height / 2 - ScalePoint2.transform.position.y)));
 
         return calculatedWorldPoint;
     }
@@ -250,45 +294,86 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
         Vector3 calculatedSelectorLocalPosition = WorldPointToMousePosition(WorldPoint);
 
         SelectedPoint.GetComponent<RectTransform>().localPosition = calculatedSelectorLocalPosition;
-        Info.SelectedSpawn = WorldPoint;
-        CoordsDisplay.GetComponent<TextMeshProUGUI>().text = Language.main.Get("LPR.CoordsDisplay") + " " + WorldPoint;
-
-        playButton.interactable = true;//make the start button pressable, once point is selected
-        hasSelectedPoint = true;
+        LPRGlobals.SelectedSpawn = WorldPoint;
+        UpdateCoordsDisplay();
     }
+    public void UpdateCoordsDisplay()
+    {
+        CoordsDisplay.GetComponent<TextMeshProUGUI>().text =
+            $"({LPRGlobals.SelectedSpawn.x.ToString("F2")}, " +
+            $"{LPRGlobals.SelectedSpawn.y.ToString("F2")}, " +
+            $"{LPRGlobals.SelectedSpawn.z.ToString("F2")})";
+    }
+    void ResetInteractables()
+    {
+        ToggleCurrentModeInteraction(currentModeIndex, true);
 
+        MapTypeButton.GetComponent<Button>().interactable = true;
+        ModeChoiceLeft.GetComponent<Button>().interactable = true;
+        ModeChoiceRight.GetComponent<Button>().interactable = true;
+    }
 
     void OnSettingsModButtonClick()
     {
         RightSideInfoText.text = Language.main.Get("LPR.OptionsDescription");
         showModSettings = !showModSettings;
         OptionsPannel.SetActive(showModSettings);
-        mapsBackground.SetActive(!showModSettings);
         ClickSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
+
+        ToggleCurrentModeInteraction(currentModeIndex, !showModSettings);
+
+        MapTypeButton.GetComponent<Button>().interactable = !showModSettings;
+        ModeChoiceLeft.GetComponent<Button>().interactable = !showModSettings;
+        ModeChoiceRight.GetComponent<Button>().interactable = !showModSettings;
+
+        if (activeMapDisplayType == MapDisplayType.TwoDimensional)
+        {
+            mapsBackground.SetActive(!showModSettings);
+        }
+        if (!showModSettings)
+        {
+            ReloadCurrentModeText(currentModeIndex);
+        }
     }
+    void OnMapTypeButtonClick()
+    {
+        if (showModSettings)
+        {
+            return;
+        }
+        if (activeMapDisplayType == MapDisplayType.ThreeDimensional)
+        {
+            MiniWorldController.main.HideMiniworld();
+            mapsBackground.SetActive(true);
+            activeMapDisplayType = MapDisplayType.TwoDimensional;
+        }
+        else if (activeMapDisplayType == MapDisplayType.TwoDimensional)
+        {
+            MiniWorldController.main.ShowMiniworld();
+            mapsBackground.SetActive(false);
+            activeMapDisplayType = MapDisplayType.ThreeDimensional;
+        }
+        ReloadCurrentModeText(currentModeIndex);
+        MoveSelecedPointFromWorldPoint(LPRGlobals.SelectedSpawn);//update the red reticle as the 3d move system wont
+    }
+
     void OnStartGameButtonClick()
     {
-        if (hasSelectedPoint)
-        {
-            ClickSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
-            Info.showmap = false;
-            Info.newSave = true;
-            SaveUtils.LoadChachedSettingsToSlotSave();
+        ClickSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
+        LPRGlobals.newSave = true;
+        SaveUtils.LoadChachedSettingsToSlotSave();
+        CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(selectedGameMode));
 
-            CoroutineHost.StartCoroutine(uGUI_MainMenu.main.StartNewGame(selectedGameMode));
+        main = null;
 
-            main = null;
-
-            gameObject.SetActive(false);
-        }
+        gameObject.SetActive(false);
     }
     void OnBackToMenuButtonClick()
     {
         ClickSound.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
-        Info.showmap = false;
         OptionsPannel.SetActive(false);
         gameObject.SetActive(false);
-
+        MiniWorldController.main.HideMiniworld();
         originalGameCanvas.enabled = true;
     }
     void OnModeChoiceleftClick()
@@ -296,26 +381,36 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
         if (currentModeIndex != 0)
         {
             currentModeIndex--;
-            PlayButtonPressSound();
-            UpdateCurrentMode(currentModeIndex);
+
         }
+        else
+        {
+            currentModeIndex = modes.Count - 1;
+        }
+        PlayButtonPressSound();
+        UpdateCurrentMode(currentModeIndex);
     }
     void OnModeChoiceRightClick()
     {
         if (currentModeIndex != modes.Count - 1)
         {
             currentModeIndex++;
-            PlayButtonPressSound();
-            UpdateCurrentMode(currentModeIndex);
         }
+        else
+        {
+            currentModeIndex = 0;
+        }
+        PlayButtonPressSound();
+        UpdateCurrentMode(currentModeIndex);
     }
     void OnMapButtonClick()
     {
         ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
-        if(currentMapSelected < mapVariants.Count)
+        if (currentMapSelected < mapVariants.Count - 1)
         {
             currentMapSelected++;
-        } else
+        }
+        else
         {
             currentMapSelected = 0;
         }
@@ -333,19 +428,35 @@ public class EscapePodMainMenu : MonoBehaviour, IPointerDownHandler
         ButtonHoverSharp.GetComponent<FMOD_StudioEventEmitter>().StartEvent();
     }
 
-    public void registerPointerDownEvent(Action<PointerEventData> action)
+    public void registerPointerDownEvent(Action action)
     {
         registeredMouseDownEvents.Add(action);
     }
-    public void OnPointerDown(PointerEventData eventData)
+
+    public void Update()
     {
-        if(mapsBackground.activeSelf == false)
+        if (GameInput.GetButtonDown(GameInput.Button.LeftHand) || GameInput.GetButtonDown(GameInput.Button.RightHand))
         {
-            return;
-        }
-        for(int i = 0;i < registeredMouseDownEvents.Count; i++)
-        {
-            registeredMouseDownEvents[i].Invoke(eventData);
+            if (showModSettings)
+            {
+                return;
+            }
+            for (int i = 0; i < registeredMouseDownEvents.Count; i++)
+            {
+                registeredMouseDownEvents[i].Invoke();
+            }
         }
     }
+    public void ResetCurrentModeToDefault()
+    {
+        currentModeIndex = 0;
+        UpdateCurrentMode(currentModeIndex);
+    }
+}
+
+public enum MapDisplayType
+{
+    TwoDimensional,
+    ThreeDimensional//,
+    //FiveDChess
 }

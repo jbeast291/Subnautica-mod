@@ -1,35 +1,51 @@
 {
+  //If you're translating this to another language, please use Unicode escape sequences for special characters.
+  //Example: \u00E1 for á
   "LPR.ModeTitle": "Mode:",
   "LPR.ConfigButton": "Pod Start Config",
+  "LPR.MapTypeToggleButton": "Toggle 3D/2D",
   "LPR.BackButton": "Back To Menu",
   "LPR.PlayButton": "Play",
   "LPR.CoordsDisplay": "Coords:",
-
-  "LPR.ModeSpecificName": "Specific Point",
-  "LPR.ModeSpecificDescription": "Click a position on the map to set were the pod spawns.\r\n\r\n\r\nPress play to \r\nstart!",
-  "LPR.ModePresetName": "Preset Point",
-  "LPR.ModePresetDescription": "Choose from one of the preset points on the left\r\n\r\n\r\nPress play to \r\nstart!",
+  //modes
+  "LPR.ModeSpecificName": "Specific",
+  "LPR.ModeSpecific2dDescription": "Click a position on the map to set where the pod spawns.",
+  "LPR.ModeSpecific3dDescription": "Left click the lifepod to take control with Cyclops-like controls.\r\nLeft click again to lock in the selected point!",
+  "LPR.ModePresetName": "Preset",
+  "LPR.ModePresetDescription": "Choose one of the presets on the left",
   "LPR.ModePresetText": "Presets:",
-  "LPR.ModePresetSubText": "*Presets can be modified in mod folder,\r\n/Presets/presets.txt,",
-  "LPR.ModeInputTextName": "Type Coords",
-  "LPR.ModeInputTextDescription": "For more advanced users type your desired coords in manually\r\n\r\n\r\nPress play to \r\nstart!",
+  "LPR.ModePresetSubText": "*Presets can be modified in mod folder,\r\n/LifePodRemastered/Presets/,",
+  "LPR.ModePresetNotice": "Some pod start settings are overriden with preset mode!",
+  "LPR.ModePresetErrorNotification": "There were errors loading the current preset! Check logs",
+  "LPR.ModeInputTextName": "Input",
+  "LPR.ModeInputTextDescription": "For more advanced users, type your desired coords manually",
   "LPR.ModeInputTextPlaceholder": "Enter Coords...",
   "LPR.ModeInputExample": "Example:\n10, 10, 10",
-  "LPR.ModeRandomName": "Random Point",
-  "LPR.ModeRandomDescription": "Press the button \"Randomize Point\" for a randompoint (can be in void so be carefull)\r\n\r\nPress play to \r\nstart!",
+  "LPR.ModeRandomName": "Random",
+  "LPR.ModeRandomDescription": "Press the button \"Randomize Point\" for a random point (can be in void so be careful)",
   "LPR.ModeRandomButton": "Randomize Point",
-
+  //config - main menu
   "LPR.OptionsTitle": "In-Game Settings",
-  "LPR.OptionsDescription": "Modify experimental spawning properties or post-intro settings!\r\n\r\nPress play to \r\nstart!",
-
+  "LPR.OptionsDescription": "Modify experimental spawning properties or post-intro settings!",
+  "LPR.LoadoutTitle": "Selected Loadout",
+  "LPR.LoadoutDescription": "Loadout items are pulled from preset files located at /LifePodRemastered/Presets in the mod folder. Items will be put in the lifepod storage on start.\nItems:",
+  "LPR.StorageSizeTitle": "Life Pod Storage Size",
+  "LPR.StorageSizeDescription": "Modify the size of the life pod's built in storage. If a preset adds more items than space allows, the overflow items will not appear. 4x8 is the vinilla value.",
   "LPR.HeavyPodTitle": "Heavy Pod",
-  "LPR.HeavyPodDescription": "Toggle the life pod sinking underwater at the start of the game. Can be disabled later though the mod config in the pause menu",
+  "LPR.HeavyPodDescription": "Toggle the life pod sinking underwater at the start of the game. Can be disabled later after repairing the lifepod's secondry systems or through the mod's' config in the pause menu. NOTE: The life pod will only move when within 20m of the player to ensure it does not clip into the floor",
+  "LPR.StartRepairedTitle": "Start Reparied",
+  "LPR.StartRepairedDescription": "Toggle the life pod secondry systems and radio starting the game repaired",
   "LPR.FirstTimeAnimationsTitle": "First Time Animations",
   "LPR.FirstTimeAnimationsDescription": "Toggle the unique animations the first time you leave the pod",
   "LPR.CinematicOverlayTitle": "Cinematic Overlay",
-  "LPR.CinematicOverlayDescription": "Toggle the overlay durring the pod falling cinematic, disable if you experience eye strain or nausea",
+  "LPR.CinematicOverlayDescription": "Toggle the overlay during the pod falling cinematic, disable if you experience eye strain or nausea",
   "LPR.CustomIntroTitle": "Custom Intro",
-  "LPR.CustomIntroDescription": "Toggle Custom intro. (You know, how the pod falls from orbit with this mod installed)",
-  "LPR.AirSpawnTitle": "Spawn Pod In The Air",
-  "LPR.AirSpawnDescription": "Toggle the life pod spawning in the air. This setting will be ignored if the custom into is enabled"
+  "LPR.CustomIntroDescription": "Toggle custom intro. The escape pod will fall from orbit in the most beautifully *handcrafted* introduction gaming has ever seen.\nNOTE: If enabled, this will override the selected Y level & your pod will always spawn 2000m in the air playing the cutscene",
+  "LPR.AutoSkipVinillaIntroTitle": "Skip Vinilla Cinematic Automatically",
+  "LPR.AutoSkipVinillaIntroDescription": "Skip the base-game cinematic automatically.\nNOTE: This setting has no effect if the mod's custom cinematic is enabled.",
+  //config - nautalis
+  "LPR.VerticalMotionRate": "Vertical Motion Rate",
+  "LPR.VerticalMotionRateToolTip": "When toggling the Heavy Pod on/off, this is the rate it will move up/down",
+  //In-Game
+  "LPR.ToggleHeavyPodButtonInGame": "Toggle Heavy Pod"
 }

@@ -1,0 +1,39 @@
+{
+  "ConfigVersion": 1, //NO TOUCHY 
+  "Author": "Jbeast291",
+  "Location": "-1519, -391, 526",
+  "StorageSize": "6x10",
+  "HeavyPod": true,
+  "StartRepaired": true,
+  "CustomIntro": true,
+  "LifePodStorage": [
+    {
+      "Name": "filteredwater",
+      "Quantity": 2
+    },
+    {
+      "Name": "nutrientblock",
+      "Quantity": 2
+    },
+    {
+      "Name": "doubletank",
+      "Quantity": 1
+    },
+    {
+      "Name": "fins",
+      "Quantity": 1
+    },
+    {
+      "Name": "jeweleddiskpiece",
+      "Quantity": 6
+    },
+    {
+      "Name": "fibermesh",
+      "Quantity": 1
+    },
+    {
+      "Name": "scrapmetal",
+      "Quantity": 3
+    }
+  ]
+}

@@ -21,15 +21,11 @@ internal class RandomStartPatch
         public static bool NewGetRandomStartPoint(ref Vector3 __result)
         {
             float y = 2000f;
-            if (!SaveUtils.settingsCache.HeightReqToggle)
+            if (!SaveUtils.settingsCache.customIntroToggle)
             {
-                y = 0f;
+                y = LPRGlobals.SelectedSpawn.y;
             }
-            if (!SaveUtils.settingsCache.HeightReqToggle && Info.OverideSpawnHeight)
-            {
-                y = Info.SelectedSpawn.y;
-            }
-            __result = new Vector3(Info.SelectedSpawn.x, y, Info.SelectedSpawn.z);
+            __result = new Vector3(LPRGlobals.SelectedSpawn.x, y, LPRGlobals.SelectedSpawn.z);
             return false;
         }
     }

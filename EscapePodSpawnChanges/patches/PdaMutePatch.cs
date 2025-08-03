@@ -18,7 +18,7 @@ internal class PdaMutePatch
         [HarmonyPrefix]
         public static bool SoundQueuePreFix()
         {
-            if (Info.mutePdaEvents)
+            if (LPRGlobals.mutePdaEvents)
             {
                 return false;
             }

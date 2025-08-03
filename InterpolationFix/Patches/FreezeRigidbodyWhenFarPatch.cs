@@ -37,6 +37,7 @@ namespace InterpolationFix.Patches
                     codes.RemoveAt(i);//dont need the fourth instruction
                 }
             }
+            BepInEx.Logger.LogInfo("Finished Transpiler for FreezeRigidbodyWhenFar.FixedUpdate...");
             return codes;
         } 
     }

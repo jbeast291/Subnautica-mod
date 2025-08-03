@@ -1,0 +1,47 @@
+{
+  "ConfigVersion": 1, //NO TOUCHY 
+  "Author": "Jbeast291",
+  "Location": "-219, -1240, -77",
+  "StorageSize": "6x10",
+  "HeavyPod": true,
+  "StartRepaired": true,
+  "CustomIntro": false,
+  "LifePodStorage": [
+    {
+      "Name": "bigfilteredwater",
+      "Quantity": 7
+    },
+    {
+      "Name": "nutrientblock",
+      "Quantity": 7
+    },
+    {
+      "Name": "highcapacitytank",
+      "Quantity": 1
+    },
+    {
+      "Name": "ultraglidefins",
+      "Quantity": 1
+    },
+    {
+      "Name": "fibermesh",
+      "Quantity": 1
+    },
+    {
+      "Name": "jeweleddiskpiece",
+      "Quantity": 4
+    },
+    {
+      "Name": "acidmushroom",
+      "Quantity": 6
+    },
+    {
+      "Name": "scrapmetal",
+      "Quantity": 3
+    },
+    {
+      "Name": "reinforceddivesuit",
+      "Quantity": 1
+    }
+  ]
+}

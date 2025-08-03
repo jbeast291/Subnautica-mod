@@ -262,6 +262,9 @@
  <Reference Include="unityplastic">
  <HintPath>C:/Users/tsmit/OneDrive/Documents/GitHub/Subnautica-mod/UnityProject/AssetBundleTestingForSubnautica/Library/PackageCache/com.unity.collab-proxy@1.14.12/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
  </Reference>
+ <Reference Include="ICSharpCode.NRefactory">
+ <HintPath>C:/Users/tsmit/OneDrive/Documents/GitHub/Subnautica-mod/UnityProject/AssetBundleTestingForSubnautica/Library/PackageCache/com.unity.render-pipelines.core@7.7.1/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Users/tsmit/OneDrive/Documents/GitHub/Subnautica-mod/UnityProject/AssetBundleTestingForSubnautica/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
@@ -634,6 +637,12 @@
  <Reference Include="Unity.VSCode.Editor">
  <HintPath>C:/Users/tsmit/OneDrive/Documents/GitHub/Subnautica-mod/UnityProject/AssetBundleTestingForSubnautica/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.RenderPipelines.Core.Editor">
+ <HintPath>C:/Users/tsmit/OneDrive/Documents/GitHub/Subnautica-mod/UnityProject/AssetBundleTestingForSubnautica/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Core.Runtime">
+ <HintPath>C:/Users/tsmit/OneDrive/Documents/GitHub/Subnautica-mod/UnityProject/AssetBundleTestingForSubnautica/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/tsmit/OneDrive/Documents/GitHub/Subnautica-mod/UnityProject/AssetBundleTestingForSubnautica/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
@@ -649,6 +658,9 @@
  <Reference Include="Unity.Rider.Editor">
  <HintPath>C:/Users/tsmit/OneDrive/Documents/GitHub/Subnautica-mod/UnityProject/AssetBundleTestingForSubnautica/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+ <HintPath>C:/Users/tsmit/OneDrive/Documents/GitHub/Subnautica-mod/UnityProject/AssetBundleTestingForSubnautica/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.2D.Sprite.Editor">
  <HintPath>C:/Users/tsmit/OneDrive/Documents/GitHub/Subnautica-mod/UnityProject/AssetBundleTestingForSubnautica/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
  </Reference>
@@ -657,6 +669,12 @@
  </Reference>
  <Reference Include="Unity.VisualStudio.Editor">
  <HintPath>C:/Users/tsmit/OneDrive/Documents/GitHub/Subnautica-mod/UnityProject/AssetBundleTestingForSubnautica/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ShaderGraph.Editor">
+ <HintPath>C:/Users/tsmit/OneDrive/Documents/GitHub/Subnautica-mod/UnityProject/AssetBundleTestingForSubnautica/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+ <HintPath>C:/Users/tsmit/OneDrive/Documents/GitHub/Subnautica-mod/UnityProject/AssetBundleTestingForSubnautica/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>C:/Users/tsmit/OneDrive/Documents/GitHub/Subnautica-mod/UnityProject/AssetBundleTestingForSubnautica/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

@@ -53,6 +53,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\Nautilus\Nautilus.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.1.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -61,6 +65,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\Unity.ResourceManager.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\Unity.TextMeshPro.dll</HintPath>
     </Reference>
@@ -117,39 +125,55 @@
   <ItemGroup>
     <Compile Include="Fade&amp;Sfxmonos\ImageFader.cs" />
     <Compile Include="Fade&amp;Sfxmonos\TextFader.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Monos\HeavyPodHandTarget.cs" />
     <Compile Include="Monos\HeavyPodMono.cs" />
+    <Compile Include="Monos\MiniWorldController.cs" />
     <Compile Include="Monos\OptionsMono.cs" />
     <Compile Include="Monos\EscapePodCustomIntro.cs" />
     <Compile Include="Fade&amp;Sfxmonos\StaticOverlayShaker.cs" />
     <Compile Include="Fade&amp;Sfxmonos\SkyFader.cs" />
+    <Compile Include="Monos\PowerRelayController.cs" />
     <Compile Include="Monos\SaveMono.cs" />
-    <Compile Include="objects\Mode.cs" />
-    <Compile Include="objects\ModeInputText.cs" />
-    <Compile Include="objects\ModePreset.cs" />
-    <Compile Include="objects\ModeRandom.cs" />
-    <Compile Include="objects\ModeSpecific.cs" />
-    <Compile Include="objects\ToggleOption.cs" />
+    <Compile Include="objects\Options\BaseOption.cs" />
+    <Compile Include="objects\Modes\Mode.cs" />
+    <Compile Include="objects\Modes\ModeInputText.cs" />
+    <Compile Include="objects\Modes\ModePreset.cs" />
+    <Compile Include="objects\Modes\ModeRandom.cs" />
+    <Compile Include="objects\Modes\ModeSpecific.cs" />
+    <Compile Include="patches\PowerFXPatches.cs" />
+    <Compile Include="presetSystem\BasePreset.cs" />
+    <Compile Include="objects\Options\OptionLoadoutSelector.cs" />
+    <Compile Include="objects\Options\OptionSelector.cs" />
+    <Compile Include="objects\Options\OptionToggle.cs" />
     <Compile Include="patches\DisplayManagerPatch.cs" />
     <Compile Include="patches\EscapePodPatch.cs" />
+    <Compile Include="patches\LootSpawnerPatch.cs" />
+    <Compile Include="patches\MiniWorldPatches.cs" />
     <Compile Include="patches\PdaMutePatch.cs" />
     <Compile Include="patches\PlayerPatch.cs" />
     <Compile Include="patches\RandomStartPatch.cs" />
     <Compile Include="patches\uGUIMainMenuPatch.cs" />
     <Compile Include="patches\uGUISceneIntroPatch.cs" />
+    <Compile Include="presetSystem\PresetV1Loader.cs" />
     <Compile Include="SaveUtils.cs" />
-    <Compile Include="BepInEx.cs" />
+    <Compile Include="BepInExEntry.cs" />
     <Compile Include="Monos\EscapePodMainMenu.cs" />
-    <Compile Include="Info.cs" />
+    <Compile Include="LPRGlobals.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FMU.json" />
     <None Include="Localization\English.json" />
-    <None Include="Localization\Spanish.json" />
+    <Content Include="Presets\moddedExample.txt" />
+    <None Include="Presets\Dunes.json" />
+    <None Include="Presets\Crash Zone.json" />
+    <None Include="Presets\Lava Zone.json" />
+    <None Include="Presets\Vinilla+.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Presets\presets.txt" />
+    <Content Include="Presets\HowToAddPresets.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

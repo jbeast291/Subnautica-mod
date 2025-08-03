@@ -21,7 +21,6 @@ internal class uGUIMainMenuPatch
         [HarmonyPrefix]
         public static bool OnButtonSurvival()
         {
-            Info.showmap = true;
             EscapePodMainMenu.main.enableUI(GameMode.Survival);
             return false;
         }
@@ -29,7 +28,6 @@ internal class uGUIMainMenuPatch
         [HarmonyPrefix]
         public static bool OnButtonCreative()
         {
-            Info.showmap = true;
             EscapePodMainMenu.main.enableUI(GameMode.Creative);
             return false;
         }
@@ -37,7 +35,6 @@ internal class uGUIMainMenuPatch
         [HarmonyPrefix]
         public static bool OnButtonFreedom()
         {
-            Info.showmap = true;
             EscapePodMainMenu.main.enableUI(GameMode.Freedom);
             return false;
         }
@@ -45,7 +42,6 @@ internal class uGUIMainMenuPatch
         [HarmonyPrefix]
         public static bool OnButtonHardcore()
         {
-            Info.showmap = true;
             EscapePodMainMenu.main.enableUI(GameMode.Hardcore);
             return false;
         }
@@ -53,12 +49,8 @@ internal class uGUIMainMenuPatch
         [HarmonyPostfix]
         public static void StartPostPatch(uGUI_MainMenu __instance)
         {
-            //this needs to be done before anything to prevent breakages on new installs
-            SaveUtils.CreateDefaultConfigIfModFolderCacheDoesNotExist();
-
-            //these need to be reset even if the gameobject is never activated, otherwise the intro and other settings get fucked
-            SaveUtils.ReadSettingsFromModFolder();//load for menu
-            Info.resetInfo();
+            SaveUtils.ReadSettingsFromModFolder();
+            LPRGlobals.resetInfo();
 
             GameObject AreaSeceltor = GameObject.Instantiate(EscapePodMainMenu.assetBundle.LoadAsset<GameObject>("LifePodRemasteredCanvas"));
             SceneManager.MoveGameObjectToScene(AreaSeceltor, SceneManager.GetSceneByName("XMenu"));

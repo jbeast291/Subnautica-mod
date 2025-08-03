@@ -12,7 +12,7 @@ internal class SaveMono : MonoBehaviour
 {
     public void Awake()
     {
-        if (!Info.newSave)
+        if (!LPRGlobals.newSave)
         {
             SaveUtils.CreateDefaultSlotSettingsIfNotExist();
             SaveUtils.ReadSettingsFromCurrectSlot();

@@ -23,7 +23,7 @@ namespace LifePodRemastered;
 
 internal class EscapePodCustomIntro : MonoBehaviour
 {
-    static AssetBundle assetBundle = Info.assetBundle;
+    static AssetBundle assetBundle = LPRGlobals.assetBundle;
 
     WorldForces wf = EscapePod.main.GetComponent<WorldForces>();
 
@@ -90,14 +90,14 @@ internal class EscapePodCustomIntro : MonoBehaviour
         IngameMenu.main.canBeOpen = false;
 
         //for disabling pda notifs durring cine
-        Info.CinematicActive = true;
-        Info.mutePdaEvents = true;
+        LPRGlobals.CinematicActive = true;
+        LPRGlobals.mutePdaEvents = true;
     }
     public void SetupAudio()
     {
         //register audio from wavs to be played with fmod
-        CustomSoundHandler.RegisterCustomSound("IntroExplosions", Path.Combine(Info.PathToAudioFolder, "SubnauticaIntro-01.wav"), AudioUtils.BusPaths.PlayerSFXs);
-        CustomSoundHandler.RegisterCustomSound("IntroEnterOrbit", Path.Combine(Info.PathToAudioFolder, "SubnauticaIntro-02.wav"), AudioUtils.BusPaths.PlayerSFXs);
+        CustomSoundHandler.RegisterCustomSound("IntroExplosions", Path.Combine(LPRGlobals.PathToAudioFolder, "SubnauticaIntro-01.wav"), AudioUtils.BusPaths.PlayerSFXs);
+        CustomSoundHandler.RegisterCustomSound("IntroEnterOrbit", Path.Combine(LPRGlobals.PathToAudioFolder, "SubnauticaIntro-02.wav"), AudioUtils.BusPaths.PlayerSFXs);
     }
 
     public void SetupUi()
@@ -144,7 +144,8 @@ internal class EscapePodCustomIntro : MonoBehaviour
         //Press any button text fading
         PressAnyButtonText.GetComponent<TextFader>().startFadeIn(50);//start fading in text
         yield return new WaitUntil(() => PressAnyButtonText.GetComponent<TextFader>().DoneFadeIn == true); // wait for finished fading
-        yield return new WaitUntil(() => Input.anyKeyDown == true); // check input
+        
+        yield return new WaitUntil(() => GameInput.AnyKeyDown() == true); // check input
         PressAnyButtonText.GetComponent<TextFader>().startFadeOut(50);//start fading out text
         yield return new WaitUntil(() => PressAnyButtonText.GetComponent<TextFader>().DoneFadeOut == true); // wait for finished fading
         PressAnyButtonText.SetActive(false);
@@ -227,7 +228,7 @@ internal class EscapePodCustomIntro : MonoBehaviour
 
         //Setup Pontoons
         HeavyPodMono.main.InitPodModelAndEffects();
-        if (settingsCache.HeavyPodToggle)
+        if (inGameSave.HeavyPodToggle)
         {
             HeavyPodMono.main.HidePontoons(false);
         } else
@@ -392,7 +393,7 @@ internal class EscapePodCustomIntro : MonoBehaviour
         {
             yield return null;
         }
-        if (settingsCache.HeavyPodToggle)
+        if (inGameSave.HeavyPodToggle)
         {
             CoroutineHost.StartCoroutine(WfWaterScaler());
             HeavyPodMono.main.StartSpecIntLoop();
@@ -486,7 +487,7 @@ internal class EscapePodCustomIntro : MonoBehaviour
         if (EscapePod.main.transform.position.y <= 0)
         {
             podHitWater = true;
-            Info.mutePdaEvents = false;//depth notifs to play when sinking
+            LPRGlobals.mutePdaEvents = false;//depth notifs to play when sinking
             yield break;
         }
         CoroutineHost.StartCoroutine(CheckIfUnderwater());
@@ -510,7 +511,7 @@ internal class EscapePodCustomIntro : MonoBehaviour
     IEnumerator SpecularIntensityWithDepthLoop()
     {
         float surfaceValue = 1.0f;
-        if (EscapePod.main.transform.position.y < -1)
+        if (EscapePod.main.transform.position.y < -1 && podlanded != true)
         {
             float depth = Mathf.Abs(EscapePod.main.transform.position.y);
             float maxDepth = 30f;
@@ -527,7 +528,10 @@ internal class EscapePodCustomIntro : MonoBehaviour
             updateParachuteSpecularIntensity(parachute2, surfaceValue);
         }
         yield return new WaitForSeconds(0.25f);
-        CoroutineHost.StartCoroutine(SpecularIntensityWithDepthLoop());
+        if(podlanded != true)
+        {
+            CoroutineHost.StartCoroutine(SpecularIntensityWithDepthLoop());
+        }
     }
 
     void EndCutscene()
@@ -547,8 +551,8 @@ internal class EscapePodCustomIntro : MonoBehaviour
 
         IngameMenu.main.canBeOpen = true;
 
-        Info.CinematicActive = false;
-        Info.mutePdaEvents = false;
+        LPRGlobals.CinematicActive = false;
+        LPRGlobals.mutePdaEvents = false;
 
         Destroy(parachute);
         Destroy(parachute2);

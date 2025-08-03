@@ -7,6 +7,7 @@ using System.Collections;
 using System.IO;
 using UnityEngine;
 using UWE;
+using static RootMotion.FinalIK.RagdollUtility;
 
 namespace LifePodRemastered.Monos;
 
@@ -29,6 +30,11 @@ internal class HeavyPodMono : MonoBehaviour
 
     public Shader marmosetUber;
 
+    //Interface
+    GameObject uiRoot;
+    public GameObject HeavyPodEnabledImage;
+    public GameObject HeavyPodDisabledImage;
+
     public void Awake()
     {
         if (main != null)
@@ -42,16 +48,21 @@ internal class HeavyPodMono : MonoBehaviour
     public void Start()
     {
         Action onloaded = OnLoaded;
-        if (!Info.newSave || !SaveUtils.settingsCache.CustomIntroToggle)//if the intro is disabled the loop must still run, otherwise let it start the loop after the intro
+        if (!LPRGlobals.newSave || !SaveUtils.settingsCache.customIntroToggle)//if the intro is disabled the loop must still run, otherwise let it start the loop after the intro
         {
             Nautilus.Utility.SaveUtils.RegisterOneTimeUseOnLoadEvent(onloaded);
         }
+
     }
     public void OnLoaded()
     {
         InitPodModelAndEffects();
         StartFreezeLoop();
         StartSpecIntLoop();
+        if (EscapePod.main.liveMixin.GetHealthFraction() >= 1)
+        {
+            CreatePodUI();
+        }
     }
     public void StartFreezeLoop()
     {
@@ -60,6 +71,46 @@ internal class HeavyPodMono : MonoBehaviour
     public void StartSpecIntLoop()
     {
         CoroutineHost.StartCoroutine(SpecularIntensityWithDepthLoop());
+    }
+    public void CreatePodUI()
+    {
+        GameObject.Find("EscapePod/escapepod_weldablePoints/weldPoint_electricPannel").SetActive(false);
+        uiRoot = Instantiate(LPRGlobals.assetBundle.LoadAsset<GameObject>("EscapePodPannelUi"));
+        uiRoot.transform.SetParent(GameObject.Find("EscapePod/escapepod_weldablePoints").transform, false);
+        uiRoot.transform.localPosition = new Vector3(-1.3994f, 1.7f, 1.6581f);
+        uiRoot.transform.localRotation = Quaternion.Euler(0, 352.6214f, 0);
+        uiRoot.transform.localScale = new Vector3(0.005f, 0.005f, 0.005f);
+
+        HeavyPodHandTarget handTarget = uiRoot.transform.Find("HeavyPodToggleButton").gameObject.AddComponent<HeavyPodHandTarget>();
+        HeavyPodDisabledImage = uiRoot.transform.Find("HeavyPodToggleButton").Find("Enabled").gameObject;
+        HeavyPodEnabledImage = uiRoot.transform.Find("HeavyPodToggleButton").Find("Disabled").gameObject;
+        UpdateUI();
+    }
+    public void ToggleHeavyPod(bool PlaySound)
+    {
+        if (PlaySound)
+        {
+            FMODUWE.PlayOneShot(Util.GetFmodAsset("event:/sub/cyclops/lights_on"), uiRoot.transform.position, 1f);
+        }
+
+        SaveUtils.inGameSave.HeavyPodToggle = !SaveUtils.inGameSave.HeavyPodToggle;
+        SheduleAnimation();
+        if (uiRoot != null)
+        {
+            UpdateUI();
+        }
+
+    }
+    public void UpdateUI()
+    {
+        if (SaveUtils.inGameSave.HeavyPodToggle)
+        {
+            HeavyPodEnabledImage.SetActive(true);
+            HeavyPodDisabledImage.SetActive(false);
+            return;
+        }
+        HeavyPodEnabledImage.SetActive(false);
+        HeavyPodDisabledImage.SetActive(true);
     }
     public void HidePontoons(bool animate)
     {
@@ -111,23 +162,20 @@ internal class HeavyPodMono : MonoBehaviour
                 channel.set3DAttributes(ref podLocation, ref vel);
             }
         }
-
-
     }
     public void SheduleAnimation()
     {
         playAnimationNext = true;
     }
 
-
     public void InitPodModelAndEffects() // by default the pontoons will show
     {
         if (hasInit)
         {
-            BepInEx.Logger.LogError("Do not Init the Escape pod Model twice!!");
+            BepInExEntry.Logger.LogError("Do not Init the Escape pod Model twice!!");
             return;
         }
-        newLifePodModel = Instantiate(Info.assetBundle.LoadAsset<GameObject>("LifePodModel"));
+        newLifePodModel = Instantiate(LPRGlobals.assetBundle.LoadAsset<GameObject>("LifePodModel"));
         newLifePodModel.transform.parent = EscapePod.main.gameObject.transform;
         newLifePodModel.transform.position = EscapePod.main.transform.position;
         newLifePodModel.transform.localPosition = new Vector3(-0.1468f, -0.2f, -0.0031f);
@@ -172,27 +220,27 @@ internal class HeavyPodMono : MonoBehaviour
         pontoon.GetComponent<MeshRenderer>().material.CopyPropertiesFromMaterial(oldSMRfromLifePod.material);
 
         // Sounds
-        Sound pontoonInflate = CustomSoundHandler.RegisterCustomSound("pontoonInflate", Path.Combine(Info.PathToAudioFolder, "pontoonInflate.mp3"), AudioUtils.BusPaths.PDAVoice);
+        Sound pontoonInflate = CustomSoundHandler.RegisterCustomSound("pontoonInflate", Path.Combine(LPRGlobals.PathToAudioFolder, "pontoonInflate.mp3"), AudioUtils.BusPaths.PDAVoice);
         pontoonInflate.setMode(MODE._3D);
-        Sound pontoonDeflate = CustomSoundHandler.RegisterCustomSound("pontoonDeflate", Path.Combine(Info.PathToAudioFolder, "pontoonDeflate.mp3"), AudioUtils.BusPaths.PDAVoice);
+        Sound pontoonDeflate = CustomSoundHandler.RegisterCustomSound("pontoonDeflate", Path.Combine(LPRGlobals.PathToAudioFolder, "pontoonDeflate.mp3"), AudioUtils.BusPaths.PDAVoice);
         pontoonDeflate.setMode(MODE._3D);
 
         hasInit = true;
     }
 
-
     IEnumerator FreezeLoop()//dont move the pod if the player is not next to it, otherwise it will clip thru terrain
-    {          
+    {
         if (SaveUtils.inGameSave.HeavyPodToggle)
         {
-            wf.underwaterGravity = BepInEx.MyConfig.verticalMotionRate;
+            wf.underwaterGravity = SaveUtils.settingsCache.VertialMotionRate;
             HidePontoons(playAnimationNext);
         }
         else
         {
-            wf.underwaterGravity = -1 * BepInEx.MyConfig.verticalMotionRate;
+            wf.underwaterGravity = -1 * SaveUtils.settingsCache.VertialMotionRate;
             ShowPontoons(playAnimationNext);
         }
+        wf.aboveWaterGravity = wf.underwaterGravity;
         if (playAnimationNext)
         {
             playAnimationNext = false;
