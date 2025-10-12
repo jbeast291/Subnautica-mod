@@ -2,6 +2,7 @@
 using BepInEx.Bootstrap;
 using BepInEx.Logging;
 using HarmonyLib;
+using LifePodRemastered.Compatability;
 using LifePodRemastered.Monos;
 using LifePodRemastered.presetSystem;
 using Nautilus.Handlers;
@@ -20,6 +21,7 @@ namespace LifePodRemastered;
 
 [BepInDependency("Jbeast291.InterpolationFix", BepInDependency.DependencyFlags.HardDependency)]
 [BepInDependency("com.snmodding.nautilus", BepInDependency.DependencyFlags.HardDependency)]
+[BepInDependency("com.prototech.prototypesub", BepInDependency.DependencyFlags.SoftDependency)]
 [BepInPlugin(myGUID, pluginName, pluginVersion)]
 public class BepInExEntry : BaseUnityPlugin
 {
@@ -27,7 +29,7 @@ public class BepInExEntry : BaseUnityPlugin
     private const string pluginName = "Life Pod Remastered";
     private const string pluginVersion = "2.0.0";
 
-    private static readonly Harmony harmony = new Harmony(myGUID);
+    internal static readonly Harmony harmony = new Harmony(myGUID);
 
     internal static new ManualLogSource Logger;
 
@@ -47,6 +49,12 @@ public class BepInExEntry : BaseUnityPlugin
 
         modOptions = new MyModOptions();
         OptionsPanelHandler.RegisterModOptions(modOptions);
+
+        bool loaded = Chainloader.PluginInfos.ContainsKey("com.prototech.prototypesub");
+        if (loaded)
+        {
+            PrototypeExpansionPatches.loadCompatabilityPatches();
+        }
     }
     public static bool isGUIDLoaded(string modGUID)
     {

@@ -123,9 +123,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compatability\PrototypeExpansionPatches.cs" />
     <Compile Include="Fade&amp;Sfxmonos\ImageFader.cs" />
     <Compile Include="Fade&amp;Sfxmonos\TextFader.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Monos\HeavyPodHandTarget.cs" />
     <Compile Include="Monos\HeavyPodMono.cs" />
     <Compile Include="Monos\MiniWorldController.cs" />

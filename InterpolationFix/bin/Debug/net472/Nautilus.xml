@@ -632,15 +632,6 @@
             <param name="displayName">The display name for this item.</param>
             <param name="description">The description for this item.</param>
         </member>
-        <member name="M:Nautilus.Assets.CustomPrefab.#ctor(System.String,System.String,System.String,Atlas.Sprite)">
-            <summary>
-            Constructs a custom prefab object with the <see cref="P:Nautilus.Assets.CustomPrefab.Info"/> assigned appropriately.
-            </summary>
-            <param name="classId">The class identifier used for the PrefabIdentifier component whenever applicable.</param>
-            <param name="displayName">The display name for this item.</param>
-            <param name="description">The description for this item.</param>
-            <param name="icon">The icon for this item.</param>
-        </member>
         <member name="M:Nautilus.Assets.CustomPrefab.#ctor(System.String,System.String,System.String,UnityEngine.Sprite)">
             <summary>
             Constructs a custom prefab object with the <see cref="P:Nautilus.Assets.CustomPrefab.Info"/> assigned appropriately.
@@ -919,7 +910,7 @@
             </summary>
             <param name="prefab"><inheritdoc cref="M:Nautilus.Assets.Gadgets.Gadget.#ctor(Nautilus.Assets.ICustomPrefab)"/></param>
         </member>
-        <member name="M:Nautilus.Assets.Gadgets.FabricatorGadget.AddTabNode(System.String,System.String,Atlas.Sprite,System.String,System.String)">
+        <member name="M:Nautilus.Assets.Gadgets.FabricatorGadget.AddTabNode(System.String,System.String,UnityEngine.Sprite,System.String,System.String)">
             <summary>
             Adds a new tab node to the custom crafting tree of this fabricator.
             </summary>
@@ -1481,6 +1472,59 @@
             <param name="prefab">The prefab that may or may not be found.</param>
             <returns>True if the prefab was found in the cache, otherwise false.</returns>
         </member>
+        <member name="T:Nautilus.Assets.ModSprite">
+            <summary>
+            A class that handles a custom sprite and what item it is associated to.
+            </summary>
+        </member>
+        <member name="F:Nautilus.Assets.ModSprite.TechType">
+            <summary>
+            The tech type of a specific item associated with this sprite.
+            Can be <see cref="F:TechType.None"/> if this sprite is for used on a group.
+            </summary>
+        </member>
+        <member name="F:Nautilus.Assets.ModSprite.Sprite">
+            <summary>
+            The actual sprite used in-game when this sprite is references.
+            </summary>
+        </member>
+        <member name="F:Nautilus.Assets.ModSprite.Group">
+            <summary>
+            The group that this sprite belongs to. 
+            Can be <see cref="F:SpriteManager.Group.None"/> if this sprite is for used on an item.
+            </summary>
+        </member>
+        <member name="F:Nautilus.Assets.ModSprite.Id">
+            <summary>
+            The internal identifier of this sprite when it isn't associated to an item.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Assets.ModSprite.#ctor(TechType,UnityEngine.Sprite)">
+            <summary>
+            Creates a new ModSprite to be used with a specific TechType.
+            Created with an Atlas Sprite.
+            </summary>
+            <param name="type">The techtype paired to this sprite.</param>
+            <param name="sprite">The sprite to be added.</param>
+        </member>
+        <member name="M:Nautilus.Assets.ModSprite.#ctor(SpriteManager.Group,System.String,UnityEngine.Sprite)">
+            <summary>
+            Creates a new ModSprite to be used with a specific group and internal ID.
+            Created with an Atlas Sprite.
+            </summary>
+            <param name="group">The sprite group.</param>
+            <param name="id">The sprite internal identifier.</param>
+            <param name="sprite">The sprite to be added.</param>
+        </member>
+        <member name="M:Nautilus.Assets.ModSprite.#ctor(SpriteManager.Group,TechType,UnityEngine.Sprite)">
+            <summary>
+            Creates a new ModSprite to be used with a specific group and internal ID.
+            Created with an Atlas Sprite.
+            </summary>
+            <param name="group">The sprite group.</param>
+            <param name="type">The techtype paired to this sprite.</param>
+            <param name="sprite">The sprite to be added.</param>
+        </member>
         <member name="T:Nautilus.Assets.PrefabInfo">
             <summary>
             Data class that represents information about a prefab.
@@ -1533,13 +1577,6 @@
             <param name="unlockAtStart">Whether this tech type should be unlocked on game start or not. Defaults to <see langword="false"/>.</param>
             <param name="techTypeOwner">The assembly that owns the created tech type. The name of this assembly will be shown in the PDA.</param>
             <returns>An instance of the constructed <see cref="T:Nautilus.Assets.PrefabInfo"/>.</returns>
-        </member>
-        <member name="M:Nautilus.Assets.PrefabInfo.WithIcon(Atlas.Sprite)">
-            <summary>
-            Adds an icon for <see cref="P:Nautilus.Assets.PrefabInfo.TechType"/>.
-            </summary>
-            <param name="sprite"></param>
-            <returns>A reference to this instance after the operation has completed.</returns>
         </member>
         <member name="M:Nautilus.Assets.PrefabInfo.WithIcon(UnityEngine.Sprite)">
             <summary>
@@ -2040,76 +2077,6 @@
             <param name="EulerAngles">Euler angles for the rotation the spawned object will appear with.</param>
             <param name="Scale">The scale that the object is spawned at. If default (0, 0, 0) will be resolved to (1, 1, 1).</param>
         </member>
-        <member name="T:Nautilus.Assets.ModSprite">
-            <summary>
-            A class that handles a custom sprite and what item it is associated to.
-            </summary>
-        </member>
-        <member name="F:Nautilus.Assets.ModSprite.TechType">
-            <summary>
-            The tech type of a specific item associated with this sprite.
-            Can be <see cref="F:TechType.None"/> if this sprite is for used on a group.
-            </summary>
-        </member>
-        <member name="F:Nautilus.Assets.ModSprite.Sprite">
-            <summary>
-            The actual sprite used in-game when this sprite is references.
-            </summary>
-        </member>
-        <member name="F:Nautilus.Assets.ModSprite.Group">
-            <summary>
-            The group that this sprite belongs to. 
-            Can be <see cref="F:SpriteManager.Group.None"/> if this sprite is for used on an item.
-            </summary>
-        </member>
-        <member name="F:Nautilus.Assets.ModSprite.Id">
-            <summary>
-            The internal identifier of this sprite when it isn't associated to an item.
-            </summary>
-        </member>
-        <member name="M:Nautilus.Assets.ModSprite.#ctor(TechType,Atlas.Sprite)">
-            <summary>
-            Creates a new ModSprite to be used with a specific TechType.
-            Created with an Atlas Sprite.
-            </summary>
-            <param name="type">The techtype paired to this sprite.</param>
-            <param name="sprite">The sprite to be added.</param>
-        </member>
-        <member name="M:Nautilus.Assets.ModSprite.#ctor(SpriteManager.Group,System.String,Atlas.Sprite)">
-            <summary>
-            Creates a new ModSprite to be used with a specific group and internal ID.
-            Created with an Atlas Sprite.
-            </summary>
-            <param name="group">The sprite group.</param>
-            <param name="id">The sprite internal identifier.</param>
-            <param name="sprite">The sprite to be added.</param>
-        </member>
-        <member name="M:Nautilus.Assets.ModSprite.#ctor(SpriteManager.Group,TechType,Atlas.Sprite)">
-            <summary>
-            Creates a new ModSprite to be used with a specific group and internal ID.
-            Created with an Atlas Sprite.
-            </summary>
-            <param name="group">The sprite group.</param>
-            <param name="type">The techtype paired to this sprite.</param>
-            <param name="sprite">The sprite to be added.</param>
-        </member>
-        <member name="M:Nautilus.Assets.ModSprite.#ctor(SpriteManager.Group,System.String,UnityEngine.Sprite)">
-            <summary>
-            Creates a new ModSprite to be used with a specific group and internal ID.
-            Created with a UnityEngine Sprite.
-            </summary>
-            <param name="group">The sprite group this sprite will be added to.</param>
-            <param name="id">The sprite internal identifier.</param>
-            <param name="sprite">The sprite to be added.</param>
-        </member>
-        <member name="M:Nautilus.Assets.ModSprite.#ctor(TechType,UnityEngine.Sprite)">
-            <summary>
-            Creates a new ModSprite to be used with a specific TechType.
-            Created with a UnityEngine Sprite.
-            </summary>
-            <param name="type">The techtype paired to this sprite.</param>
-            <param name="sprite">The sprite to be added.</param>
-        </member>
         <member name="T:Nautilus.Commands.ConsoleCommand">
             <summary>
             Represents a console command.
@@ -2243,16 +2210,6 @@
             The child nodes linked bellow this node.
             </summary>
         </member>
-        <member name="M:Nautilus.Crafting.ModCraftTreeLinkingNode.AddTabNode(System.String,System.String,Atlas.Sprite,System.String)">
-            <summary>
-            Creates a new tab node for the crafting tree and links it to the calling node.
-            </summary>
-            <param name="nameID">The name/ID of this node.</param>
-            <param name="displayText">The hover text to display in-game. If null or empty, this will use the language line "{CraftTreeName}_{<paramref name="nameID"/>}" instead.</param>
-            <param name="sprite">The custom sprite to display on this tab node.</param>
-            <param name="language">The language for the display name. Defaults to English.</param>
-            <returns>A new tab node linked to the root node and ready to use.</returns>
-        </member>
         <member name="M:Nautilus.Crafting.ModCraftTreeLinkingNode.AddTabNode(System.String,System.String,UnityEngine.Sprite,System.String)">
             <summary>
             Creates a new tab node for the crafting tree and links it to the calling node.
@@ -2383,17 +2340,6 @@
             You can replace this function with your own to have more control of the crafting tree when it is being created.
             </summary>
         </member>
-        <member name="M:Nautilus.Crafting.ModCraftTreeRoot.AddTabNode(System.String,System.String,Atlas.Sprite,System.String,System.String)">
-            <summary>
-            Adds a new tab node to the custom crafting tree of this fabricator.
-            </summary>
-            <param name="tabId">The internal ID for the tab node.</param>
-            <param name="displayText">The in-game text shown for the tab node. If null or empty, this will use the language line "{CraftTreeName}_{<paramref name="tabId"/>}" instead.</param>
-            <param name="tabSprite">The sprite used for the tab node.</param>
-            <param name="language">The language for the display name. Defaults to English.</param>
-            <param name="parentTabId">Optional. The parent tab of this tab.<para/>
-            When this value is null, the tab will be added to the root of the craft tree.</param>
-        </member>
         <member name="M:Nautilus.Crafting.ModCraftTreeRoot.AddTabNode(System.String,System.String,UnityEngine.Sprite,System.String,System.String)">
             <summary>
             Adds a new tab node to the custom crafting tree of this fabricator.
@@ -2494,13 +2440,13 @@
             Initializes a new instance of the <see cref="T:Nautilus.Crafting.RecipeData"/> class a custom recipe.
             </summary>
         </member>
-        <member name="M:Nautilus.Crafting.RecipeData.#ctor(System.Collections.Generic.List{CraftData.Ingredient})">
+        <member name="M:Nautilus.Crafting.RecipeData.#ctor(System.Collections.Generic.List{Ingredient})">
             <summary>
             Initializes a new instance of the <see cref="T:Nautilus.Crafting.RecipeData"/> class for a custom recipe with a list of ingridients.
             </summary>
             <param name="ingredients">The ingredients.</param>
         </member>
-        <member name="M:Nautilus.Crafting.RecipeData.#ctor(CraftData.Ingredient[])">
+        <member name="M:Nautilus.Crafting.RecipeData.#ctor(Ingredient[])">
             <summary>
             Initializes a new instance of the <see cref="T:Nautilus.Crafting.RecipeData"/> class for a custom recipe with a collection of ingridients.
             </summary>
@@ -2511,7 +2457,7 @@
             Gets the ingredient at the specified index.
             </summary>
             <param name="index">The index.</param>
-            <returns>The <see cref="T:CraftData.Ingredient"/> at the requested the index if the index is value; Otherwise returns null.</returns>
+            <returns>The <see cref="T:Ingredient"/> at the requested the index if the index is value; Otherwise returns null.</returns>
         </member>
         <member name="M:Nautilus.Crafting.RecipeData.GetLinkedItem(System.Int32)">
             <summary>
@@ -2629,6 +2575,13 @@
             Contains extensions that are not exclusively specific to one type.
             </summary>
         </member>
+        <member name="M:Nautilus.Extensions.GeneralExtensions.KeyCodeToString(UnityEngine.KeyCode)">
+            <summary>
+            Turns a <seealso cref="T:UnityEngine.KeyCode"/> into a <seealso cref="T:System.String"/>.
+            </summary>
+            <param name="keyCode">The keycode to convert</param>
+            <returns>The text equivalent of the keycode.</returns>
+        </member>
         <member name="M:Nautilus.Extensions.GeneralExtensions.Add``1(``0[],``0)">
             <summary>
             Adds an object to the end of the <see cref="T:System.Array"/>.
@@ -2663,30 +2616,22 @@
         </member>
         <member name="T:Nautilus.Extensions.RecipeExtensions">
             <summary>
-            Contains extensions that are specific to the <see cref="T:Nautilus.Crafting.RecipeData"/> and <see cref="T:ITechData"/> classes.
+            Contains extensions that are specific to the <see cref="T:Nautilus.Crafting.RecipeData"/> class.
             </summary>
         </member>
-        <member name="M:Nautilus.Extensions.RecipeExtensions.ConvertToTechData(ITechData,TechType)">
+        <member name="M:Nautilus.Extensions.RecipeExtensions.ConvertToRecipeData(JsonValue)">
             <summary>
-            Converts a <see cref="T:Nautilus.Crafting.RecipeData"/> to an <see cref="T:ITechData"/>.
+            Converts the Games JsonValue data into Nautilus RecipeData.
             </summary>
-            <param name="techData"> the original data to convert.</param>
-            <param name="techType"> The Techtype </param>
-            <returns><see cref="T:CraftData.TechData"/></returns>
-        </member>
-        <member name="M:Nautilus.Extensions.RecipeExtensions.ConvertToRecipeData(ITechData)">
-            <summary>
-            Converts the games ITechData into Nautilus RecipeData.
-            </summary>
-            <param name="iTechData"></param>
-        </member>
-        <member name="M:Nautilus.Extensions.RecipeExtensions.SameAs(ITechData,ITechData)">
-            <summary>
-            Checks if the two ITechData are equal.
-            </summary>
-            <param name="originalTechData"></param>
             <param name="techData"></param>
-            <returns></returns>
+        </member>
+        <member name="M:Nautilus.Extensions.RecipeExtensions.ConvertToJsonValue(Nautilus.Crafting.RecipeData,TechType)">
+            <summary>
+            Converts the Nautilus RecipeData into the Games JsonValue data.
+            </summary>
+            <param name="recipeData"></param>
+            <param name="techType"></param>
+            <returns><see cref="T:JsonValue"/> or null</returns>
         </member>
         <member name="M:Nautilus.Extensions.TypeExtensions.GetFriendlyName(System.Type)">
             <summary>
@@ -3265,55 +3210,57 @@
             <summary>
             A handler class for adding and editing crafted items.
             </summary>
-            <summary>
-            A handler class for adding and editing crafted items.
-            </summary>
-        </member>
-        <member name="M:Nautilus.Handlers.CraftDataHandler.AddToGroup(TechGroup,TechCategory,TechType)">
-            <summary>
-            Allows you to add items to the game's internal grouping system.
-            Required if you want to make buildable items show up in the Habitat Builder or show in the Blueprints Tab of the PDA.
-            </summary>
-            <param name="group">The TechGroup you want to add your TechType to.</param>
-            <param name="category">The TechCategory (in the TechGroup) you want to add your TechType to.</param>
-            <param name="techType">The TechType you want to add.</param>
-        </member>
-        <member name="M:Nautilus.Handlers.CraftDataHandler.AddToGroup(TechGroup,TechCategory,TechType,TechType,System.Boolean)">
-            <summary>
-            Allows you to add items to the game's internal grouping system.
-            Required if you want to make buildable items show up in the Habitat Builder or show in the Blueprints Tab of the PDA.
-            </summary>
-            <param name="group">The TechGroup you want to add your TechType to.</param>
-            <param name="category">The TechCategory (in the TechGroup) you want to add your TechType to.</param>
-            <param name="techType">The TechType you want to add.</param>
-            <param name="target">The icon in the blueprints tab of the PDA will be added next to this item or at the end/beginning if not found.</param>
-            <param name="after">Whether to append after (true) or insert before (false) the target, for sorting purposes.</param>
-        </member>
-        <member name="M:Nautilus.Handlers.CraftDataHandler.RemoveFromGroup(TechGroup,TechCategory,TechType)">
-            <summary>
-            Allows you to remove an existing TechType from the game's internal group system.
-            </summary>
-            <param name="group">The TechGroup in which the TechType is located.</param>
-            <param name="category">The TechCategory in which the TechType is located.</param>
-            <param name="techType">The TechType which you want to remove.</param>
-        </member>
-        <member name="M:Nautilus.Handlers.CraftDataHandler.SetRecipeData(TechType,ITechData)">
-            <summary>
-            <para>Allows you to edit recipes, i.e. RecipeData for TechTypes.</para>
-            <para>Can be used for existing TechTypes too.</para>
-            </summary>
-            <param name="techType">The TechType whose RecipeData you want to edit.</param>
-            <param name="techData">The ITechData for that TechType.</param>
-            <seealso cref="T:Nautilus.Crafting.RecipeData"/>
         </member>
         <member name="M:Nautilus.Handlers.CraftDataHandler.SetRecipeData(TechType,Nautilus.Crafting.RecipeData)">
             <summary>
-            <para>Allows you to edit recipes, i.e. RecipeData for TechTypes.</para>
+            <para>Allows you to add or edit RecipeData for TechTypes.</para>
             <para>Can be used for existing TechTypes too.</para>
             </summary>
             <param name="techType">The TechType whose RecipeData you want to edit.</param>
             <param name="recipeData">The RecipeData for that TechType.</param>
             <seealso cref="T:Nautilus.Crafting.RecipeData"/>
+        </member>
+        <member name="M:Nautilus.Handlers.CraftDataHandler.SetIngredients(TechType,System.Collections.Generic.ICollection{Ingredient})">
+            <summary>
+            <para>Allows you to edit recipes for TechTypes.</para>
+            <para>Can be used for existing TechTypes too.</para>
+            </summary>
+            <param name="techType">The TechType whose RecipeData you want to edit.</param>
+            <param name="ingredients">The collection of Ingredients for that TechType.</param>
+            <seealso cref="T:Ingredient"/>
+        </member>
+        <member name="M:Nautilus.Handlers.CraftDataHandler.SetLinkedItems(TechType,System.Collections.Generic.ICollection{TechType})">
+            <summary>
+            <para>Allows you to edit Linked Items for TechTypes.</para>
+            <para>Can be used for existing TechTypes too.</para>
+            </summary>
+            <param name="techType">The TechType whose RecipeData you want to edit.</param>
+            <param name="linkedItems">The collection of Ingredients for that TechType.</param>
+            <seealso cref="T:Ingredient"/>
+        </member>
+        <member name="M:Nautilus.Handlers.CraftDataHandler.GetRecipeData(TechType)">
+            <summary>
+            Safely accesses the crafting data from a Modded or Vanilla item.<para/>
+            WARNING: This method is highly dependent on mod load order. 
+            Make sure your mod is loading after the mod whose RecipeData you are trying to access.
+            </summary>
+            <param name="techType">The TechType whose RecipeData you want to access.</param>
+            <returns>The RecipeData from the item if it exists; Otherwise, returns <c>null</c>.</returns>
+        </member>
+        <member name="M:Nautilus.Handlers.CraftDataHandler.ConvertToRecipeData(JsonValue)">
+            <summary>
+            Converts the Games JsonValue data into Nautilus RecipeData.
+            </summary>
+            <param name="techData"></param>
+        </member>
+        <member name="M:Nautilus.Handlers.CraftDataHandler.GetModdedRecipeData(TechType)">
+            <summary>
+            Safely accesses the crafting data from a Modded item.<para/>
+            WARNING: This method is highly dependent on mod load order. 
+            Make sure your mod is loading after the mod whose RecipeData you are trying to access.
+            </summary>
+            <param name="techType">The TechType whose RecipeData you want to access.</param>
+            <returns>The RecipeData from the modded item if it exists; Otherwise, returns <c>null</c>.</returns>
         </member>
         <member name="M:Nautilus.Handlers.CraftDataHandler.SetEquipmentType(TechType,EquipmentType)">
             <summary>
@@ -3326,7 +3273,7 @@
         <member name="M:Nautilus.Handlers.CraftDataHandler.SetQuickSlotType(TechType,QuickSlotType)">
             <summary>
             <para>Allows you to edit QuickSlotType for TechTypes. Can be used for existing TechTypes too.</para>
-            <para>Careful: This has to be called after <see cref="M:Nautilus.Handlers.CraftDataHandler.SetRecipeData(TechType,ITechData)"/> and <see cref="M:Nautilus.Handlers.CraftDataHandler.SetRecipeData(TechType,Nautilus.Crafting.RecipeData)"/>.</para>
+            <para>Careful: This has to be called after <see cref="M:Nautilus.Handlers.CraftDataHandler.SetRecipeData(TechType,Nautilus.Crafting.RecipeData)"/>.</para>
             </summary>
             <param name="techType">The TechType whose QuickSlotType you want to edit.</param>
             <param name="slotType">The QuickSlotType for that TechType.</param>
@@ -3404,6 +3351,14 @@
             <param name="uncooked">The TechType whose cooked creature counterpart to edit.</param>
             <param name="cooked">The cooked creature counterpart for that TechType.</param>
         </member>
+        <member name="M:Nautilus.Handlers.CraftDataHandler.SetColdResistance(TechType,System.Int32)">
+            <summary>
+            <para>Allows you to edit the Cold Resistance of a TechType.</para>
+            <para>Can be used for existing TechTypes too.</para>
+            </summary>
+            <param name="uncooked">The TechType whose Cold Resistance to edit.</param>
+            <param name="resistance">The Cold Resistance for that TechType.</param>
+        </member>
         <member name="M:Nautilus.Handlers.CraftDataHandler.SetBackgroundType(TechType,CraftData.BackgroundType)">
             <summary>
             <para>Allows you to edit inventory background colors for TechTypes.</para>
@@ -3411,6 +3366,26 @@
             <param name="techType">The TechType whose BackgroundType you want to edit.</param>
             <param name="backgroundColor">The background color for that TechType.</param>
             <seealso cref="T:CraftData.BackgroundType"/>
+        </member>
+        <member name="M:Nautilus.Handlers.CraftDataHandler.AddBuildable(TechType)">
+            <summary>
+            Allows you to add items to the buildable list.
+            </summary>
+            <param name="techType">The TechType which you want to add to the buildable list.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.CraftDataHandler.SetMaxCharge(TechType,System.Single)">
+            <summary>
+            Sets the maximum charge.
+            </summary>
+            <param name="techType">The TechType whose MaxCharge you want to edit.</param>
+            <param name="maxCharge">The maximum charge.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.CraftDataHandler.SetEnergyCost(TechType,System.Single)">
+            <summary>
+            Sets the energy cost.
+            </summary>
+            <param name="techType">The TechType whose EnergyCost you want to edit.</param>
+            <param name="energyCost">The energy cost.</param>
         </member>
         <member name="M:Nautilus.Handlers.CraftDataHandler.SetEatingSound(TechType,System.String)">
             <summary>
@@ -3428,35 +3403,33 @@
             </para>
             </param>
         </member>
-        <member name="M:Nautilus.Handlers.CraftDataHandler.AddBuildable(TechType)">
+        <member name="M:Nautilus.Handlers.CraftDataHandler.AddToGroup(TechGroup,TechCategory,TechType)">
             <summary>
-            Allows you to add items to the buildable list.
+            Allows you to add items to the game's internal grouping system.
+            Required if you want to make buildable items show up in the Habitat Builder or show in the Blueprints Tab of the PDA.
             </summary>
-            <param name="techType">The TechType which you want to add to the buildable list.</param>
+            <param name="group">The TechGroup you want to add your TechType to.</param>
+            <param name="category">The TechCategory (in the TechGroup) you want to add your TechType to.</param>
+            <param name="techType">The TechType you want to add.</param>
         </member>
-        <member name="M:Nautilus.Handlers.CraftDataHandler.GetModdedRecipeData(TechType)">
+        <member name="M:Nautilus.Handlers.CraftDataHandler.AddToGroup(TechGroup,TechCategory,TechType,TechType,System.Boolean)">
             <summary>
-            Safely accesses the crafting data from a modded item.<para/>
-            WARNING: This method is highly dependent on mod load order. 
-            Make sure your mod is loading after the mod whose RecipeData you are trying to access.
+            Allows you to add items to the game's internal grouping system.
+            Required if you want to make buildable items show up in the Habitat Builder or show in the Blueprints Tab of the PDA.
             </summary>
-            <param name="techType">The TechType whose RecipeData you want to access.</param>
-            <returns>The RecipeData from the modded item if it exists; Otherwise, returns <c>null</c>.</returns>
+            <param name="group">The TechGroup you want to add your TechType to.</param>
+            <param name="category">The TechCategory (in the TechGroup) you want to add your TechType to.</param>
+            <param name="techType">The TechType you want to add.</param>
+            <param name="target">The icon in the blueprints tab of the PDA will be added next to this item or at the end/beginning if not found.</param>
+            <param name="after">Whether to append after (true) or insert before (false) the target, for sorting purposes.</param>
         </member>
-        <member name="M:Nautilus.Handlers.CraftDataHandler.GetRecipeData(TechType)">
+        <member name="M:Nautilus.Handlers.CraftDataHandler.RemoveFromGroup(TechGroup,TechCategory,TechType)">
             <summary>
-            Safely accesses the crafting data from any item.<para/>
-            WARNING: This method is highly dependent on mod load order. 
-            Make sure your mod is loading after the mod whose RecipeData you are trying to access.
+            Allows you to remove an existing TechType from the game's internal group system.
             </summary>
-            <param name="techType">The TechType whose RecipeData you want to access.</param>
-            <returns>Returns RecipeData if it exists; Otherwise, returns <c>null</c>.</returns>
-        </member>
-        <member name="M:Nautilus.Handlers.CraftDataHandler.ConvertToRecipeData(ITechData)">
-            <summary>
-            Converts the games ITechData into Nautilus RecipeData.
-            </summary>
-            <param name="iTechData"></param>
+            <param name="group">The TechGroup in which the TechType is located.</param>
+            <param name="category">The TechCategory in which the TechType is located.</param>
+            <param name="techType">The TechType which you want to remove.</param>
         </member>
         <member name="T:Nautilus.Handlers.CraftTreeHandler">
             <summary>
@@ -3483,15 +3456,6 @@
             <param name="craftTree">The target craft tree to edit.</param>
             <param name="craftingItem">The item to craft.</param>
         </member>
-        <member name="M:Nautilus.Handlers.CraftTreeHandler.AddTabNode(CraftTree.Type,System.String,System.String,Atlas.Sprite)">
-            <summary>
-            Adds a new tab node to the root of the specified crafting tree.
-            </summary>
-            <param name="craftTree">The target craft tree to edit.</param>
-            <param name="name">The ID of the tab node. Must be unique!</param>
-            <param name="displayName">The display name of the tab, which will show up when you hover your mouse on the tab. If null or empty, this will use the language line "{craftTreeName}_{tabName}" instead.</param>
-            <param name="sprite">The sprite of the tab.</param>        
-        </member>
         <member name="M:Nautilus.Handlers.CraftTreeHandler.AddTabNode(CraftTree.Type,System.String,System.String,UnityEngine.Sprite)">
             <summary>
             Adds a new tab node to the root of the specified crafting tree.
@@ -3499,22 +3463,7 @@
             <param name="craftTree">The target craft tree to edit.</param>
             <param name="name">The ID of the tab node. Must be unique!</param>
             <param name="displayName">The display name of the tab, which will show up when you hover your mouse on the tab. If null or empty, this will use the language line "{craftTreeName}_{tabName}" instead.</param>
-            <param name="sprite">The sprite of the tab.</param>
-        </member>
-        <member name="M:Nautilus.Handlers.CraftTreeHandler.AddTabNode(CraftTree.Type,System.String,System.String,Atlas.Sprite,System.String[])">
-            <summary>
-            Adds a new tab node to the root of the specified crafting tree, at the specified tab location.
-            </summary>
-            <param name="craftTree">The target craft tree to edit.</param>
-            <param name="name">The ID of the tab node. Must be unique!</param>
-            <param name="displayName">The display name of the tab, which will show up when you hover your mouse on the tab. If null or empty, this will use the language line "{craftTreeName}_{tabName}" instead.</param>
-            <param name="sprite">The sprite of the tab.</param>
-            <param name="stepsToTab">
-            <para>The steps to the target tab.</para>
-            <para>These must match the id value of the CraftNode in the crafting tree you're targeting.</para>
-            <para>Do not include "root" in this path.</para>
-            <para>See <see href="https://subnauticamodding.github.io/Nautilus/tutorials/craft-tree-paths.html"/> or use the <see cref="T:Nautilus.Handlers.CraftTreeHandler.Paths"/> class for examples of valid parameters.</para>
-            </param>        
+            <param name="sprite">The sprite of the tab.</param>        
         </member>
         <member name="M:Nautilus.Handlers.CraftTreeHandler.AddTabNode(CraftTree.Type,System.String,System.String,UnityEngine.Sprite,System.String[])">
             <summary>
@@ -3837,7 +3786,7 @@
             <typeparam name="TEnum">The type of the enum.</typeparam>
             <returns><see langword="true"/> if the specified enum value is defined by default, otherwise; <see langword="false"/>.</returns>
         </member>
-        <member name="M:Nautilus.Handlers.EnumExtensions.WithBackground(Nautilus.Handlers.EnumBuilder{CraftData.BackgroundType},Atlas.Sprite)">
+        <member name="M:Nautilus.Handlers.EnumExtensions.WithBackground(Nautilus.Handlers.EnumBuilder{CraftData.BackgroundType},UnityEngine.Sprite)">
             <summary>
             Adds a sprite for this instance.
             </summary>
@@ -3857,14 +3806,6 @@
             This tree will be automatically patched into the game.<para/>
             For more advanced usage, you can replace the default value of <see cref="F:Nautilus.Crafting.ModCraftTreeRoot.CraftTreeCreation"/> with your own custom function.
             </param>
-            <returns>A reference to this instance after the operation has completed.</returns>
-        </member>
-        <member name="M:Nautilus.Handlers.EnumExtensions.WithIcon(Nautilus.Handlers.EnumBuilder{PingType},Atlas.Sprite)">
-            <summary>
-            Adds an icon for this instance.
-            </summary>
-            <param name="builder">The current custom enum object instance.</param>
-            <param name="sprite">The icon to add for this instance.</param>
             <returns>A reference to this instance after the operation has completed.</returns>
         </member>
         <member name="M:Nautilus.Handlers.EnumExtensions.WithIcon(Nautilus.Handlers.EnumBuilder{PingType},UnityEngine.Sprite)">
@@ -3910,14 +3851,6 @@
             <param name="tooltip">The tooltip displayed when hovered in the PDA, can be anything. If null or empty, this will use the language line "Tooltip_{enumName}" instead.</param>
             <param name="language">The language for this entry. Defaults to English.</param>
             <param name="unlockAtStart">Whether this instance should be unlocked on game start or not.</param>
-            <returns>A reference to this instance after the operation has completed.</returns>
-        </member>
-        <member name="M:Nautilus.Handlers.EnumExtensions.WithIcon(Nautilus.Handlers.EnumBuilder{TechType},Atlas.Sprite)">
-            <summary>
-            Adds an icon for this instance.
-            </summary>
-            <param name="builder">The current custom enum object instance.</param>
-            <param name="sprite">The icon to add for this instance.</param>
             <returns>A reference to this instance after the operation has completed.</returns>
         </member>
         <member name="M:Nautilus.Handlers.EnumExtensions.WithIcon(Nautilus.Handlers.EnumBuilder{TechType},UnityEngine.Sprite)">
@@ -4191,11 +4124,11 @@
             Handles custom loading screens
             </summary>
         </member>
-        <member name="M:Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.RegisterLoadingScreen(BepInEx.BaseUnityPlugin,Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.LoadingScreenData[])">
+        <member name="M:Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.RegisterLoadingScreen(System.String,Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.LoadingScreenData[])">
             <summary>
             Register loading screens with Nautilus. Note that custom loading screens will only appear when your mod is selected as the current theme
             </summary>
-            <param name="plugin">The plugin registering the loading screens</param>
+            <param name="titleAddonKey">The key used when registering the TitleScreenHandler.CollaborationData that should control this loading screen</param>
             <param name="loadingScreenDatas">The loading screens to register</param>
         </member>
         <member name="T:Nautilus.Handlers.LoadingScreen.LoadingScreenHandler.LoadingScreenData">
@@ -4623,6 +4556,9 @@
         <member name="M:Nautilus.Handlers.SaveDataHandler.RegisterSaveDataCache``1">
             <summary>
             Registers your <see cref="T:Nautilus.Json.SaveDataCache"/> to be automatically loaded and saved whenever the game is.
+            <br />
+            If you have overridden either the <see cref="M:Nautilus.Json.SaveDataCache.Load(System.Boolean)"/> or <see cref="M:Nautilus.Json.SaveDataCache.Save"/> methods
+            in your cache be aware that this handler calls the <em>async</em> versions of those functions!
             </summary>
             <typeparam name="T">A class derived from <see cref="T:Nautilus.Json.SaveDataCache"/> to hold your save data.</typeparam>
             <returns>An instance of the <typeparamref name="T"/> : <see cref="T:Nautilus.Json.SaveDataCache"/> with values loaded
@@ -4632,21 +4568,6 @@
             <summary>
             A handler class for adding custom sprites into the game.
             </summary>
-        </member>
-        <member name="M:Nautilus.Handlers.SpriteHandler.RegisterSprite(SpriteManager.Group,System.String,Atlas.Sprite)">
-            <summary>
-            Registers a new sprite to the game.
-            </summary>
-            <param name="group">The sprite group this sprite will be added to.</param>
-            <param name="id">The sprite internal identifier.</param>
-            <param name="sprite">The sprite to be added.</param>
-        </member>
-        <member name="M:Nautilus.Handlers.SpriteHandler.RegisterSprite(TechType,Atlas.Sprite)">
-            <summary>
-            Registers a new sprite to the game.
-            </summary>
-            <param name="type">The techtype paired to this sprite.</param>
-            <param name="sprite">The sprite to be added.</param>
         </member>
         <member name="M:Nautilus.Handlers.SpriteHandler.RegisterSprite(SpriteManager.Group,System.String,UnityEngine.Sprite)">
             <summary>
@@ -4992,6 +4913,11 @@
             Called when the addon is enabled. This occurs when your mod is selected as the current theme.
             </summary>
         </member>
+        <member name="M:Nautilus.Handlers.TitleScreen.TitleAddon.OnEnterLoadScreen">
+            <summary>
+            Is called when the player clicks on a save, and the loading screen is enabled.
+            </summary>
+        </member>
         <member name="M:Nautilus.Handlers.TitleScreen.TitleAddon.OnDisable">
             <summary>
             Called when the addon is disabled. This occurs when your mod is deselected as the current theme, or
@@ -5003,11 +4929,11 @@
             Handles custom additions to the main menu (Title screen).
             </summary>
         </member>
-        <member name="M:Nautilus.Handlers.TitleScreen.TitleScreenHandler.RegisterTitleScreenObject(BepInEx.BaseUnityPlugin,Nautilus.Handlers.TitleScreen.TitleScreenHandler.CustomTitleData)">
+        <member name="M:Nautilus.Handlers.TitleScreen.TitleScreenHandler.RegisterTitleScreenObject(System.String,Nautilus.Handlers.TitleScreen.TitleScreenHandler.CustomTitleData)">
             <summary>
             Register title screen additions with Nautilus for automatic handling.
             </summary>
-            <param name="plugin">The plugin for your mod.</param>
+            <param name="key">The key for your custom title data. Must be unique.</param>
             <param name="customTitleData">The custom title data for your additions.</param>
         </member>
         <member name="M:Nautilus.Handlers.TitleScreen.TitleScreenHandler.ApproveTitleCollaboration(BepInEx.BaseUnityPlugin,Nautilus.Handlers.TitleScreen.TitleScreenHandler.CollaborationData)">
@@ -5105,6 +5031,85 @@
         <member name="M:Nautilus.Handlers.TitleScreen.WorldObjectTitleAddon.ManagedUpdate">
             <summary>
             Called every frame while registered.
+            </summary>
+        </member>
+        <member name="T:Nautilus.Handlers.WaitScreenHandler">
+            <summary>
+            A handler for registering mod loading actions to be performed during the loading screen.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Handlers.WaitScreenHandler.RegisterEarlyLoadTask(System.String,System.Action{Nautilus.Handlers.WaitScreenHandler.WaitScreenTask},System.String)">
+            <summary>
+            Register a task for doing something very early during the loading screen.
+            <br /><br />
+            The task will execute almost immediately after the user presses the button to start a game, once the loading
+            screen fades in. This makes the timing ideal for loading save data or other data that does not directly depend
+            on objects in the game.
+            <br />
+            Do not use this task to set up GameObjects for your mod, as at this point the game is still in the MainMenu
+            scene and any GameObjects you create now will be destroyed once the in-game Main scene is loaded. Consider using
+            <see cref="M:Nautilus.Handlers.WaitScreenHandler.RegisterAsyncLoadTask(System.String,System.Func{Nautilus.Handlers.WaitScreenHandler.WaitScreenTask,System.Collections.IEnumerator},System.String)"/> or <see cref="M:Nautilus.Handlers.WaitScreenHandler.RegisterLateAsyncLoadTask(System.String,System.Func{Nautilus.Handlers.WaitScreenHandler.WaitScreenTask,System.Collections.IEnumerator},System.String)"/> for that instead.
+            </summary>
+            <param name="modName">The name of your mod. Will be displayed while this task is being worked on.</param>
+            <param name="loadingFunction">The function that will be called.</param>
+            <param name="description">An optional description to give users detailed information about what your task is
+            doing. Can be updated even while your task is executing by setting
+            <see cref="T:Nautilus.Handlers.WaitScreenHandler.WaitScreenTask"/>.<see cref="P:Nautilus.Handlers.WaitScreenHandler.WaitScreenTask.Status"/>.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.WaitScreenHandler.RegisterEarlyAsyncLoadTask(System.String,System.Func{Nautilus.Handlers.WaitScreenHandler.WaitScreenTask,System.Collections.IEnumerator},System.String)">
+            <inheritdoc cref="M:Nautilus.Handlers.WaitScreenHandler.RegisterEarlyLoadTask(System.String,System.Action{Nautilus.Handlers.WaitScreenHandler.WaitScreenTask},System.String)"/>
+        </member>
+        <member name="M:Nautilus.Handlers.WaitScreenHandler.RegisterLoadTask(System.String,System.Action{Nautilus.Handlers.WaitScreenHandler.WaitScreenTask},System.String)">
+            <summary>
+            Register a task for doing something midway through the loading screen.
+            <br /><br />
+            The task will execute just after the Main scene has finished loading in, meaning any GameObjects created during
+            this task will not be destroyed by a unity scene switch.
+            <br />
+            However, nothing in the game exists yet. You cannot access in-game concepts like Player.main, EscapePod.main or
+            similar at this time during the loading process. For that purpose, consider using
+            <see cref="M:Nautilus.Handlers.WaitScreenHandler.RegisterLateAsyncLoadTask(System.String,System.Func{Nautilus.Handlers.WaitScreenHandler.WaitScreenTask,System.Collections.IEnumerator},System.String)"/>.
+            </summary>
+            <param name="modName">The name of your mod. Will be displayed while this task is being worked on.</param>
+            <param name="loadingFunction">The function that will be called.</param>
+            <param name="description">An optional description to give users detailed information about what your task is
+            doing. Can be updated even while your task is executing by setting
+            <see cref="T:Nautilus.Handlers.WaitScreenHandler.WaitScreenTask"/>.<see cref="P:Nautilus.Handlers.WaitScreenHandler.WaitScreenTask.Status"/>.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.WaitScreenHandler.RegisterAsyncLoadTask(System.String,System.Func{Nautilus.Handlers.WaitScreenHandler.WaitScreenTask,System.Collections.IEnumerator},System.String)">
+            <inheritdoc cref="M:Nautilus.Handlers.WaitScreenHandler.RegisterLoadTask(System.String,System.Action{Nautilus.Handlers.WaitScreenHandler.WaitScreenTask},System.String)"/>
+        </member>
+        <member name="M:Nautilus.Handlers.WaitScreenHandler.RegisterLateLoadTask(System.String,System.Action{Nautilus.Handlers.WaitScreenHandler.WaitScreenTask},System.String)">
+            <summary>
+            Register a task for doing something just before the loading screen ends and the player gains control.
+            <br /><br />
+            The task will execute at the last possible moment before the loading screen ends. The game has finished all its
+            setup at this point and is only waiting for any tasks registered through this method. Use this method for tasks
+            that heavily rely on other GameObjects or singletons to be present, such as the Player, Inventory, or other mods.
+            </summary>
+            <param name="modName">The name of your mod. Will be displayed while this task is being worked on.</param>
+            <param name="loadingFunction">The function that will be called.</param>
+            <param name="description">An optional description to give users detailed information about what your task is
+            doing. Can be updated even while your task is executing by setting
+            <see cref="T:Nautilus.Handlers.WaitScreenHandler.WaitScreenTask"/>.<see cref="P:Nautilus.Handlers.WaitScreenHandler.WaitScreenTask.Status"/>.</param>
+        </member>
+        <member name="M:Nautilus.Handlers.WaitScreenHandler.RegisterLateAsyncLoadTask(System.String,System.Func{Nautilus.Handlers.WaitScreenHandler.WaitScreenTask,System.Collections.IEnumerator},System.String)">
+            <inheritdoc cref="M:Nautilus.Handlers.WaitScreenHandler.RegisterLateLoadTask(System.String,System.Action{Nautilus.Handlers.WaitScreenHandler.WaitScreenTask},System.String)"/>
+        </member>
+        <member name="T:Nautilus.Handlers.WaitScreenHandler.WaitScreenTask">
+            <summary>
+            Represents the unit of work performed by a mod during the loading screen.
+            </summary>
+        </member>
+        <member name="P:Nautilus.Handlers.WaitScreenHandler.WaitScreenTask.ModName">
+            <summary>
+            Determines the name displayed while this task is being performed.
+            </summary>
+        </member>
+        <member name="P:Nautilus.Handlers.WaitScreenHandler.WaitScreenTask.Status">
+            <summary>
+            Optional detailed information about what the mod is working on during this task. Can be updated during
+            tasks to give the user detailed feedback about what exactly the mod is doing.
             </summary>
         </member>
         <member name="T:Nautilus.Handlers.WorldEntityDatabaseHandler">
@@ -5655,6 +5660,9 @@
             <param name="jsonConverters">The <see cref="T:Newtonsoft.Json.JsonConverter"/>s to be used for deserialization.</param>
             <seealso cref="M:Nautilus.Json.ExtensionMethods.JsonExtensions.SaveJson``1(``0,System.String,Newtonsoft.Json.JsonConverter[])"/>
         </member>
+        <member name="M:Nautilus.Json.ExtensionMethods.JsonExtensions.LoadJsonAsync``1(``0,System.String,System.Boolean,Newtonsoft.Json.JsonConverter[])">
+            <inheritdoc cref="M:Nautilus.Json.ExtensionMethods.JsonExtensions.LoadJson``1(``0,System.String,System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
+        </member>
         <member name="M:Nautilus.Json.ExtensionMethods.JsonExtensions.SaveJson``1(``0,System.String,Newtonsoft.Json.JsonConverter[])">
             <summary>
             Saves the fields and properties of the <paramref name="jsonObject"/> as JSON properties to the file on disk.
@@ -5663,6 +5671,9 @@
             <param name="jsonObject">The object instance to save the fields and properties from.</param>
             <param name="path">The file path at which to save the JSON file.</param>
             <param name="jsonConverters">The <see cref="T:Newtonsoft.Json.JsonConverter"/>s to be used for serialization.</param>
+        </member>
+        <member name="M:Nautilus.Json.ExtensionMethods.JsonExtensions.SaveJsonAsync``1(``0,System.String,Newtonsoft.Json.JsonConverter[])">
+            <inheritdoc cref="M:Nautilus.Json.ExtensionMethods.JsonExtensions.SaveJson``1(``0,System.String,Newtonsoft.Json.JsonConverter[])"/>
         </member>
         <member name="T:Nautilus.Json.Interfaces.IJsonFile">
             <summary>
@@ -5756,7 +5767,20 @@
             </summary>
             <param name="createFileIfNotExist">Whether a new JSON file should be created with default values if it does not
             already exist.</param>
+            <seealso cref="M:Nautilus.Json.JsonFile.LoadAsync(System.Boolean)"/>
             <seealso cref="M:Nautilus.Json.JsonFile.Save"/>
+            <seealso cref="M:Nautilus.Json.JsonFile.SaveAsync"/>
+            <seealso cref="M:Nautilus.Json.JsonFile.LoadWithConverters(System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
+        </member>
+        <member name="M:Nautilus.Json.JsonFile.LoadAsync(System.Boolean)">
+            <summary>
+            Loads the JSON properties from the file on disk into the <see cref="T:Nautilus.Json.JsonFile"/>.
+            </summary>
+            <param name="createFileIfNotExist">Whether a new JSON file should be created with default values if it does not
+            already exist.</param>
+            <seealso cref="M:Nautilus.Json.JsonFile.Load(System.Boolean)"/>
+            <seealso cref="M:Nautilus.Json.JsonFile.Save"/>
+            <seealso cref="M:Nautilus.Json.JsonFile.SaveAsync"/>
             <seealso cref="M:Nautilus.Json.JsonFile.LoadWithConverters(System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
         </member>
         <member name="M:Nautilus.Json.JsonFile.Save">
@@ -5764,6 +5788,17 @@
             Saves the current fields and properties of the <see cref="T:Nautilus.Json.JsonFile"/> as JSON properties to the file on disk.
             </summary>
             <seealso cref="M:Nautilus.Json.JsonFile.Load(System.Boolean)"/>
+            <seealso cref="M:Nautilus.Json.JsonFile.LoadAsync(System.Boolean)"/>
+            <seealso cref="M:Nautilus.Json.JsonFile.SaveAsync"/>
+            <seealso cref="M:Nautilus.Json.JsonFile.SaveWithConverters(Newtonsoft.Json.JsonConverter[])"/>
+        </member>
+        <member name="M:Nautilus.Json.JsonFile.SaveAsync">
+            <summary>
+            Saves the current fields and properties of the <see cref="T:Nautilus.Json.JsonFile"/> as JSON properties to the file on disk.
+            </summary>
+            <seealso cref="M:Nautilus.Json.JsonFile.Load(System.Boolean)"/>
+            <seealso cref="M:Nautilus.Json.JsonFile.LoadAsync(System.Boolean)"/>
+            <seealso cref="M:Nautilus.Json.JsonFile.Save"/>
             <seealso cref="M:Nautilus.Json.JsonFile.SaveWithConverters(Newtonsoft.Json.JsonConverter[])"/>
         </member>
         <member name="M:Nautilus.Json.JsonFile.LoadWithConverters(System.Boolean,Newtonsoft.Json.JsonConverter[])">
@@ -5777,6 +5812,18 @@
             <seealso cref="M:Nautilus.Json.JsonFile.SaveWithConverters(Newtonsoft.Json.JsonConverter[])"/>
             <seealso cref="M:Nautilus.Json.JsonFile.Load(System.Boolean)"/>
         </member>
+        <member name="M:Nautilus.Json.JsonFile.LoadWithConvertersAsync(System.Boolean,Newtonsoft.Json.JsonConverter[])">
+            <summary>
+            Loads the JSON properties from the file on disk into the <see cref="T:Nautilus.Json.JsonFile"/>.
+            </summary>
+            <param name="createFileIfNotExist">Whether a new JSON file should be created with default values if it does not
+            already exist.</param>
+            <param name="jsonConverters">Optional <see cref="T:Newtonsoft.Json.JsonConverter"/>s to be used for serialization.
+            The <see cref="P:Nautilus.Json.JsonFile.AlwaysIncludedJsonConverters"/> will always be used, regardless of whether you pass them.</param>
+            <seealso cref="M:Nautilus.Json.JsonFile.SaveWithConvertersAsync(Newtonsoft.Json.JsonConverter[])"/>
+            <seealso cref="M:Nautilus.Json.JsonFile.LoadWithConverters(System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
+            <seealso cref="M:Nautilus.Json.JsonFile.Load(System.Boolean)"/>
+        </member>
         <member name="M:Nautilus.Json.JsonFile.SaveWithConverters(Newtonsoft.Json.JsonConverter[])">
             <summary>
             Saves the current fields and properties of the <see cref="T:Nautilus.Json.JsonFile"/> as JSON properties to the file on disk.
@@ -5784,6 +5831,16 @@
             <param name="jsonConverters">Optional <see cref="T:Newtonsoft.Json.JsonConverter"/>s to be used for deserialization.
             The <see cref="P:Nautilus.Json.JsonFile.AlwaysIncludedJsonConverters"/> will always be used, regardless of whether you pass them.</param>
             <seealso cref="M:Nautilus.Json.JsonFile.LoadWithConverters(System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
+            <seealso cref="M:Nautilus.Json.JsonFile.Save"/>
+        </member>
+        <member name="M:Nautilus.Json.JsonFile.SaveWithConvertersAsync(Newtonsoft.Json.JsonConverter[])">
+            <summary>
+            Saves the current fields and properties of the <see cref="T:Nautilus.Json.JsonFile"/> as JSON properties to the file on disk.
+            </summary>
+            <param name="jsonConverters">Optional <see cref="T:Newtonsoft.Json.JsonConverter"/>s to be used for deserialization.
+            The <see cref="P:Nautilus.Json.JsonFile.AlwaysIncludedJsonConverters"/> will always be used, regardless of whether you pass them.</param>
+            <seealso cref="M:Nautilus.Json.JsonFile.LoadWithConverters(System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
+            <seealso cref="M:Nautilus.Json.JsonFile.SaveWithConverters(Newtonsoft.Json.JsonConverter[])"/>
             <seealso cref="M:Nautilus.Json.JsonFile.Save"/>
         </member>
         <member name="T:Nautilus.Json.JsonFileEventArgs">
@@ -5821,18 +5878,48 @@
         <member name="M:Nautilus.Json.SaveDataCache.Load(System.Boolean)">
             <summary>
             Loads the JSON properties from the file on disk into the <see cref="T:Nautilus.Json.SaveDataCache"/>.
+            <br />
+            If you are overriding this in a subclass, be aware that <see cref="T:Nautilus.Handlers.SaveDataHandler"/>.
+            <see cref="M:Nautilus.Handlers.SaveDataHandler.RegisterSaveDataCache``1"/> calls the <em>async</em> load function
+            <see cref="M:Nautilus.Json.SaveDataCache.LoadAsync(System.Boolean)"/>!
             </summary>
             <param name="createFileIfNotExist">Whether a new JSON file should be created with default values if it does not
             already exist.</param>
+            <seealso cref="M:Nautilus.Json.SaveDataCache.LoadAsync(System.Boolean)"/>
             <seealso cref="M:Nautilus.Json.SaveDataCache.Save"/>
+            <seealso cref="M:Nautilus.Json.SaveDataCache.LoadWithConverters(System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
+            <exception cref="T:System.InvalidOperationException">Thrown when the player is not in-game.</exception>
+        </member>
+        <member name="M:Nautilus.Json.SaveDataCache.LoadAsync(System.Boolean)">
+            <summary>
+            Loads the JSON properties from the file on disk into the <see cref="T:Nautilus.Json.SaveDataCache"/>.
+            </summary>
+            <param name="createFileIfNotExist">Whether a new JSON file should be created with default values if it does not
+            already exist.</param>
+            <seealso cref="M:Nautilus.Json.SaveDataCache.Load(System.Boolean)"/>
+            <seealso cref="M:Nautilus.Json.SaveDataCache.SaveAsync"/>
             <seealso cref="M:Nautilus.Json.SaveDataCache.LoadWithConverters(System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
             <exception cref="T:System.InvalidOperationException">Thrown when the player is not in-game.</exception>
         </member>
         <member name="M:Nautilus.Json.SaveDataCache.Save">
             <summary>
             Saves the current fields and properties of the <see cref="T:Nautilus.Json.SaveDataCache"/> as JSON properties to the file on disk.
+            <br />
+            If you are overriding this in a subclass, be aware that <see cref="T:Nautilus.Handlers.SaveDataHandler"/>.
+            <see cref="M:Nautilus.Handlers.SaveDataHandler.RegisterSaveDataCache``1"/> calls the <em>async</em> saving
+            function <see cref="M:Nautilus.Json.SaveDataCache.SaveAsync"/>!
             </summary>
             <seealso cref="M:Nautilus.Json.SaveDataCache.Load(System.Boolean)"/>
+            <seealso cref="M:Nautilus.Json.SaveDataCache.SaveAsync"/>
+            <seealso cref="M:Nautilus.Json.SaveDataCache.SaveWithConverters(Newtonsoft.Json.JsonConverter[])"/>
+            <exception cref="T:System.InvalidOperationException">Thrown when the player is not in-game.</exception>
+        </member>
+        <member name="M:Nautilus.Json.SaveDataCache.SaveAsync">
+            <summary>
+            Saves the current fields and properties of the <see cref="T:Nautilus.Json.SaveDataCache"/> as JSON properties to the file on disk.
+            </summary>
+            <seealso cref="M:Nautilus.Json.SaveDataCache.LoadAsync(System.Boolean)"/>
+            <seealso cref="M:Nautilus.Json.SaveDataCache.Save"/>
             <seealso cref="M:Nautilus.Json.SaveDataCache.SaveWithConverters(Newtonsoft.Json.JsonConverter[])"/>
             <exception cref="T:System.InvalidOperationException">Thrown when the player is not in-game.</exception>
         </member>
@@ -5848,6 +5935,18 @@
             <seealso cref="M:Nautilus.Json.SaveDataCache.Load(System.Boolean)"/>
             <exception cref="T:System.InvalidOperationException">Thrown when the player is not in-game.</exception>
         </member>
+        <member name="M:Nautilus.Json.SaveDataCache.LoadWithConvertersAsync(System.Boolean,Newtonsoft.Json.JsonConverter[])">
+            <summary>
+            Loads the JSON properties from the file on disk into the <see cref="T:Nautilus.Json.SaveDataCache"/>.
+            </summary>
+            <param name="createFileIfNotExist">Whether a new JSON file should be created with default values if it does not
+            already exist.</param>
+            <param name="jsonConverters">Optional <see cref="T:Newtonsoft.Json.JsonConverter"/>s to be used for serialization.
+            The <see cref="P:Nautilus.Json.JsonFile.AlwaysIncludedJsonConverters"/> will always be used, regardless of whether you pass them.</param>
+            <seealso cref="M:Nautilus.Json.SaveDataCache.SaveWithConvertersAsync(Newtonsoft.Json.JsonConverter[])"/>
+            <seealso cref="M:Nautilus.Json.SaveDataCache.Load(System.Boolean)"/>
+            <exception cref="T:System.InvalidOperationException">Thrown when the player is not in-game.</exception>
+        </member>
         <member name="M:Nautilus.Json.SaveDataCache.SaveWithConverters(Newtonsoft.Json.JsonConverter[])">
             <summary>
             Saves the current fields and properties of the <see cref="T:Nautilus.Json.SaveDataCache"/> as JSON properties to the file on disk.
@@ -5855,6 +5954,16 @@
             <param name="jsonConverters">Optional <see cref="T:Newtonsoft.Json.JsonConverter"/>s to be used for deserialization.
             The <see cref="P:Nautilus.Json.JsonFile.AlwaysIncludedJsonConverters"/> will always be used, regardless of whether you pass them.</param>
             <seealso cref="M:Nautilus.Json.SaveDataCache.LoadWithConverters(System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
+            <seealso cref="M:Nautilus.Json.SaveDataCache.Save"/>
+            <exception cref="T:System.InvalidOperationException">Thrown when the player is not in-game.</exception>
+        </member>
+        <member name="M:Nautilus.Json.SaveDataCache.SaveWithConvertersAsync(Newtonsoft.Json.JsonConverter[])">
+            <summary>
+            Saves the current fields and properties of the <see cref="T:Nautilus.Json.SaveDataCache"/> as JSON properties to the file on disk.
+            </summary>
+            <param name="jsonConverters">Optional <see cref="T:Newtonsoft.Json.JsonConverter"/>s to be used for deserialization.
+            The <see cref="P:Nautilus.Json.JsonFile.AlwaysIncludedJsonConverters"/> will always be used, regardless of whether you pass them.</param>
+            <seealso cref="M:Nautilus.Json.SaveDataCache.LoadWithConvertersAsync(System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
             <seealso cref="M:Nautilus.Json.SaveDataCache.Save"/>
             <exception cref="T:System.InvalidOperationException">Thrown when the player is not in-game.</exception>
         </member>
@@ -7168,16 +7277,6 @@
             <param name="key">The starting keybind value.</param>
             <param name="tooltip">The tooltip to show when hovering over the option.</param>
         </member>
-        <member name="M:Nautilus.Options.ModKeybindOption.Create(System.String,System.String,GameInput.Device,System.String,System.String)">
-            <summary>
-            Creates a new <see cref="T:Nautilus.Options.ModKeybindOption"/> for handling an option that is a keybind.
-            </summary>
-            <param name="id">The internal ID for the toggle option.</param>
-            <param name="label">The display text to use in the in-game menu.</param>
-            <param name="device">The device name.</param>
-            <param name="key">The starting keybind value.</param>
-            /// <param name="tooltip">The tooltip to show when hovering over the option.</param>
-        </member>
         <member name="M:Nautilus.Options.ModKeybindOption.AddToPanel(uGUI_TabbedControlsPanel,System.Int32)">
             <summary>
             The base method for adding an object to the options panel
@@ -7657,6 +7756,37 @@
             A constant <see cref="T:ItemAction"/> value to represent a custom left click item action
             </summary>
         </member>
+        <member name="M:Nautilus.Patchers.WaitScreenPatcher.AddModLoadStageDuration">
+            <summary>
+            Patch in the amount of space that the mod load stages take up in the loading bar. These are relative to all
+            other stages. The vanilla spacing was likely set based on measured load times (total ~20).
+            </summary>
+        </member>
+        <member name="M:Nautilus.Patchers.WaitScreenPatcher.LoadEarlyModDataAsync(System.Collections.IEnumerator)">
+            <summary>
+            Perform an early, initial load stage for mods. This is as early into the save game launch process as you can
+            get while still showing the loading screen (and thereby delaying any freezes/stutters to a point where users
+            expect them to happen).
+            </summary>
+        </member>
+        <member name="M:Nautilus.Patchers.WaitScreenPatcher.LoadModDataAsync(System.Collections.IEnumerator)">
+            <summary>
+            We gain execution here directly after the game's main scene has finished loading, but before the rest of the
+            game can continue to load (that's what the rest of the patched method does). This is the earliest point
+            you can do anything without your GameObjects getting destroyed by the loading of the Main scene.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Patchers.WaitScreenPatcher.UpdateStatusText">
+            <summary>
+            Update the text above the loading bar according to the wait screen's status.
+            Runs every time the loading bar progress updates, i.e. only during update cycles in loading screens.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Patchers.WaitScreenPatcher.CreateStatusText">
+            <summary>
+            Set up the text label describing progress above the loading bar.
+            </summary>
+        </member>
         <member name="T:Nautilus.Utility.AssetBundleLoadingUtils">
             <summary>
             Utilities related to loading Asset Bundles.
@@ -7679,6 +7809,20 @@
             <param name="pathToBundle">The relative path to the Asset Bundle file from your plugin folder, i.e. "Assets/deextinctionassets" or "Assets/AssetBundles/gargantuanassets". See <see cref="M:System.IO.Path.Combine(System.String,System.String)"/> for creating the path.
             These typically do not have a file extension.</param>
             <seealso cref="M:UnityEngine.AssetBundle.LoadFromFile(System.String)"/>
+        </member>
+        <member name="T:Nautilus.Utility.AsyncUtils">
+            <summary>
+            Utilities that make it easier to work with async methods in the context of Unity.
+            </summary>
+        </member>
+        <member name="M:Nautilus.Utility.AsyncUtils.WaitUntilTaskComplete(System.Threading.Tasks.Task)">
+            <summary>
+            Takes an async <see cref="T:System.Threading.Tasks.Task"/> and returns an <see cref="T:System.Collections.IEnumerator"/> that only continues when the task
+            has completed (successfully or unsuccessfully). Can be used to run an async method as part of a
+            <see cref="T:UnityEngine.Coroutine"/>.
+            </summary>
+            <param name="task">The async method to wait for.</param>
+            <returns>An IEnumerator for use in e.g. a coroutine.</returns>
         </member>
         <member name="T:Nautilus.Utility.AudioUtils">
             <summary>
@@ -8129,7 +8273,7 @@
         </member>
         <member name="M:Nautilus.Utility.ImageUtils.LoadSpriteFromFile(System.String,UnityEngine.TextureFormat)">
             <summary>
-            Creates a new <see cref="T:Atlas.Sprite" /> from an image file.
+            Creates a new <see cref="T:UnityEngine.Sprite" /> from an image file.
             </summary>
             <param name="filePathToImage">The path to the image file.</param>
             <param name="format">
@@ -8137,15 +8281,15 @@
             https://docs.unity3d.com/ScriptReference/TextureFormat.BC7.html <br/>
             Don't change this unless you really know what you're doing.
             </param>
-            <returns>Will return a new <see cref="T:Atlas.Sprite"/> instance if the file exists; Otherwise returns null.</returns>
+            <returns>Will return a new <see cref="T:UnityEngine.Sprite"/> instance if the file exists; Otherwise returns null.</returns>
         </member>
         <member name="M:Nautilus.Utility.ImageUtils.LoadSpriteFromTexture(UnityEngine.Texture2D)">
             <summary>
-            Creates a new <see cref="T:Atlas.Sprite" /> from an image file.
+            Creates a new <see cref="T:UnityEngine.Sprite" /> from an image file.
             </summary>
             <param name="texture2D">The 2D texture to convert into a sprite.</param>
             <returns>
-            Will return a new <see cref="T:Atlas.Sprite" /> instance using the provided texture.
+            Will return a new <see cref="T:UnityEngine.Sprite" /> instance using the provided texture.
             </returns>
         </member>
         <member name="T:Nautilus.Utility.IOUtilities">
@@ -8267,6 +8411,12 @@
             <seealso cref="M:Nautilus.Utility.JsonUtils.Load``1(System.String,System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
             <seealso cref="M:Nautilus.Utility.JsonUtils.Save``1(``0,System.String,Newtonsoft.Json.JsonConverter[])"/>
         </member>
+        <member name="M:Nautilus.Utility.JsonUtils.LoadAsync``1(System.String,System.Boolean,Newtonsoft.Json.JsonConverter[])">
+            <inheritdoc cref="M:Nautilus.Utility.JsonUtils.Load``1(System.String,System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
+        </member>
+        <member name="M:Nautilus.Utility.JsonUtils.LoadAsync``1(``0,System.String,System.Boolean,Newtonsoft.Json.JsonConverter[])">
+            <inheritdoc cref="M:Nautilus.Utility.JsonUtils.Load``1(``0,System.String,System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
+        </member>
         <member name="M:Nautilus.Utility.JsonUtils.Save``1(``0,System.String,Newtonsoft.Json.JsonConverter[])">
             <summary>
             Saves the <paramref name="jsonObject"/> parsed as JSON data to the JSON file at <paramref name="path"/>,
@@ -8279,119 +8429,8 @@
             <seealso cref="M:Nautilus.Utility.JsonUtils.Load``1(``0,System.String,System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
             <seealso cref="M:Nautilus.Utility.JsonUtils.Load``1(System.String,System.Boolean,Newtonsoft.Json.JsonConverter[])"/>
         </member>
-        <member name="T:Nautilus.Utility.KeyCodeUtils">
-            <summary>
-            A collection of <see cref="T:UnityEngine.KeyCode"/> related utility methods.
-            </summary>
-        </member>
-        <member name="M:Nautilus.Utility.KeyCodeUtils.KeyCodeToString(UnityEngine.KeyCode)">
-            <summary>
-            Turn a <seealso cref="T:UnityEngine.KeyCode"/> into a <seealso cref="T:System.String"/>
-            </summary>
-            <param name="keyCode"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Nautilus.Utility.KeyCodeUtils.GetDisplayTextForKeyCode(UnityEngine.KeyCode)">
-            <summary>
-            Get the UI display text for KeyCode input using uGUI.buttonCharacters.
-            Supports most key inputs, including controller and mouse buttons.
-            </summary>
-            <param name="keyCode"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Nautilus.Utility.KeyCodeUtils.StringToKeyCode(System.String)">
-            <summary>
-            Turn a <seealso cref="T:System.String"/> into a <seealso cref="T:UnityEngine.KeyCode"/>
-            </summary>
-            <param name="s"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Nautilus.Utility.KeyCodeUtils.GetKeyDown(UnityEngine.KeyCode)">
-            <summary>
-            Check this is the first frame a key has been pressed
-            </summary>
-            <param name="keyCode"></param>
-            <returns>True during the first frame a key has been pressed, otherwise false</returns>
-            <seealso cref="T:UnityEngine.KeyCode"/>
-            <seealso cref="M:Nautilus.Utility.KeyCodeUtils.GetKeyDown(System.String)"/>
-        </member>
-        <member name="M:Nautilus.Utility.KeyCodeUtils.GetKeyDown(System.String)">
-            <summary>
-            Check this is the first frame a key has been pressed.
-            </summary>
-            <param name="s"></param>
-            <returns>True during the first frame a key has been pressed, otherwise false</returns>
-            <seealso cref="M:Nautilus.Utility.KeyCodeUtils.GetKeyDown(UnityEngine.KeyCode)"/>
-        </member>
-        <member name="M:Nautilus.Utility.KeyCodeUtils.GetKeyHeld(UnityEngine.KeyCode)">
-            <summary>
-            Check a key is currently held down
-            </summary>
-            <param name="keyCode"></param>
-            <returns>True every frame a key is held down, otherwise false</returns>
-            <seealso cref="T:UnityEngine.KeyCode"/>
-            <seealso cref="M:Nautilus.Utility.KeyCodeUtils.GetKeyHeld(System.String)"/>
-        </member>
-        <member name="M:Nautilus.Utility.KeyCodeUtils.GetKeyHeld(System.String)">
-            <summary>
-            Check a key is currently held down
-            </summary>
-            <param name="s"></param>
-            <returns>True every frame a key is held down, otherwise false</returns>
-            <seealso cref="M:Nautilus.Utility.KeyCodeUtils.GetKeyHeld(UnityEngine.KeyCode)"/>
-        </member>
-        <member name="M:Nautilus.Utility.KeyCodeUtils.GetKeyHeldTime(UnityEngine.KeyCode)">
-            <summary>
-            Check how long a key has been held down
-            </summary>
-            <param name="keyCode"></param>
-            <returns></returns>
-            <seealso cref="T:UnityEngine.KeyCode"/>
-            <seealso cref="M:Nautilus.Utility.KeyCodeUtils.GetKeyHeldTime(System.String)"/>
-        </member>
-        <member name="M:Nautilus.Utility.KeyCodeUtils.GetKeyHeldTime(System.String)">
-            <summary>
-            Check how long a key has been held down
-            </summary>
-            <param name="s"></param>
-            <returns></returns>
-            <seealso cref="M:Nautilus.Utility.KeyCodeUtils.GetKeyHeldTime(UnityEngine.KeyCode)"/>
-        </member>
-        <member name="M:Nautilus.Utility.KeyCodeUtils.GetKeyUp(UnityEngine.KeyCode)">
-            <summary>
-            Check this is the frame a key has been released
-            </summary>
-            <param name="keyCode"></param>
-            <returns>True during the first frame a key has been released, otherwise false</returns>
-            <seealso cref="T:UnityEngine.KeyCode"/>
-            <seealso cref="M:Nautilus.Utility.KeyCodeUtils.GetKeyUp(System.String)"/>
-        </member>
-        <member name="M:Nautilus.Utility.KeyCodeUtils.GetKeyUp(System.String)">
-            <summary>
-            Check this is the first frame a key has been released
-            </summary>
-            <param name="s"></param>
-            <returns>True during the first frame a key has been released, otherwise false</returns>
-            <seealso cref="M:Nautilus.Utility.KeyCodeUtils.GetKeyUp(UnityEngine.KeyCode)"/>
-        </member>
-        <member name="M:Nautilus.Utility.KeyCodeUtils.GetAnalogValueForKey(UnityEngine.KeyCode)">
-            <summary>
-            Gets the analog value for a <seealso cref="T:UnityEngine.KeyCode"/> following the same logic as
-            <seealso cref="M:GameInput.GetAnalogValueForButton(GameInput.Button)"/>
-            </summary>
-            <param name="keyCode"></param>
-            <returns>1f while a key is being held, otherwise 0f</returns>
-            <seealso cref="T:UnityEngine.KeyCode"/>
-            <seealso cref="M:Nautilus.Utility.KeyCodeUtils.GetAnalogValueForKey(System.String)"/>
-        </member>
-        <member name="M:Nautilus.Utility.KeyCodeUtils.GetAnalogValueForKey(System.String)">
-            <summary>
-            Gets the analog value for a key by <seealso cref="T:System.String"/> value, following the same logic as
-            <seealso cref="M:GameInput.GetAnalogValueForButton(GameInput.Button)"/>
-            </summary>
-            <param name="s"></param>
-            <returns>1f while a key is being held, otherwise 0f</returns>
-            <seealso cref="M:Nautilus.Utility.KeyCodeUtils.GetAnalogValueForKey(UnityEngine.KeyCode)"/>
+        <member name="M:Nautilus.Utility.JsonUtils.SaveAsync``1(``0,System.String,Newtonsoft.Json.JsonConverter[])">
+            <inheritdoc cref="M:Nautilus.Utility.JsonUtils.Save``1(``0,System.String,Newtonsoft.Json.JsonConverter[])"/>
         </member>
         <member name="T:Nautilus.Utility.MaterialModifiers.ColorModifier">
             <summary>
@@ -9362,6 +9401,15 @@
             Registers a simple <see cref="T:System.Action"/> method to invoke whenever the player saves the game via the in game menu.
             </summary>
             <param name="onSaveAction">The method to invoke.</param>
+        </member>
+        <member name="M:Nautilus.Utility.SaveUtils.RegisterOnSaveAsyncEvent(System.Func{System.Collections.IEnumerator})">
+            <summary>
+            Registers an async method to invoke whenever the player saves the game via the in game menu.
+            </summary>
+            <param name="onSaveTask">The async method to invoke.</param>
+        </member>
+        <member name="M:Nautilus.Utility.SaveUtils.RegisterOnSaveAsyncEvent(System.Func{System.Threading.Tasks.Task})">
+            <inheritdoc cref="M:Nautilus.Utility.SaveUtils.RegisterOnSaveAsyncEvent(System.Func{System.Collections.IEnumerator})"/>
         </member>
         <member name="M:Nautilus.Utility.SaveUtils.RegisterOnFinishLoadingEvent(System.Action)">
             <summary>

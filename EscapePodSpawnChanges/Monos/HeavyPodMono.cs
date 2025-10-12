@@ -27,6 +27,7 @@ internal class HeavyPodMono : MonoBehaviour
     WaterClipProxy wcp;
 
     bool playAnimationNext = false;
+    public bool playerRespawning;
 
     public Shader marmosetUber;
 
@@ -230,29 +231,32 @@ internal class HeavyPodMono : MonoBehaviour
 
     IEnumerator FreezeLoop()//dont move the pod if the player is not next to it, otherwise it will clip thru terrain
     {
+        //Gravity And animations
         if (SaveUtils.inGameSave.HeavyPodToggle)
         {
             wf.underwaterGravity = SaveUtils.settingsCache.VertialMotionRate;
+            wf.aboveWaterGravity = wf.underwaterGravity;
             HidePontoons(playAnimationNext);
         }
         else
         {
             wf.underwaterGravity = -1 * SaveUtils.settingsCache.VertialMotionRate;
+            wf.aboveWaterGravity = 9.81f;
             ShowPontoons(playAnimationNext);
         }
-        wf.aboveWaterGravity = wf.underwaterGravity;
         if (playAnimationNext)
         {
             playAnimationNext = false;
         }
 
-        if (Vector3.Distance( Player.main.transform.position, EscapePod.main.transform.position) < 20)
-        {
-            EscapePod.main.GetComponent<Rigidbody>().isKinematic = false;
-
-        } else
+        //Freeze System
+        if (playerRespawning || Vector3.Distance(Player.main.transform.position, EscapePod.main.transform.position) > 20)
         {
             EscapePod.main.GetComponent<Rigidbody>().isKinematic = true;
+        }
+        else
+        {
+            EscapePod.main.GetComponent<Rigidbody>().isKinematic = false;
         }
 
         yield return new WaitForSeconds(0.25f);

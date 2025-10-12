@@ -27,9 +27,13 @@ NOTE: moddedExample.txt has a .txt extension to not be loaded into the game; cha
    "ModGUID": "com.lee23.pdaupgradechips"
 }
 Each item has 2 extra fields that tell Life Pod Remastered to load it differently.
-The `"IsModded": true` tells it to treat the item as modded and search for it through Nautilus.
-"ModGUID" tells what mod the item is intended to come from. It is technically optional but is highly recommended for troubleshooting and for other users of the preset.
+1. The `"IsModded": true` tells it to treat the item as modded and search for it through Nautilus.
+2. "ModGUID" tells what mod the item is intended to come from. It is technically optional but is highly recommended for troubleshooting and for other users of the preset.
 To get the ModGUID of any mod, use Lee23's Subnautica Mod Manager https://www.nexusmods.com/subnautica/mods/1168. It is by far the easiest way to get a loaded mod’s GUID.
+
+The modded item name can be found easily in game. In Nautilus's settings in-game, set "Extra item info" to "Mod name and item ID".
+Next obtain the item in game and you will be able to see the debug spawn item id. Use that for the "Name" field
+
 
 ===Vanilla Items===
 These item IDs were generated from this page on the Subnautica wiki: https://subnautica.fandom.com/wiki/Spawn_IDs_(Subnautica)
