@@ -21,27 +21,16 @@
     <PackageReference Include="BepInEx.Core" Version="5.4.21" />
     <PackageReference Include="BepInEx.PluginInfoProps" Version="1.1.0" />
     <PackageReference Include="UnityEngine.Modules" Version="2019.4.36" IncludeAssets="compile" />
-    <PackageReference Include="Subnautica.GameLibs" Version="71288.0.0-r.0" />
+    <PackageReference Include="Subnautica.GameLibs" Version="82304.0.0-r.0" />
+    <PackageReference Include="Subnautica.Nautilus" Version="1.0.0-pre.48" PrivateAssets="all">
+        <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="PolySharp" Version="1.13.1" />
   </ItemGroup>
+
+  <Import Project="..\PostBuild.targets" />
 
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\publicized_assemblies\Assembly-CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\publicized_assemblies\Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
-    <Reference Include="Nautilus">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\Nautilus\Nautilus.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="mkdir &quot;C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\$(TargetName)&quot;&#xD;&#xA;copy /Y &quot;$(TargetPath)&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\$(TargetName)&quot;" />
-  </Target>
 </Project>
