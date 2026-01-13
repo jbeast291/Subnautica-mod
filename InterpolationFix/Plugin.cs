@@ -1,6 +1,8 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
+using InterpolationFix.Mono;
+using Nautilus.Handlers;
 using Nautilus.Utility.ModMessages;
 
 namespace InterpolationFix;
@@ -14,7 +16,8 @@ public class Plugin : BaseUnityPlugin
 
     private static readonly Harmony Harmony = new Harmony(MyGuid);
 
-    internal static new ManualLogSource Logger;
+    internal new static ManualLogSource Logger;
+    
     public void Awake()
     {
         Logger = base.Logger;
@@ -22,8 +25,16 @@ public class Plugin : BaseUnityPlugin
         ModMessageSystem.SendGlobal("FindMyUpdates", "https://raw.githubusercontent.com/jbeast291/Subnautica-mod/refs/heads/main/InterpolationFix/FMU.json");
         
         Logger.LogInfo(PluginName + " " + PluginVersion + " " + "has been loaded!");
-        Logger.LogInfo("Patching...");
         Harmony.PatchAll();
-        Logger.LogInfo("Patched!");
+        Logger.LogInfo("Patched Methods!");
+        
+        WaitScreenHandler.RegisterLateLoadTask(PluginName, AttachInterpolationManager, "SceneLoadListener");
+    }
+
+    public void AttachInterpolationManager(WaitScreenHandler.WaitScreenTask waitScreenTask)
+    {
+        waitScreenTask.Status = "Adding Interpolation Manager...";
+        Logger.LogInfo("Adding Interpolation Manager...");
+        Player.main.gameObject.EnsureComponent<PlayerInterpolationManager>();
     }
 }

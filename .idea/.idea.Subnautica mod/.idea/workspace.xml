@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e833fc0d-7623-4d58-99dc-89bd72c9b49d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/InterpolationFix/Mono/PlayerInterpolationManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterpolationFix/BepInEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InterpolationFix/Plugin.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Subnautica mod/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Subnautica mod/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InterpolationFix/InterpolationFix.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/InterpolationFix/InterpolationFix.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InterpolationFix/Patches/FreezeRigidbodyWhenFarPatch.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InterpolationFix/Patches/FreezeRigidbodyWhenFarPatch.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InterpolationFix/Patches/PlayerPatch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/InterpolationFix/Plugin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InterpolationFix/Plugin.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,31 +27,34 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/81d5be8111284415bf73df3b0d8557a84400/5b/bc0cc69f/02000022pdb1.il" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99c774acc5fb40bdb0485e546b85e2e415400/27/5e315af2/CharacterController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9ec6c1b62c324758b9c2d79021505be61b5600/b2/e11d5398/FreezeRigidbodyWhenFar.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c055c80802d14a9db359fbdc91eb371c398800/31/b845e44d/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c055c80802d14a9db359fbdc91eb371c398800/d3/95e06fdc/FreezeRigidbodyWhenFar.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/df60b3a160a540f493f66f56a66f0e8c1bbe00/6e/5c669763/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f841581f63d54f5ca96e72fa08d3a0bf15be00/7a/f3e1b352/Utils.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/InterpolationFix/Mono/PlayerInterpolationManager.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="38BIdjnesb91G94yLSNfu9A6RhC" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/jbeast/.local/share/Steam/steamapps/common/Subnautica/Subnautica_Data/Managed/UnityEngine.PhysicsModule.dll",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/jbeast/.local/share/Steam/steamapps/common/Subnautica/Subnautica_Data/Managed/UnityEngine.PhysicsModule.dll&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="e833fc0d-7623-4d58-99dc-89bd72c9b49d" name="Changes" comment="" />
@@ -56,7 +62,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768266628451</updated>
-      <workItem from="1768266629768" duration="3955000" />
+      <workItem from="1768266629768" duration="4108000" />
+      <workItem from="1768271891853" duration="7586000" />
     </task>
     <servers />
   </component>

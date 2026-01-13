@@ -77,3 +77,8 @@ crashlytics-build.properties
 /UnityProject
 /UnityProject
 TargetDirectories.targets
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+out/

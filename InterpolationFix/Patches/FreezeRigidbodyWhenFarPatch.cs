@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using UnityEngine;
-using UnityEngine.TextCore;
 
 namespace InterpolationFix.Patches;
 
@@ -16,7 +15,6 @@ internal class FreezeRigidbodyWhenFarPatch
     static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         CodeMatcher matcher = new CodeMatcher(instructions);
-
         
         ReplaceSetIsKinematicAndUpdateInterpolationCalls(matcher);
         ReplaceSetIsKinematicAndUpdateInterpolationCalls(matcher);
