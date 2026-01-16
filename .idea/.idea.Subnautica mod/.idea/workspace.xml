@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e833fc0d-7623-4d58-99dc-89bd72c9b49d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Subnautica mod/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Subnautica mod/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InvisiblePlayerModel/Plugin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InvisiblePlayerModel/Plugin.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InterpolationFix/FMU.json" beforeDir="false" afterPath="$PROJECT_DIR$/InterpolationFix/FMU.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InterpolationFix/Plugin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InterpolationFix/Plugin.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +79,7 @@
       <workItem from="1768354076879" duration="38000" />
       <workItem from="1768515812809" duration="2446000" />
       <workItem from="1768526423802" duration="4610000" />
-      <workItem from="1768532241123" duration="2970000" />
+      <workItem from="1768532241123" duration="4317000" />
     </task>
     <servers />
   </component>
