@@ -2,18 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e833fc0d-7623-4d58-99dc-89bd72c9b49d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/InterpolationFix/Mono/PlayerInterpolationManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/InvisiblePlayerModel/FMU.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/InvisiblePlayerModel/InvisiblePlayerModel.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/InvisiblePlayerModel/InvisiblePlayerModelConfig.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/InvisiblePlayerModel/PlayerModelModifier.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/InvisiblePlayerModel/Plugin.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Subnautica mod/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Subnautica mod/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterpolationFix/InterpolationFix.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/InterpolationFix/InterpolationFix.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterpolationFix/Patches/FreezeRigidbodyWhenFarPatch.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InterpolationFix/Patches/FreezeRigidbodyWhenFarPatch.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterpolationFix/Patches/PlayerPatch.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/InterpolationFix/Plugin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InterpolationFix/Plugin.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Subnautica mod.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Subnautica mod.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JSON File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -25,13 +33,20 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/3c3da67be6ab4f88b6531750bb852d1d4600/97/f0567b6d/02000022pdb1.il" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/3f5d1661c827488697afe193fcb066ac4400/e9/1674546f/02000022pdb1.il" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/81d5be8111284415bf73df3b0d8557a84400/5b/bc0cc69f/02000022pdb1.il" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6a18188ce6264976a9218286caeb57f41ea00/1c/b80fcb42/PluginInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99c774acc5fb40bdb0485e546b85e2e415400/27/5e315af2/CharacterController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9ec6c1b62c324758b9c2d79021505be61b5600/b2/e11d5398/FreezeRigidbodyWhenFar.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c055c80802d14a9db359fbdc91eb371c398800/31/b845e44d/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c055c80802d14a9db359fbdc91eb371c398800/d3/95e06fdc/FreezeRigidbodyWhenFar.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/df60b3a160a540f493f66f56a66f0e8c1bbe00/6e/5c669763/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f841581f63d54f5ca96e72fa08d3a0bf15be00/7a/f3e1b352/Utils.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4deedb497267de5db084b8a66f4ea1fac5bcabf11c921cd8739c438cea/ToggleAttribute.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/InterpolationFix/FMU.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/InterpolationFix/Mono/PlayerInterpolationManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/InterpolationFix/Plugin.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/InvisiblePlayerModel/FMU.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/InvisiblePlayerModel/Plugin.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/InvisiblePlayerModel/obj/Debug/net472/PluginInfo.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -47,6 +62,7 @@
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
@@ -64,6 +80,9 @@
       <updated>1768266628451</updated>
       <workItem from="1768266629768" duration="4108000" />
       <workItem from="1768271891853" duration="7586000" />
+      <workItem from="1768354076879" duration="38000" />
+      <workItem from="1768515812809" duration="2446000" />
+      <workItem from="1768526423802" duration="4610000" />
     </task>
     <servers />
   </component>

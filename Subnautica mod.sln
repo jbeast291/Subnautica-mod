@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterpolationFix", "Interpo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OxygenPipeBiomeFix", "OxygenPipeBiomeFix\OxygenPipeBiomeFix.csproj", "{D1FBEBD3-10BF-4EE2-AE04-CB6D7D10A1C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvisiblePlayerModel", "InvisiblePlayerModel\InvisiblePlayerModel.csproj", "{FEE09BAE-D52B-4ECD-97ED-017A63122A53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D1FBEBD3-10BF-4EE2-AE04-CB6D7D10A1C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1FBEBD3-10BF-4EE2-AE04-CB6D7D10A1C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1FBEBD3-10BF-4EE2-AE04-CB6D7D10A1C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEE09BAE-D52B-4ECD-97ED-017A63122A53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEE09BAE-D52B-4ECD-97ED-017A63122A53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEE09BAE-D52B-4ECD-97ED-017A63122A53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEE09BAE-D52B-4ECD-97ED-017A63122A53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

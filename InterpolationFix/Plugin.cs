@@ -8,6 +8,7 @@ using Nautilus.Utility.ModMessages;
 namespace InterpolationFix;
 
 [BepInPlugin(MyGuid, PluginName, PluginVersion)]
+[BepInDependency("com.snmodding.nautilus")]
 public class Plugin : BaseUnityPlugin
 {
     private const string MyGuid = "Jbeast291.InterpolationFix";
@@ -18,7 +19,7 @@ public class Plugin : BaseUnityPlugin
 
     internal new static ManualLogSource Logger;
     
-    public void Awake()
+    private void Awake()
     {
         Logger = base.Logger;
         
@@ -31,7 +32,7 @@ public class Plugin : BaseUnityPlugin
         WaitScreenHandler.RegisterLateLoadTask(PluginName, AttachInterpolationManager, "SceneLoadListener");
     }
 
-    public void AttachInterpolationManager(WaitScreenHandler.WaitScreenTask waitScreenTask)
+    private void AttachInterpolationManager(WaitScreenHandler.WaitScreenTask waitScreenTask)
     {
         waitScreenTask.Status = "Adding Interpolation Manager...";
         Logger.LogInfo("Adding Interpolation Manager...");
