@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e833fc0d-7623-4d58-99dc-89bd72c9b49d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/InvisiblePlayerModel/FMU.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InvisiblePlayerModel/InvisiblePlayerModel.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InvisiblePlayerModel/InvisiblePlayerModelConfig.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InvisiblePlayerModel/PlayerModelModifier.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InvisiblePlayerModel/Plugin.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Subnautica mod/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Subnautica mod/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterpolationFix/Plugin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InterpolationFix/Plugin.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Subnautica mod.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Subnautica mod.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InvisiblePlayerModel/Plugin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InvisiblePlayerModel/Plugin.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +42,7 @@
     <setting file="file://$PROJECT_DIR$/InvisiblePlayerModel/Plugin.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/InvisiblePlayerModel/obj/Debug/net472/PluginInfo.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 5
@@ -83,12 +78,14 @@
       <workItem from="1768354076879" duration="38000" />
       <workItem from="1768515812809" duration="2446000" />
       <workItem from="1768526423802" duration="4610000" />
+      <workItem from="1768532241123" duration="2970000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityProjectDiscoverer">
     <option name="hasUnityReference" value="true" />
